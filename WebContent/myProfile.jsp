@@ -6,11 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-<%-- 
-	The first page you get sent to when opening the website.
-	Here you have can either sign in, or register a new user. 
---%>
-
+<%-- JSP for viewing and editing your profile --%>
 
 </head>
 <body>
