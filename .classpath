@@ -29,6 +29,5 @@
 	<classpathentry exported="true" kind="lib" path="/Applications/apache-tomcat-7.0.70/lib/tomcat-util.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Applications/apache-tomcat-7.0.70/lib/tomcat7-websocket.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Applications/apache-tomcat-7.0.70/lib/websocket-api.jar"/>
-	<classpathentry kind="lib" path="/Users/vebjornberg/Downloads/mysql-connector-java-5.1.39/mysql-connector-java-5.1.39-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
