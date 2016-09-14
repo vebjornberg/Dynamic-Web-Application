@@ -31,7 +31,7 @@ public class ControllerServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		
-
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
 		
 		rd.forward(request, response);
@@ -43,7 +43,21 @@ public class ControllerServlet extends HttpServlet {
 	
 	// DO POST
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		HttpSession session = request.getSession();
+		
+		String action = request.getParameter("action");
+		 
+		System.out.println("requested action: " + action);
+		
+		if (action.equals("Sign in")){
+			//Check if username and password matches in database.
+			//Send to search/home page
+			
+		}
+		else if(action.equals("Create new user")){
+			//Send to registration page
+		}
 		doGet(request, response);
 	}
 
