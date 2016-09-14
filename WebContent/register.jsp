@@ -11,5 +11,14 @@
 </head>
 <body>
 
+<form action="RegisterUser" method="post">
+User name: <input type="text" name="username"><br>
+First Name:<input type="text" name="fname"><br>
+Last Name:<input type="text" name="lname"><br>
+Date of Birth: <input type=text name="bDate" placeholder="ddmmyyyy">
+Password : <input type="password" name="pass"><br>
+<input type="submit"><br>
+</form>
+
 </body>
 </html>
