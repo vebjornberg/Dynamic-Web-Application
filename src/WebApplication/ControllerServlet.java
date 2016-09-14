@@ -46,16 +46,32 @@ public class ControllerServlet extends HttpServlet {
 		 
 		System.out.println("requested action: " + action);
 		
+		
+		
+		// Button in signIn.jsp
 		if (action.equals("Sign in")){
 			//Check if username and password matches in database.
 			//Send to search/home page
-			
+		
 		}
+		
+		// Button in signIn.jsp
 		else if(action.equals("Create new user")){
 			
+			// Redirects to register.jsp
 			RequestDispatcher requestdispatcher = request.getRequestDispatcher("/register.jsp");
 			requestdispatcher.forward(request, response);
 		}
+		
+		
+		// Button in register.jsp
+		else if (action.equals("Register user")){
+			//Sjekk at alle inputs er ok
+			
+			//send mail til konto med confirmation link
+		}
+		
+		
 		doGet(request, response);
 	}
 

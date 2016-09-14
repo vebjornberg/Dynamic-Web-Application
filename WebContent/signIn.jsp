@@ -26,7 +26,7 @@
 		
 		<br><br>
 		<form action="newUser" method="post" >
-			<input type="submit" value = "Create new user">
+			<input type="submit" name ="action" value = "Create new user">
 		</form>
 		
 		</center>
