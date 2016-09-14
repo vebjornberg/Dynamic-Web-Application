@@ -32,10 +32,6 @@ public class ControllerServlet extends HttpServlet {
 		
 		
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
-		
-		rd.forward(request, response);
-		
 	}
 
 	
