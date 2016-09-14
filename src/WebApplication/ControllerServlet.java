@@ -29,9 +29,7 @@ public class ControllerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		
-		//andrefen gjør endring
-		
+		//torjussa test
 		
 	}
 
