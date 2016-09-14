@@ -53,7 +53,9 @@ public class ControllerServlet extends HttpServlet {
 			
 		}
 		else if(action.equals("Create new user")){
-			//Send to registration page
+			
+			RequestDispatcher requestdispatcher = request.getRequestDispatcher("/register.jsp");
+			requestdispatcher.forward(request, response);
 		}
 		doGet(request, response);
 	}
