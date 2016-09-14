@@ -22,7 +22,6 @@
 	} else {
 		out.println("Connection succeeded");
 	}
-	
 %>
 
 
