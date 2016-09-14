@@ -12,24 +12,30 @@ import javax.sql.DataSource;
 public class mySQLconnection {
 	
 	DataSource datasource = null;
+	PreparedStatement preparedStatement = null;
+	private static final String sql = "SELECT * FROM webApplicationDatabase.Publication_Table";
 	
-	//Class.forName("com.mysql.jdbc.Driver");
-	//Connection connection = DriverManager.getConnection("jdbc.mysql://localhost:3306/webApplicationDatabase", "root", "manchester123");
-	
-	
+	/**public Connection getConnection() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc.mysql://localhost:3306/webApplicationDatabase", "root", "manchester123");
+			return conn;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+	}**/
 	public Connection getConnection() {
 		try {
-			//Context context = (Context) new InitialContext().lookup("java:comp/env");
-			//datasource = (DataSource) context.lookup("jdbc/webApplicationDatabase");
-			//Connection connection = datasource.getConnection();
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			System.out.println("kommer vi hit?");
-			Connection connection = DriverManager.getConnection("jdbc.mysql://localhost:3306/webApplicationDatabase", "root", "manchester123");
-			System.out.println("Hva skjer her?");
+			Context context = (Context) new InitialContext().lookup("java:comp/env");
+			datasource = (DataSource) context.lookup("jdbc/webApplicationDatabase");
+			Connection connection = datasource.getConnection();
 			return connection;
+			//preparedStatement = connection.prepareStatement(sql);
+			//ResultSet resultset = preparedStatement.executeQuery();
 		} catch (Exception e) {
-			System.out.println("Hva skjer her da mon tro");
 			return null;
+			// TODO: handle exception
 		}
 	}
 }
