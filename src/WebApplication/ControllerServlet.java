@@ -30,6 +30,7 @@ public class ControllerServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
+		//andrefen gjør endring
 		
 		
 	}
