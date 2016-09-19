@@ -9,7 +9,7 @@
 <body>
 <h1>Enter email to get password</h1> <%-- Klartekst..? --%>
 <form action="forgotPassword">
-<input type="text" placeholder= "example@email.com" name="forgottenPwMail">
+<input type="text" placeholder="example@email.com" name="forgottenPwMail">
 <input type="submit" value="Get password">
 </form>
 </body>

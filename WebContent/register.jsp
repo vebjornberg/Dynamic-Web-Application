@@ -35,10 +35,16 @@
 		<label>First name:</label><input type="text" name="fname"><br>
 		<label>Last name:</label><input type="text" name="lname"><br>
 		<label>Date of Birth:</label> <input type=text name="bDate" placeholder="ddmmyyyy"><br><br>
+		<label>Address:</label><input type="text" name="address"><br><br>
+		
 		<label>Email</label><input type="text" name="email"><br>
 		<label>Repeat email:</label> <input type="text" name="emailRep"><br><br>
+		
 		<label>Password:</label><input type="password" name="pass"><br>
 		<label>Repeat password:</label><input type="password" name="passRep"><br><br>
+		
+		<label>Credit card#:</label><input type="text" name="creditCardNr"><br><br>
+		
 		</div>
 		<input type="submit" name = action value="Register user"><br>
 	</form>

@@ -2,6 +2,7 @@ package WebApplication;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpSession;
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
-	
+	EmailSender es = new EmailSender();
     public ControllerServlet() {
         super();
         // TODO Auto-generated constructor stub
@@ -29,6 +30,7 @@ public class ControllerServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
     	
     	
+    
     	
     	
     	super.init(config);
@@ -41,7 +43,7 @@ public class ControllerServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		//torjussa test
+		
 		
 	}
 
@@ -73,6 +75,8 @@ public class ControllerServlet extends HttpServlet {
 		// Button in signIn.jsp
 		else if(action.equals("Create new user")){
 			
+			
+			
 			// Redirects to register.jsp
 			RequestDispatcher requestdispatcher = request.getRequestDispatcher("/register.jsp");
 			requestdispatcher.forward(request, response);
@@ -81,9 +85,12 @@ public class ControllerServlet extends HttpServlet {
 		
 		// Button in register.jsp
 		else if (action.equals("Register user")){
+		
 			//TODO: Sjekk at alle inputs er ok
 			
-			//TODO: Send mail til konto med confirmation link. 
+			
+			//	es.sendEmail(mottaker Email, Confirmation link);
+		
 			// Ikke opprett i DB før bruker trykker på godkjenningslinken.
 		}
 		
