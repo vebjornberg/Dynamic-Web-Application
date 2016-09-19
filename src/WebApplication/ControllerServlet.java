@@ -3,6 +3,7 @@ package WebApplication;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +24,16 @@ public class ControllerServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+    
+    // init
+    public void init(ServletConfig config) throws ServletException {
+    	
+    	
+    	
+    	
+    	super.init(config);
+    }
+    
     
     
 	// DO GET
@@ -50,8 +61,8 @@ public class ControllerServlet extends HttpServlet {
 		
 		// Button in signIn.jsp
 		if (action.equals("Sign in")){
-			//Check if username and password matches in database.
-			//Send to search/home page
+			//TODO: Check if username and password matches in database.
+			//TODO: Send to search/home page
 		
 		}
 		
@@ -66,9 +77,18 @@ public class ControllerServlet extends HttpServlet {
 		
 		// Button in register.jsp
 		else if (action.equals("Register user")){
-			//Sjekk at alle inputs er ok
+			//TODO: Sjekk at alle inputs er ok
 			
-			//send mail til konto med confirmation link
+			//TODO: Send mail til konto med confirmation link. 
+			// Ikke opprett i DB før bruker trykker på godkjenningslinken.
+		}
+		
+		// Button in confirmationPage.jsp
+		else if(action.equals("Sign in here")){
+			
+			//Sends user to signIn.jsp
+			RequestDispatcher requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
+			requestdispatcher.forward(request, response);	
 		}
 		
 		
