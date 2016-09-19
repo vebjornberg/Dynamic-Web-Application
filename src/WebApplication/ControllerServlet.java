@@ -61,8 +61,12 @@ public class ControllerServlet extends HttpServlet {
 		
 		// Button in signIn.jsp
 		if (action.equals("Sign in")){
+			String username  = request.getParameter("username");
+			String password = request.getParameter("pass");
+			
 			//TODO: Check if username and password matches in database.
 			//TODO: Send to search/home page
+			// session.setAttribute("currentUser", sql hent);
 		
 		}
 		
@@ -91,6 +95,16 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher.forward(request, response);	
 		}
 		
+		else if(action.equals("Forgot password")){
+			
+			
+			RequestDispatcher requestdispatcher = request.getRequestDispatcher("/forgotPassword.jsp");
+			requestdispatcher.forward(request, response);	
+		}
+		
+		else if(action.equals("Get password")){
+			// Send email
+		}
 		
 		doGet(request, response);
 	}
