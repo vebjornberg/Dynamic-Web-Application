@@ -59,59 +59,76 @@ public class ControllerServlet extends HttpServlet {
 		 
 		System.out.println("requested action: " + action);
 		
+		RequestDispatcher requestdispatcher;
+		switch(action){
 		
 		
-		// Button in signIn.jsp
-		if (action.equals("Sign in")){
+		case "Sign in":
+			
 			String username  = request.getParameter("username");
 			String password = request.getParameter("pass");
 			
 			//TODO: Check if username and password matches in database.
 			//TODO: Send to search/home page
 			// session.setAttribute("currentUser", sql hent);
-		
-		}
-		
-		// Button in signIn.jsp
-		else if(action.equals("Create new user")){
 			
+			break;
 			
+		case "Create new user":
 			
 			// Redirects to register.jsp
-			RequestDispatcher requestdispatcher = request.getRequestDispatcher("/register.jsp");
+			requestdispatcher = request.getRequestDispatcher("/register.jsp");
 			requestdispatcher.forward(request, response);
-		}
+			
+			break;
+			
+		case "Forgot password":
+			
+			requestdispatcher = request.getRequestDispatcher("/forgotPassword.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+		
+			
 		
 		
-		// Button in register.jsp
-		else if (action.equals("Register user")){
 		
+		
+		
+		
+		
+		case "Register user":
+			
 			//TODO: Sjekk at alle inputs er ok
 			
 			
 			//	es.sendEmail(mottaker Email, Confirmation link);
 		
 			// Ikke opprett i DB før bruker trykker på godkjenningslinken.
-		}
-		
-		// Button in confirmationPage.jsp
-		else if(action.equals("Sign in here")){
 			
+			break;
+			
+			
+		case "Sign in here": // Button in confirmationPage.jsp
+
 			//Sends user to signIn.jsp
-			RequestDispatcher requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
+			requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
 			requestdispatcher.forward(request, response);	
-		}
-		
-		else if(action.equals("Forgot password")){
+			
+			break;
 			
 			
-			RequestDispatcher requestdispatcher = request.getRequestDispatcher("/forgotPassword.jsp");
-			requestdispatcher.forward(request, response);	
+		case "Get password":
+			break;
+		
+		
+		
+		
+		
 		}
 		
-		else if(action.equals("Get password")){
-			// Send email
-		}
+		
+
 		
 		doGet(request, response);
 	}
