@@ -143,7 +143,7 @@ public class ControllerServlet extends HttpServlet {
 				session.setAttribute("registrationError", "Not valid username, only letters a-z and numbers.");
 				ok=false;
 			}
-			else if (!isValidDOB(request.getParameter("dateOfBirth"))){
+			else if (!isValidDOB(request.getParameter("bDate"))){
 				session.setAttribute("registrationError", "Not valid date of birth, ex: 01031989.");
 				ok=false;
 			}
@@ -152,10 +152,10 @@ public class ControllerServlet extends HttpServlet {
 				ok=false;
 			}
 			
-			
+			System.out.println(ok + " "+ session.getAttribute("registrationError"));
 			if(ok){
 			try {
-				es.sendEmail(request.getParameter("email"), "Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + getConfirmationLink(request.getParameter("username")) + "\nRegards, \nDBL tema :)");
+				EmailSender.sendEmail(request.getParameter("email"), "Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + getConfirmationLink(request.getParameter("username")) + "\nRegards, \nDBL tema :)");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -224,13 +224,14 @@ public class ControllerServlet extends HttpServlet {
 	
 	// Checks birthdate
 	public boolean isValidDOB(String dob){
-		if(!(dob.length()==8)){
+		if(!(dob.trim().length()==8)){
+			System.out.println("ikke riktig antall");
 			return false;
 		}
 		if(!dob.matches("[0-9]+")){
 			return false;
 		}
-		if(  (Integer.parseInt(dob.substring(2)) >31) || 
+		if(  (Integer.parseInt(dob.substring(0,2)) >31) || 
 				(Integer.parseInt(dob.substring(2,4)) >12) ||
 				Integer.parseInt(dob.substring(4,8)) >2016 || 
 				Integer.parseInt(dob.substring(4,8)) <1900) {
@@ -248,7 +249,9 @@ public class ControllerServlet extends HttpServlet {
 		   } catch (AddressException ex) {
 		      result = false;
 		   }
-		 if (!sql.getEmails().contains(email)) {
+		   ArrayList<String> emails = sql.getEmails();
+		   System.out.println(emails);
+		 if (emails.contains(email)) {
 			result = false;}
 		   return result;
 	}
