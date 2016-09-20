@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -61,6 +62,22 @@ public class mySQLconnection {
 			return null;
 			// TODO: handle exception
 		}
+	}
+	public ArrayList<String> getUsernames() {
+		try {
+			ArrayList<String> usernames = new ArrayList<String>();
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT username FROM user_table";
+			ResultSet result = statement.executeQuery(sql);
+			while(result.next()) {
+				usernames.add(result.getString("username"));
+			}
+			return usernames;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	}
 	public boolean getAdmin() {
 		return false;
