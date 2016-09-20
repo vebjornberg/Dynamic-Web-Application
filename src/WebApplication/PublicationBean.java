@@ -2,55 +2,49 @@ package WebApplication;
 
 public class PublicationBean {
 	
-	private String author, title, year;
+	private String firstname, lastname, title, date, price;
+	private int publicationid;
 	
 	
-	
-	
-public String getAuthor() {
-		return author;
+	public PublicationBean() {
+		
 	}
-
-
-
-
-	public void setAuthor(String author) {
-		this.author = author;
+	public String getFirstname() {
+		return firstname;
 	}
-
-
-
-
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	public String getLastname() {
+		return lastname;
+	}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 	public String getTitle() {
 		return title;
 	}
-
-
-
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-
-
-
-	public String getYear() {
-		return year;
+	public String getDate() {
+		return date;
 	}
-
-
-
-
-	public void setYear(String year) {
-		this.year = year;
+	public void setDate(String date) {
+		this.date = date;
 	}
-
-
-
-
-public PublicationBean() {
-	// TODO Auto-generated constructor stub
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
+	public int getPublicationid() {
+		return publicationid;
+	}
+	public void setPublicationid(int publicationid) {
+		this.publicationid = publicationid;
+	}
+	
 }
 
-}
