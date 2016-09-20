@@ -52,7 +52,6 @@ public class mySQLconnection {
 			String userPassword = "";
 			while(result.next()) {
 				userPassword = result.getString("password");
-				System.out.println(userPassword);
 			}
 			result.close();
 			closeConnection();
@@ -63,6 +62,23 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
+	public boolean getAdmin() {
+		return false;
+	}
+	public void setUser(String email, String username, String firstname, String lastname, String address, String creditCard, String dateOfBirth, String password) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "INSERT INTO user_table VALUES " +
+			"('" + email + "', '" + username + "', '" + firstname + "', '" + lastname + "', '" + address + "', '" + creditCard + "', '" + dateOfBirth + "', 0, '" + password + "')";
+			
+			statement.executeUpdate(sql);
+			System.out.println(sql);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 
 }
+
 	
