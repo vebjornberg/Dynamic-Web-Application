@@ -2,8 +2,8 @@ package WebApplication;
 
 public class PublicationBean {
 	
-	private String firstname, lastname, title, date, price;
-	private int publicationid;
+	private String firstname, lastname, title, date, price, type;
+	private int publicationid, authorid;
 	
 	
 	public PublicationBean() {
@@ -45,6 +45,21 @@ public class PublicationBean {
 	public void setPublicationid(int publicationid) {
 		this.publicationid = publicationid;
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public int getAuthorid() {
+		return authorid;
+	}
+	public void setAuthorid(int authorid) {
+		this.authorid = authorid;
+	}
+	
+	
+	
 	
 }
 

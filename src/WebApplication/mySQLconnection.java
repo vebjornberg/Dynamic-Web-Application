@@ -87,7 +87,7 @@ public class mySQLconnection {
 			String sql = "SELECT email FROM user_table";
 			ResultSet result = statement.executeQuery(sql);
 			while(result.next()) {
-				emails.add(result.getString("username"));
+				emails.add(result.getString("email"));
 			}
 			return emails;
 		} catch (Exception e) {
@@ -96,7 +96,27 @@ public class mySQLconnection {
 		return null;
 	}
 	public boolean getAdmin() {
-		return false;
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT admin FROM user_table WHERE username='" + username + "'";
+			ResultSet result = statement.executeQuery(sql);
+			int admin = 0;
+			while(result.next()) {
+				admin = result.getInt("activated");
+			}
+			result.close();
+			closeConnection();
+			if (admin==1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+			// TODO: handle exception
+		}
 	}
 	public void setUser(String email, String username, String firstname, String lastname, String address, String creditCard, String dateOfBirth, String password) {
 		try {
@@ -106,12 +126,43 @@ public class mySQLconnection {
 			"('" + email + "', '" + username + "', '" + firstname + "', '" + lastname + "', '" + address + "', '" + creditCard + "', '" + dateOfBirth + "', 0, '" + password + "', 0)";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
+			closeConnection();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
 	public ArrayList<PublicationBean> getPublications(String search) {
-		return null;
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT publication_table.*, author_table.* FROM publication_table JOIN authoredby_table "
+					+ "ON authoredby_table.publicationid = publication_table.publicationid "
+					+ "JOIN author_table ON author_table.authorid = authoredby_table.authorid "
+					+ "WHERE publication_table.type='" + search + "' OR publication_table.title='" + search +"' OR "
+					+ "publication_table.date='"+ search + "' OR publication_table.price='" + search + "' OR "
+					+ "author_table.firstname='" + search + "' OR author_table.lastname='" + search + "'";
+			ResultSet result = statement.executeQuery(sql);
+			ArrayList<PublicationBean> publications = new ArrayList<PublicationBean>();
+			while(result.next()) {
+				PublicationBean publicationbean = new PublicationBean();
+				publicationbean.setAuthorid(result.getInt("authorid"));
+				publicationbean.setPublicationid(result.getInt("publicationid"));
+				publicationbean.setType(result.getString("type"));
+				publicationbean.setDate(result.getString("date"));
+				publicationbean.setPrice(result.getString("price"));
+				publicationbean.setFirstname(result.getString("firstname"));
+				publicationbean.setLastname(result.getString("lastname"));
+				publicationbean.setTitle(result.getString("title"));
+				publications.add(publicationbean);
+			}
+			result.close();
+			closeConnection();
+			return publications;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			// TODO: handle exception
+		}
 	}
 	public boolean getActivated(String username) {
 		try {
