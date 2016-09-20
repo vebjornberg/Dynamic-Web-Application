@@ -26,7 +26,18 @@
 	
 %>
 
-welcome <%=username %>!
+welcome <%=username %>! <br><br>
+Search in publication database: <br>
+<form action = "ControllerServlet" >
+	<input type ="hidden" name = "action" value = "simpleSearch" >
+	<input type = "text" name ="searchWord">
+	<input type="submit" value = "search" >
+</form><br><br>
+	
+<form action = "advancedSearch.jsp">
+	<input type = "submit" value = "Go to advanced search">
+</form>
 
+then a list of 10 random publications;<br>
 </body>
 </html>

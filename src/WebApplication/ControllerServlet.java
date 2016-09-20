@@ -1,6 +1,7 @@
 package WebApplication;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.mail.MessagingException;
 import javax.servlet.RequestDispatcher;
@@ -105,7 +106,16 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher.forward(request, response);
 			
 			break;
+			
 		
+		case "simple search":
+			String searchWord = request.getParameter("keyWord");
+			//ArrayList<PublicationBean> result = getResultsSimpleSearch(String searchWord);
+			//request.setParameter("results", result)";
+
+			
+			requestdispatcher = request.getRequestDispatcher("/results.jsp");
+			requestdispatcher.forward(request, response);
 			
 		
 		
