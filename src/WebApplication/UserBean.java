@@ -11,6 +11,7 @@ public class UserBean {
 	private String creditCard;
 	private String dateOfBirth;
 	private int admin;
+	private int activated;
 	
 	public UserBean() {
 		
@@ -68,6 +69,12 @@ public class UserBean {
 	}
 	public void setAdmin(int admin) {
 		this.admin = admin;
+	}
+	public int getActivated() {
+		return activated;
+	}
+	public void setActivated(int activated) {
+		this.activated = activated;
 	}
 	
 	

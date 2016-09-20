@@ -103,7 +103,7 @@ public class mySQLconnection {
 			establishConnection();
 			Statement statement = connection.createStatement();
 			String sql = "INSERT INTO user_table VALUES " +
-			"('" + email + "', '" + username + "', '" + firstname + "', '" + lastname + "', '" + address + "', '" + creditCard + "', '" + dateOfBirth + "', 0, '" + password + "', " + "0)";
+			"('" + email + "', '" + username + "', '" + firstname + "', '" + lastname + "', '" + address + "', '" + creditCard + "', '" + dateOfBirth + "', 0, '" + password + "', 0)";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
 		} catch (Exception e) {
@@ -133,6 +133,34 @@ public class mySQLconnection {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return false;
+			// TODO: handle exception
+		}
+	}
+	public UserBean getUserInfo(String username) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT * FROM user_table WHERE username='" + username + "'";
+			ResultSet result = statement.executeQuery(sql);
+			UserBean userbean = new UserBean();
+			while(result.next()) {
+				userbean.setEmail(result.getString("email"));
+				userbean.setUsername(result.getString("username"));
+				userbean.setPassword(result.getString("password"));
+				userbean.setFirstname(result.getString("firstname"));
+				userbean.setLastname(result.getString("lastname"));
+				userbean.setAddress(result.getString("address"));
+				userbean.setCreditCard(result.getString("creditCard"));
+				userbean.setDateOfBirth(result.getString("dateOfBirth"));
+				userbean.setAdmin(result.getInt("admin"));
+				userbean.setActivated(result.getInt("activated"));
+			}
+			result.close();
+			closeConnection();
+			return userbean;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
 			// TODO: handle exception
 		}
 	}
