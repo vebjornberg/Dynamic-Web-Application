@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -52,7 +53,6 @@ public class mySQLconnection {
 			String userPassword = "";
 			while(result.next()) {
 				userPassword = result.getString("password");
-				System.out.println(userPassword);
 			}
 			result.close();
 			closeConnection();
@@ -63,6 +63,55 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
+	public ArrayList<String> getUsernames() {
+		try {
+			ArrayList<String> usernames = new ArrayList<String>();
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT username FROM user_table";
+			ResultSet result = statement.executeQuery(sql);
+			while(result.next()) {
+				usernames.add(result.getString("username"));
+			}
+			return usernames;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+	public ArrayList<String> getEmails() {
+		try {
+			ArrayList<String> emails = new ArrayList<String>();
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT email FROM user_table";
+			ResultSet result = statement.executeQuery(sql);
+			while(result.next()) {
+				emails.add(result.getString("username"));
+			}
+			return emails;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+	public boolean getAdmin() {
+		return false;
+	}
+	public void setUser(String email, String username, String firstname, String lastname, String address, String creditCard, String dateOfBirth, String password) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "INSERT INTO user_table VALUES " +
+			"('" + email + "', '" + username + "', '" + firstname + "', '" + lastname + "', '" + address + "', '" + creditCard + "', '" + dateOfBirth + "', 0, '" + password + "')";
+			
+			statement.executeUpdate(sql);
+			System.out.println(sql);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 
 }
+
 	
