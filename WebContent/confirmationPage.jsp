@@ -10,7 +10,7 @@
 <%-- JSP file to send users to when they press their confirmation link in the email --%>
 
 <body><center>
-<% //if (Profile has already been confirmed){%>
+<% //if (true){%>
 
 <%-- <h1>Your profile has already been confirmed</h1>   --%>
 <% 

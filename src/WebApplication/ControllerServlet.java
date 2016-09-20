@@ -2,6 +2,7 @@ package WebApplication;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -22,7 +23,11 @@ import javax.servlet.http.HttpSession;
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
-	EmailSender es = new EmailSender();
+	static EmailSender es = new EmailSender();
+	static mySQLconnection sql = new mySQLconnection();
+	
+	
+	private String confirmationLinkHash;
     public ControllerServlet() {
         super();
         // TODO Auto-generated constructor stub
@@ -128,18 +133,34 @@ public class ControllerServlet extends HttpServlet {
 		
 		case "Register user":
 			
-			if (!isValidDOB(request.getParameter("dateOfBirth"))){
-				
+			boolean ok = true;
+			
+			if (isAvailableUsername(request.getParameter("Username"))){
+				session.setAttribute("registrationError", "Not valid username, already taken.");
+				ok=false;
 			}
-			if (!isValidEmailAddress("email")){
-				
+			else if(!isValidUsername("username")){
+				session.setAttribute("registrationError", "Not valid username, only letters a-z and numbers.");
+				ok=false;
 			}
-			if(!isValidUsername("username")){
-				
+			else if (!isValidDOB(request.getParameter("dateOfBirth"))){
+				session.setAttribute("registrationError", "Not valid date of birth, ex: 01031989.");
+				ok=false;
+			}
+			else if (!isValidEmailAddress("email")){
+				session.setAttribute("registrationError", "Not valid email, ex: john@gmail.com.");
+				ok=false;
 			}
 			
 			
-			//	es.sendEmail(mottaker Email, Confirmation link, "Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + link + "\nRegards, \nDBL tema :)");
+			if(ok){
+			try {
+				es.sendEmail(request.getParameter("email"), "Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + getConfirmationLink(request.getParameter("username")) + "\nRegards, \nDBL tema :)");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
 		
 			// Ikke opprett i DB før bruker trykker på godkjenningslinken.
 			
@@ -173,6 +194,12 @@ public class ControllerServlet extends HttpServlet {
 	}
 
 	
+	
+	
+	
+	
+	// HELP METHODS
+	
 	public boolean isCorrectLogin(String username, String password){
 		return true;
 	}
@@ -180,16 +207,22 @@ public class ControllerServlet extends HttpServlet {
 	
 	
 	public boolean isValidUsername(String username){
-		//if (!getAllUserNames().contains(username)) {
-			//return false;}
         if(!username.matches("^[a-zA-Z0-9]*$")){
             return false;}
 		return true;
 	}
 	
 	
+	public boolean isAvailableUsername(String username){
+		if (!sql.getUsernames().contains(username)) {
+			return false;
+		}
+		return true;
+	}
 	
 	
+	
+	// Checks birthdate
 	public boolean isValidDOB(String dob){
 		if(!(dob.length()==8)){
 			return false;
@@ -206,6 +239,7 @@ public class ControllerServlet extends HttpServlet {
 		return true;
 	}
 	
+	// Checks email address
 	public static boolean isValidEmailAddress(String email) {
 		   boolean result = true;
 		   try {
@@ -214,11 +248,34 @@ public class ControllerServlet extends HttpServlet {
 		   } catch (AddressException ex) {
 		      result = false;
 		   }
-		 //if (!getAllEmails().contains(email)) {
-			//result = false;}
+		 if (!sql.getEmails().contains(email)) {
+			result = false;}
 		   return result;
 	}
 	
+	
+	
+	public String getConfirmationLink(String username){
+		
+		
+		String confirmationLinkHash = getRandomString(8);
+		String res = "http://localhost:8080/Web-Applications-Engineering/confirmationPage?user=" + username + "&hash=" + confirmationLinkHash;
+		this.confirmationLinkHash=confirmationLinkHash;
+		
+		return res;
+	}
+	
+	
+	public String getRandomString(int len){
+		char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
+		for (int i = 0; i < len; i++) {
+		    char c = chars[random.nextInt(chars.length)];
+		    sb.append(c);
+		}
+		return sb.toString();
+	}
 	
 	
 }
