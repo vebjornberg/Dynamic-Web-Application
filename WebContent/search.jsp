@@ -30,6 +30,7 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    width: 50%;
 }
 
 li {
