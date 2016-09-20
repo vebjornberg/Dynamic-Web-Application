@@ -79,6 +79,22 @@ public class mySQLconnection {
 		}
 		return null;
 	}
+	public ArrayList<String> getEmails() {
+		try {
+			ArrayList<String> emails = new ArrayList<String>();
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT email FROM user_table";
+			ResultSet result = statement.executeQuery(sql);
+			while(result.next()) {
+				emails.add(result.getString("username"));
+			}
+			return emails;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
 	public boolean getAdmin() {
 		return false;
 	}
