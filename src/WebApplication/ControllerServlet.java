@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -126,10 +128,18 @@ public class ControllerServlet extends HttpServlet {
 		
 		case "Register user":
 			
-			//TODO: Sjekk at alle inputs er ok
+			if (!isValidDOB(request.getParameter("dateOfBirth"))){
+				
+			}
+			if (!isValidEmailAddress("email")){
+				
+			}
+			if(!isValidUsername("username")){
+				
+			}
 			
 			
-			//	es.sendEmail(mottaker Email, Confirmation link);
+			//	es.sendEmail(mottaker Email, Confirmation link, "Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + link + "\nRegards, \nDBL tema :)");
 		
 			// Ikke opprett i DB før bruker trykker på godkjenningslinken.
 			
@@ -146,6 +156,8 @@ public class ControllerServlet extends HttpServlet {
 			
 			
 		case "Get password":
+			//if email exists in db, get password and send
+				//es.sendEmail(email, content)
 			break;
 		
 		
@@ -160,4 +172,53 @@ public class ControllerServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+	
+	public boolean isCorrectLogin(String username, String password){
+		return true;
+	}
+	
+	
+	
+	public boolean isValidUsername(String username){
+		//if (!getAllUserNames().contains(username)) {
+			//return false;}
+        if(!username.matches("^[a-zA-Z0-9]*$")){
+            return false;}
+		return true;
+	}
+	
+	
+	
+	
+	public boolean isValidDOB(String dob){
+		if(!(dob.length()==8)){
+			return false;
+		}
+		if(!dob.matches("[0-9]+")){
+			return false;
+		}
+		if(  (Integer.parseInt(dob.substring(2)) >31) || 
+				(Integer.parseInt(dob.substring(2,4)) >12) ||
+				Integer.parseInt(dob.substring(4,8)) >2016 || 
+				Integer.parseInt(dob.substring(4,8)) <1900) {
+					return false;
+				}
+		return true;
+	}
+	
+	public static boolean isValidEmailAddress(String email) {
+		   boolean result = true;
+		   try {
+		      InternetAddress emailAddr = new InternetAddress(email);
+		      emailAddr.validate();
+		   } catch (AddressException ex) {
+		      result = false;
+		   }
+		 //if (!getAllEmails().contains(email)) {
+			//result = false;}
+		   return result;
+	}
+	
+	
+	
 }
