@@ -12,7 +12,8 @@
 </head>
 <body>
 
-<p>hei<p/>
+<p>Search for title or whatevah<p/>
+<form ></form>
 
 <% 
 	mySQLconnection sqlConnection = new mySQLconnection();

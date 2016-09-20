@@ -29,7 +29,8 @@ public class ControllerServlet extends HttpServlet {
     // init
     public void init(ServletConfig config) throws ServletException {
     	
-    	
+    
+
     
     	
     	
@@ -42,6 +43,8 @@ public class ControllerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(-1);
+		session.setAttribute("wrongPassword", false);
 		
 		
 		
@@ -54,12 +57,15 @@ public class ControllerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
+		session.setAttribute("wrongPassword", false);
 		
 		String action = request.getParameter("action");
 		 
 		System.out.println("requested action: " + action);
 		
 		RequestDispatcher requestdispatcher;
+		
+		// Checks parameter action
 		switch(action){
 		
 		
@@ -71,7 +77,17 @@ public class ControllerServlet extends HttpServlet {
 			//TODO: Check if username and password matches in database.
 			//TODO: Send to search/home page
 			// session.setAttribute("currentUser", sql hent);
-			
+			if(true){ // (isvalid(username, password){
+				
+		
+				requestdispatcher = request.getRequestDispatcher("/search.jsp");
+				requestdispatcher.forward(request, response);
+			}
+			else{
+				session.setAttribute("wrongPassword", true);
+				requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
+				requestdispatcher.forward(request, response);
+			}
 			break;
 			
 		case "Create new user":

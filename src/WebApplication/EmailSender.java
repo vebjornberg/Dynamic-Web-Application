@@ -34,7 +34,7 @@ public class EmailSender {
 	        // Create your text message part
 	        BodyPart messageBodyPart = new MimeBodyPart();
 	        
-	        messageBodyPart.setText("Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account" + link);
+	        messageBodyPart.setText("Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + link + "\nRegards, \nDBL tema :)");
 
 	        // Add the text part to the multipart
 	        multipart.addBodyPart(messageBodyPart);

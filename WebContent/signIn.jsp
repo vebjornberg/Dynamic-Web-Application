@@ -11,6 +11,11 @@
 	Here you have can either sign in, or register a new user. 
 --%>
 
+<% 
+if ((Boolean)session.getAttribute("wrongPassword")== null){
+	session.setAttribute("wrongPassword", false);
+}
+	%>
 
 </head>
 	<body>
@@ -21,10 +26,13 @@
 		<form action="login" method="post">
 			Username : <input type="text" name="username"><br>
 			Password : <input type="password" name="pass"><br>
-			<input type="submit" value = "Sign in"><br>
+			<input type="submit" name="action" value = "Sign in"><br>
 		</form>
+		<%if ((Boolean)session.getAttribute("wrongPassword") == true){ %>
+		<p style="color: red">Username or password is incorrect.<p>
+		<%}else{ %>
 		
-		<br><br>
+		<br><br><%} %>
 		<form action="newUser" method="post" >
 			<input type="submit" name ="action" value = "Create new user">
 			<input type="submit" name = "action" value = "Forgot password">
