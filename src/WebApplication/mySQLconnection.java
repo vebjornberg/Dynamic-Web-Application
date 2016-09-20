@@ -103,15 +103,39 @@ public class mySQLconnection {
 			establishConnection();
 			Statement statement = connection.createStatement();
 			String sql = "INSERT INTO user_table VALUES " +
-			"('" + email + "', '" + username + "', '" + firstname + "', '" + lastname + "', '" + address + "', '" + creditCard + "', '" + dateOfBirth + "', 0, '" + password + "')";
-			
+			"('" + email + "', '" + username + "', '" + firstname + "', '" + lastname + "', '" + address + "', '" + creditCard + "', '" + dateOfBirth + "', 0, '" + password + "', " + "0)";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
-	
+	public ArrayList<PublicationBean> getPublications(String search) {
+		return null;
+	}
+	public boolean getActivated(String username) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT activated FROM user_table WHERE username='" + username + "'";
+			ResultSet result = statement.executeQuery(sql);
+			int activated = 0;
+			while(result.next()) {
+				activated = result.getInt("activated");
+			}
+			result.close();
+			closeConnection();
+			if (activated==1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+			// TODO: handle exception
+		}
+	}
 
 }
 
