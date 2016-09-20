@@ -1,3 +1,4 @@
+<%@page import="WebApplication.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -25,7 +26,8 @@
 
 <%
 String username = (String) session.getAttribute("currentUser");
-//ArrayString<String> infoFromUsername = infoFromUsername(username;)
+//UserBean user sqlConnection.getUserInfo(username);
+
 //String firstName, lastname, dob, address, email, password, creditCard = infoFromUsername[0], infoFromUsername[1], infoFromUsername[2], osv..   
 %>
 
