@@ -26,6 +26,8 @@
 	
 %>
 
+
+
 welcome <%=username %>! <br><br>
 Search in publication database: <br>
 <form action = "ControllerServlet" >
