@@ -73,7 +73,8 @@ public class ControllerServlet extends HttpServlet {
 			
 			String username  = request.getParameter("username");
 			String password = request.getParameter("pass");
-			
+			session.setAttribute("currentUser", username);
+						
 			//TODO: Check if username and password matches in database.
 			//TODO: Send to search/home page
 			// session.setAttribute("currentUser", sql hent);
