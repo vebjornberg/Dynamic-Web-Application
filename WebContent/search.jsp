@@ -1,4 +1,3 @@
-<%@page import="java.util.ArrayList"%>
 <%@page import="WebApplication.mySQLconnection" import="java.sql.DriverManager" import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -20,14 +19,14 @@
 	mySQLconnection sqlConnection = new mySQLconnection();
 	String password = sqlConnection.getPassword("vebjorbe");
 	sqlConnection.setUser("torjus.saethre@gmail.com", "torjussa", "Torjus", "Saethre", "50 Coogee street", "123456789", "26041993", "torjussapass");
-	ArrayList<String> usernames = new ArrayList<String>();
-	usernames = sqlConnection.getUsernames();
-	for(int i=0; i<usernames.size(); i++) {
-		out.println(usernames.get(i));
-	}
+	
+	String username = (String) session.getAttribute("currentUser");
+	
+	
 	
 %>
 
+welcome <%=username %>!
 
 </body>
 </html>
