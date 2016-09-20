@@ -15,14 +15,9 @@
 <p>hei<p/>
 
 <% 
-	mySQLconnection mySQL = new mySQLconnection();
-	Connection conn = mySQL.getConnection();
-	if (conn == null) {
-		out.println("Connection failed");
-	} else {
-		out.println("Connection succeeded");
-	}
-	
+	mySQLconnection sqlConnection = new mySQLconnection();
+	String password = sqlConnection.getPassword("vebjorbe");
+	out.println(password);
 %>
 
 
