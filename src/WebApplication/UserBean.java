@@ -10,11 +10,21 @@ public class UserBean {
 	private String address;
 	private String creditCard;
 	private String dateOfBirth;
+	private String confirmationHash;
 	private int admin;
 	private int activated;
 	
+	
 	public UserBean() {
 		
+	}
+	
+	
+	public String getConfirmationHash() {
+		return confirmationHash;
+	}
+	public void setConfirmationHash(String confirmationHash) {
+		this.confirmationHash = confirmationHash;
 	}
 	public String getEmail() {
 		return email;

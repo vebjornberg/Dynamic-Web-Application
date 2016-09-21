@@ -23,11 +23,11 @@ import javax.servlet.http.HttpSession;
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
-	static EmailSender es = new EmailSender();
-	static mySQLconnection sql = new mySQLconnection();
+	EmailSender es = new EmailSender();
+	mySQLconnection sql = new mySQLconnection();
+	UserBean userBean;
 	
-	
-	private String confirmationLinkHash;
+
     public ControllerServlet() {
         super();
         // TODO Auto-generated constructor stub
@@ -81,11 +81,11 @@ public class ControllerServlet extends HttpServlet {
 			
 			String username  = request.getParameter("username");
 			String password = request.getParameter("pass");
-			session.setAttribute("currentUser", username);
+			
 						
 			//TODO: Check if username and password matches in database.
 			//TODO: Send to search/home page
-			// session.setAttribute("currentUser", sql hent);
+			session.setAttribute("currentUser", sql.getUserInfo(username));
 			if(true){ // (isvalid(username, password){
 				
 		
@@ -135,11 +135,11 @@ public class ControllerServlet extends HttpServlet {
 			
 			boolean ok = true;
 			
-			if (isAvailableUsername(request.getParameter("Username"))){
+			if (isAvailableUsername(request.getParameter("username"))){
 				session.setAttribute("registrationError", "Not valid username, already taken.");
 				ok=false;
 			}
-			else if(!isValidUsername("username")){
+			else if(!isValidUsername(request.getParameter("username"))){
 				session.setAttribute("registrationError", "Not valid username, only letters a-z and numbers.");
 				ok=false;
 			}
@@ -154,15 +154,33 @@ public class ControllerServlet extends HttpServlet {
 			
 			System.out.println(ok + " "+ session.getAttribute("registrationError"));
 			if(ok){
+				UserBean newCurrentUser = new UserBean();
+				session.setAttribute("currentUser", newCurrentUser);
+				
+				newCurrentUser.setActivated(0);
+				newCurrentUser.setAddress(request.getParameter("adress"));
+				newCurrentUser.setAdmin(0);
+				newCurrentUser.setCreditCard(request.getParameter("creditCardNr"));
+				newCurrentUser.setEmail(request.getParameter("email"));
+				newCurrentUser.setDateOfBirth(request.getParameter("bDate"));
+				newCurrentUser.setFirstname(request.getParameter("fname"));
+				newCurrentUser.setLastname(request.getParameter("lname"));
+				newCurrentUser.setPassword(request.getParameter("pass"));
+				String confirmLink = getConfirmationLink(request.getParameter("username"));
+				newCurrentUser.setConfirmationHash(confirmLink.substring(confirmLink.length()-8));
+				//TODO: Set userbean in database
+				
+				
 			try {
-				EmailSender.sendEmail(request.getParameter("email"), "Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + getConfirmationLink(request.getParameter("username")) + "\nRegards, \nDBL tema :)");
+				EmailSender.sendEmail(request.getParameter("email"), "Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + confirmLink + "\nRegards, \nDBL tema :)");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			}
 		
-			// Ikke opprett i DB før bruker trykker på godkjenningslinken.
+			
 			
 			break;
 			
@@ -241,16 +259,13 @@ public class ControllerServlet extends HttpServlet {
 	}
 	
 	// Checks email address
-	public static boolean isValidEmailAddress(String email) {
+	public boolean isValidEmailAddress(String email) {
 		   boolean result = true;
-		   try {
-		      InternetAddress emailAddr = new InternetAddress(email);
-		      emailAddr.validate();
-		   } catch (AddressException ex) {
-		      result = false;
-		   }
+		  
+		   //TODO: check email
+		   
 		   ArrayList<String> emails = sql.getEmails();
-		   System.out.println(emails);
+//		   System.out.println(emails);
 		 if (emails.contains(email)) {
 			result = false;}
 		   return result;
@@ -262,8 +277,7 @@ public class ControllerServlet extends HttpServlet {
 		
 		
 		String confirmationLinkHash = getRandomString(8);
-		String res = "http://localhost:8080/Web-Applications-Engineering/confirmationPage?user=" + username + "&hash=" + confirmationLinkHash;
-		this.confirmationLinkHash=confirmationLinkHash;
+		String res = "http://localhost:8080/Web-Applications-Engineering/confirmationPage.jsp?user=" + username + "&hash=" + confirmationLinkHash;
 		
 		return res;
 	}
