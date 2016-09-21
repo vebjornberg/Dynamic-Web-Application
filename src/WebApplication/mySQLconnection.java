@@ -146,16 +146,17 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
-	public ArrayList<PublicationBean> getPublications(String search) { //fungerer ikke helt
+	public ArrayList<PublicationBean> getPublications(String search) {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
-			String sql = "SELECT publication_table.*, author_table.* FROM publication_table JOIN authoredby_table "
+			String sql = "SELECT publication_table.*, author_table.* "
+					+ "FROM publication_table INNER JOIN authoredby_table "
 					+ "ON authoredby_table.publicationid = publication_table.publicationid "
-					+ "JOIN author_table ON author_table.authorid = authoredby_table.authorid "
-					+ "WHERE publication_table.type='" + search + "' OR publication_table.title='" + search +"' OR "
-					+ "publication_table.date='"+ search + "' OR publication_table.price='" + search + "' OR "
-					+ "author_table.firstname='" + search + "' OR author_table.lastname='" + search + "'";
+					+ "INNER JOIN author_table ON author_table.authorid = authoredby_table.authorid "
+					+ "WHERE publication_table.type LIKE '%" + search + "%' OR publication_table.title LIKE '%" + search +"%' OR "
+					+ "publication_table.date LIKE '%"+ search + "%' OR publication_table.price LIKE '%" + search + "%' OR "
+					+ "author_table.firstname LIKE '%" + search + "%' OR author_table.lastname LIKE '%" + search + "%'";
 			ResultSet result = statement.executeQuery(sql);
 			ArrayList<PublicationBean> publications = new ArrayList<PublicationBean>();
 			while(result.next()) {
