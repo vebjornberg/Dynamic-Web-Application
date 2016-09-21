@@ -132,7 +132,7 @@ input[type=submit]:hover {
 
 
 
-<form action = "ControllerServlet">
+<form action = "ControllerServlet" method = "post">
 	<input type = "hidden" name = "action" value = "advancedSearch" >
 	
 
