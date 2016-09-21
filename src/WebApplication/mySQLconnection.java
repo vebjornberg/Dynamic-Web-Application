@@ -131,6 +131,21 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
+	public void setUserBean(UserBean userbean) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "INSERT INTO user_table VALUES " +
+			"('" + userbean.getEmail() + "', '" + userbean.getUsername() + "', '" + userbean.getFirstname() + "', '" 
+					+ userbean.getLastname() + "', '" + userbean.getAddress() + "', '" + userbean.getCreditCard() 
+					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0)";
+			statement.executeUpdate(sql);
+			System.out.println(sql);
+			closeConnection();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 	public ArrayList<PublicationBean> getPublications(String search) { //fungerer ikke helt
 		try {
 			establishConnection();
