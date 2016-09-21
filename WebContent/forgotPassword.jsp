@@ -8,9 +8,16 @@
 </head>
 <body>
 <h1>Enter email to get password</h1> <%-- Klartekst..? --%>
-<form action="forgotPassword">
+<form action="forgotPassword" method="post">
 <input type="text" placeholder="example@email.com" name="forgottenPwMail">
-<input type="submit" value="Get password">
+<input type="submit" name="action" value="Get password">
+<%if ((Boolean)session.getAttribute("getPasswordPressed")){ %>
+<p>If the email exists in the database an email has been sent.</p>
+<%} %>
+</form>
+<br>
+<form action="goToSignin" method="post">
+<input type="submit" name="action" value ="Sign in here">
 </form>
 </body>
 </html>

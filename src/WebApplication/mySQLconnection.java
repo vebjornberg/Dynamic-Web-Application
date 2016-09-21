@@ -219,6 +219,35 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
+	public UserBean getUserInfoFromEmail(String email) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT * FROM user_table WHERE email='" + email + "'";
+			ResultSet result = statement.executeQuery(sql);
+			UserBean userbean = new UserBean();
+			while(result.next()) {
+				userbean.setEmail(result.getString("email"));
+				userbean.setUsername(result.getString("username"));
+				userbean.setPassword(result.getString("password"));
+				userbean.setFirstname(result.getString("firstname"));
+				userbean.setLastname(result.getString("lastname"));
+				userbean.setAddress(result.getString("address"));
+				userbean.setCreditCard(result.getString("creditCard"));
+				userbean.setDateOfBirth(result.getString("dateOfBirth"));
+				userbean.setAdmin(result.getInt("admin"));
+				userbean.setActivated(result.getInt("activated"));
+				userbean.setConfirmationHash(result.getString("confirmationHash"));
+			}
+			result.close();
+			closeConnection();
+			return userbean;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			// TODO: handle exception
+		}
+	}
 	public void updateUser(UserBean userbean) {
 		try {
 			establishConnection();
