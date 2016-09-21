@@ -220,9 +220,24 @@ public class mySQLconnection {
 		}
 	}
 	public void updateUser(UserBean userbean) {
-		
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "UPDATE user_table SET user_table.email='" + userbean.getEmail() + "' user_table.username='" + userbean.getUsername() +"' "
+					+ "user_table.firstname='" + userbean.getFirstname() + "' user_table.lastname='" + userbean.getLastname() + "' "
+					+ "user_table.address='" + userbean.getAddress() + "' user_table.creditCard='" + userbean.getCreditCard() + "' "
+					+ "user_table.dateOfBirth='" + userbean.getDateOfBirth() + "' user_table.admin=" + userbean.getAdmin()
+					+ " user_table.password='" + userbean.getPassword() + "' user_table.activated=" + userbean.getActivated()
+					+ " user_table.confirmationHash='" + userbean.getConfirmationHash() + "' "
+					+ "WHERE user_table.username='" + userbean.getUsername() + "'";
+			statement.executeUpdate(sql);
+			System.out.println(sql);
+			closeConnection();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
-	public void addPublication(PublicationBean publicationbean, AuthorBean authorbean) {
+	public void addPublication(PublicationBean publicationbean) {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
@@ -231,11 +246,8 @@ public class mySQLconnection {
 			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "')";
 			String sqlAuthoredBy = "INSERT INTO authoredby_table VALUES " +
 					"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getAuthorid() + "')";
-			String sqlAuthor = "INSERT INTO author_table VALUES " +
-					"('" + authorbean.getAuthorid() + "', '" + authorbean.getFirstname() + "', '" + authorbean.getLastname() + "')";
 			statement.executeUpdate(sqlPublication);
 			statement.executeUpdate(sqlAuthoredBy);
-			statement.execute(sqlAuthor);
 			closeConnection();
 		} catch (Exception e) {
 			// TODO: handle exception

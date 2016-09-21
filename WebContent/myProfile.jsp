@@ -1,5 +1,4 @@
-<%@page import="WebApplication.mySQLconnection"%>
-<%@page import="WebApplication.UserBean"%>
+<%@page import="WebApplication.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -26,9 +25,9 @@
 
 
 <%
-String username = (String) session.getAttribute("currentUser");
 mySQLconnection con = new mySQLconnection();
-UserBean user = con.getUserInfo(username);
+UserBean user = (UserBean) session.getAttribute("currentUser");
+String username = user.getUsername();
 
 //String firstName, lastname, dob, address, email, password, creditCard = infoFromUsername[0], infoFromUsername[1], infoFromUsername[2], osv..   
 %>
