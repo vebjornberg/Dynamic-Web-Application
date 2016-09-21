@@ -223,12 +223,12 @@ public class mySQLconnection {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
-			String sql = "UPDATE user_table SET user_table.email='" + userbean.getEmail() + "' user_table.username='" + userbean.getUsername() +"' "
-					+ "user_table.firstname='" + userbean.getFirstname() + "' user_table.lastname='" + userbean.getLastname() + "' "
-					+ "user_table.address='" + userbean.getAddress() + "' user_table.creditCard='" + userbean.getCreditCard() + "' "
-					+ "user_table.dateOfBirth='" + userbean.getDateOfBirth() + "' user_table.admin=" + userbean.getAdmin()
-					+ " user_table.password='" + userbean.getPassword() + "' user_table.activated=" + userbean.getActivated()
-					+ " user_table.confirmationHash='" + userbean.getConfirmationHash() + "' "
+			String sql = "UPDATE user_table SET user_table.email='" + userbean.getEmail() + "', user_table.username='" + userbean.getUsername() +"', "
+					+ "user_table.firstname='" + userbean.getFirstname() + "', user_table.lastname='" + userbean.getLastname() + "', "
+					+ "user_table.address='" + userbean.getAddress() + "', user_table.creditCard='" + userbean.getCreditCard() + "', "
+					+ "user_table.dateOfBirth='" + userbean.getDateOfBirth() + "', user_table.admin=" + userbean.getAdmin()
+					+ ", user_table.password='" + userbean.getPassword() + "', user_table.activated=" + userbean.getActivated()
+					+ ", user_table.confirmationHash='" + userbean.getConfirmationHash() + "' "
 					+ "WHERE user_table.username='" + userbean.getUsername() + "'";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
@@ -253,10 +253,32 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
-	
-	public void testPrint(){
-		System.out.println("DRITTTEST HELVETE SATAN");
+	public ArrayList<AuthorBean> getAuthors(String search) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT author_table.* "
+					+ "FROM author_table "
+					+ "WHERE author_table.firstname LIKE '%" + search + "%' OR author_table.lastname LIKE '%" + search +"%'";
+			ResultSet result = statement.executeQuery(sql);
+			ArrayList<AuthorBean> authors = new ArrayList<AuthorBean>();
+			while(result.next()) {
+				AuthorBean authorbean = new AuthorBean();
+				authorbean.setAuthorid(result.getInt("authorid"));
+				authorbean.setFirstname(result.getString("firstname"));
+				authorbean.setLastname(result.getString("lastname"));
+				authors.add(authorbean);
+			}
+			result.close();
+			closeConnection();
+			return authors;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			// TODO: handle exception
+		}
 	}
+	
 
 }
 
