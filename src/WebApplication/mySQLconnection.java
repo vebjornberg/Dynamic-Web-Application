@@ -229,7 +229,10 @@ public class mySQLconnection {
 			String sqlPublication = "INSERT INTO publication_table VALUES " +
 			"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getType() + "', '" + publicationbean.getTitle() 
 			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "')";
+			String sqlAuthoredBy = "INSERT INTO authoredby_table VALUES " +
+					"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getAuthorid() + "')";
 			statement.executeUpdate(sqlPublication);
+			statement.executeUpdate(sqlAuthoredBy);
 			closeConnection();
 		} catch (Exception e) {
 			// TODO: handle exception
