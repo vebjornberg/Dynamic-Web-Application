@@ -234,7 +234,6 @@ public class mySQLconnection {
 			System.out.println(sql);
 			closeConnection();
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println(e.getMessage());
 		}
 	}

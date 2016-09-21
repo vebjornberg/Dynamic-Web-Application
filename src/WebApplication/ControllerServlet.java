@@ -181,7 +181,7 @@ public class ControllerServlet extends HttpServlet {
 				System.out.println("usr: " + newCurrentUser.getUsername() + "\nadress: " + newCurrentUser.getAddress() + "\nemail: "
 						+ newCurrentUser.getEmail() + "\nDoB: " + newCurrentUser.getDateOfBirth()
 				);
-				sql.testPrint();
+			
 				sql.setUserBean(newCurrentUser);
 				
 				System.out.println("Setter userbean i SQLdatabase");
