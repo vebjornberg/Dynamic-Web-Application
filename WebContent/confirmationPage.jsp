@@ -13,8 +13,10 @@ mySQLconnection sql =new mySQLconnection();
 
 String username = request.getParameter("user");
 String hash = request.getParameter("hash");
+System.out.println("Parameters from url: " +username + " , " + hash);
 
 UserBean currentUserBean = sql.getUserInfo(username);
+
 
 
  %>
@@ -26,8 +28,11 @@ UserBean currentUserBean = sql.getUserInfo(username);
 <body><center>
 <%
 if (currentUserBean.getActivated()==0){
-	if ((username == (String)currentUserBean.getUsername()) && (hash == (String)currentUserBean.getConfirmationHash())){
+	System.out.println("Hash stored in bean; "+ currentUserBean.getConfirmationHash());
+	
+	if (currentUserBean.getConfirmationHash() == hash){
 		currentUserBean.setActivated(1);
+		System.out.println("UserBean has been activated");
 %>
 
 <h1>Your profile is now confirmed and ready to use</h1>
@@ -39,9 +44,13 @@ else{
 %>
 <h1>Your profile has already been activated</h1>
 
-<%} %>
+
+
+<%System.out.println("Already acivated");
+} %>
 
 <form action="goToSignin" method="post">
-<button value="Sign in here" ></button></form>
+<input type="submit" name="action" value ="Sign in here">
+</form>
 </center></body>
 </html>

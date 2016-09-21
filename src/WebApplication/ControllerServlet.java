@@ -134,6 +134,7 @@ public class ControllerServlet extends HttpServlet {
 		case "Register user":
 			
 			boolean ok = true;
+			session.setAttribute("registrationError", "");
 			
 			if (isAvailableUsername(request.getParameter("username"))){
 				session.setAttribute("registrationError", "Not valid username, already taken.");
@@ -147,10 +148,10 @@ public class ControllerServlet extends HttpServlet {
 				session.setAttribute("registrationError", "Not valid date of birth, ex: 01031989.");
 				ok=false;
 			}
-			else if (!isValidEmailAddress("email")){
-				session.setAttribute("registrationError", "Not valid email, ex: john@gmail.com.");
-				ok=false;
-			}
+//			else if (!isValidEmailAddress("email")){
+//				session.setAttribute("registrationError", "Not valid email, ex: john@gmail.com.");
+//				ok=false;
+//			}
 			
 			System.out.println(ok + " "+ session.getAttribute("registrationError"));
 			if(ok){
@@ -167,8 +168,11 @@ public class ControllerServlet extends HttpServlet {
 				newCurrentUser.setLastname(request.getParameter("lname"));
 				newCurrentUser.setPassword(request.getParameter("pass"));
 				String confirmLink = getConfirmationLink(request.getParameter("username"));
-				newCurrentUser.setConfirmationHash(confirmLink.substring(confirmLink.length()-8));
-				//TODO: Set userbean in database
+				String hash = confirmLink.substring(confirmLink.length()-8);
+				System.out.println(hash);
+				newCurrentUser.setConfirmationHash(hash);
+				
+				sql.setUserBean(newCurrentUser);
 				
 				
 			try {
