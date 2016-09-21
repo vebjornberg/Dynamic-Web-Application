@@ -118,19 +118,6 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
-	public void setUser(String email, String username, String firstname, String lastname, String address, String creditCard, String dateOfBirth, String password) {
-		try {
-			establishConnection();
-			Statement statement = connection.createStatement();
-			String sql = "INSERT INTO user_table VALUES " +
-			"('" + email + "', '" + username + "', '" + firstname + "', '" + lastname + "', '" + address + "', '" + creditCard + "', '" + dateOfBirth + "', 0, '" + password + "', 0)";
-			statement.executeUpdate(sql);
-			System.out.println(sql);
-			closeConnection();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
 	public void setUserBean(UserBean userbean) {
 		try {
 			establishConnection();
@@ -138,7 +125,7 @@ public class mySQLconnection {
 			String sql = "INSERT INTO user_table VALUES " +
 			"('" + userbean.getEmail() + "', '" + userbean.getUsername() + "', '" + userbean.getFirstname() + "', '" 
 					+ userbean.getLastname() + "', '" + userbean.getAddress() + "', '" + userbean.getCreditCard() 
-					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0)";
+					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0, " + userbean.getConfirmationHash() + ")";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
 			closeConnection();
@@ -146,16 +133,17 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
-	public ArrayList<PublicationBean> getPublications(String search) { //fungerer ikke helt
+	public ArrayList<PublicationBean> getPublications(String search) {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
-			String sql = "SELECT publication_table.*, author_table.* FROM publication_table JOIN authoredby_table "
+			String sql = "SELECT publication_table.*, author_table.* "
+					+ "FROM publication_table INNER JOIN authoredby_table "
 					+ "ON authoredby_table.publicationid = publication_table.publicationid "
-					+ "JOIN author_table ON author_table.authorid = authoredby_table.authorid "
-					+ "WHERE publication_table.type='" + search + "' OR publication_table.title='" + search +"' OR "
-					+ "publication_table.date='"+ search + "' OR publication_table.price='" + search + "' OR "
-					+ "author_table.firstname='" + search + "' OR author_table.lastname='" + search + "'";
+					+ "INNER JOIN author_table ON author_table.authorid = authoredby_table.authorid "
+					+ "WHERE publication_table.type LIKE '%" + search + "%' OR publication_table.title LIKE '%" + search +"%' OR "
+					+ "publication_table.year LIKE '%"+ search + "%' OR publication_table.price LIKE '%" + search + "%' OR "
+					+ "author_table.firstname LIKE '%" + search + "%' OR author_table.lastname LIKE '%" + search + "%'";
 			ResultSet result = statement.executeQuery(sql);
 			ArrayList<PublicationBean> publications = new ArrayList<PublicationBean>();
 			while(result.next()) {
@@ -163,7 +151,7 @@ public class mySQLconnection {
 				publicationbean.setAuthorid(result.getInt("authorid"));
 				publicationbean.setPublicationid(result.getInt("publicationid"));
 				publicationbean.setType(result.getString("type"));
-				publicationbean.setDate(result.getString("date"));
+				publicationbean.setYear(result.getString("year"));
 				publicationbean.setPrice(result.getString("price"));
 				publicationbean.setFirstname(result.getString("firstname"));
 				publicationbean.setLastname(result.getString("lastname"));
@@ -220,6 +208,7 @@ public class mySQLconnection {
 				userbean.setDateOfBirth(result.getString("dateOfBirth"));
 				userbean.setAdmin(result.getInt("admin"));
 				userbean.setActivated(result.getInt("activated"));
+				userbean.setConfirmationHash(result.getString("confirmationHash"));
 			}
 			result.close();
 			closeConnection();
@@ -227,6 +216,28 @@ public class mySQLconnection {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
+			// TODO: handle exception
+		}
+	}
+	public void updateUser(UserBean userbean) {
+		
+	}
+	public void addPublication(PublicationBean publicationbean, AuthorBean authorbean) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sqlPublication = "INSERT INTO publication_table VALUES " +
+			"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getType() + "', '" + publicationbean.getTitle() 
+			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "')";
+			String sqlAuthoredBy = "INSERT INTO authoredby_table VALUES " +
+					"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getAuthorid() + "')";
+			String sqlAuthor = "INSERT INTO author_table VALUES " +
+					"('" + authorbean.getAuthorid() + "', '" + authorbean.getFirstname() + "', '" + authorbean.getLastname() + "')";
+			statement.executeUpdate(sqlPublication);
+			statement.executeUpdate(sqlAuthoredBy);
+			statement.execute(sqlAuthor);
+			closeConnection();
+		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}

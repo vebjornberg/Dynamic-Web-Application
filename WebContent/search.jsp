@@ -74,6 +74,27 @@ li.dropdown {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+input[type=text] {
+    width: 250px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 50%;
+}
+
+    
 </style>
 </head>
 <body>
@@ -96,18 +117,12 @@ li.dropdown {
   </li>
 </ul><br>
 
+<h2>Welcome <%=username %>!</h2>
 
-welcome <%=username %>! <br><br>
-Search in publication database: <br>
-<form action = "ControllerServlet" >
-	<input type ="hidden" name = "action" value = "simpleSearch" >
-	<input type = "text" name ="searchWord">
-	<input type="submit" value = "search" >
-</form><br><br>
-	
-<form action = "advancedSearch.jsp">
-	<input type = "submit" value = "Go to advanced search">
+<form action = "ControllerServlet">
+  <input type="text" name="search" placeholder="Search in publication database">
 </form>
+
 
 then a list of 10 random publications;<br>
 </body>

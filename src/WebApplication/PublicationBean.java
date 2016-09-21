@@ -2,7 +2,7 @@ package WebApplication;
 
 public class PublicationBean {
 	
-	private String firstname, lastname, title, date, price, type;
+	private String firstname, lastname, title, year, price, type;
 	private int publicationid, authorid;
 	
 	
@@ -27,11 +27,11 @@ public class PublicationBean {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getDate() {
-		return date;
+	public String getYear() {
+		return year;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setYear(String date) {
+		this.year = date;
 	}
 	public String getPrice() {
 		return price;
