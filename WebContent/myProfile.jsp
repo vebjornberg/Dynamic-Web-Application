@@ -1,3 +1,4 @@
+<%@page import="WebApplication.mySQLconnection"%>
 <%@page import="WebApplication.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -26,7 +27,8 @@
 
 <%
 String username = (String) session.getAttribute("currentUser");
-//UserBean user sqlConnection.getUserInfo(username);
+mySQLconnection con = new mySQLconnection();
+UserBean user = con.getUserInfo(username);
 
 //String firstName, lastname, dob, address, email, password, creditCard = infoFromUsername[0], infoFromUsername[1], infoFromUsername[2], osv..   
 %>
@@ -106,24 +108,24 @@ li.dropdown {
 </ul><br>
 
 
-Her you can update user info. NB: username cannot be changed.<br><br> 
+<h2> Profile Overview - <%=user.getFirstname()%> <%=user.getLastname() %> </h2>
 <form action='Edit Account' method='post'>
 		<div class="container">
 		
 		<label>First name</label><br>
-		<input type="text" name="fname" value= "1"><br><br>
+		<input type="text" name="fname" value= "<%=user.getFirstname() %>"><br><br>
 		<label>Last name</label><br>
-		<input type="text" name="lname" value= "2"><br><br>
+		<input type="text" name="lname" value= "<%=user.getLastname() %>"><br><br>
 		<label>Date of Birth</label><br>
-		<input type=text name="bDate" placeholder="ddmmyyyy" value= "3"><br><br>
+		<input type=text name="bDate" placeholder="ddmmyyyy" value= "<%=user.getDateOfBirth() %>"><br><br>
 		<label>Address</label><br>
-		<input type="text" name="address" value= "4"><br><br>	
+		<input type="text" name="address" value= "<%=user.getAddress()%>"><br><br>	
 		<label>Email</label><br>
-		<input type="text" name="email"><br><br>
+		<input type="text" name="email" value = "<%=user.getAddress() %>"><br><br>
 		<label>Password</label><br>
-		<input type="password" name="pass"><br><br>
+		<input type="password" name="pass" value= "<%=user.getPassword() %>"><br><br>
 		<label>Credit card number</label><br>
-		<input type="text" name="creditCardNr"><br><br>
+		<input type="text" name="creditCardNr" value = "<%=user.getCreditCard() %>"><br><br>
 		</div>
 	<input type = 'submit' name='action' value='Confirm Changes'>
 </form>
