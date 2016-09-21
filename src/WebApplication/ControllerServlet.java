@@ -224,8 +224,6 @@ public class ControllerServlet extends HttpServlet {
 			
 				sql.setUserBean(newCurrentUser);
 				
-				requestdispatcher = request.getRequestDispatcher("/register.jsp");
-				requestdispatcher.forward(request, response);
 				
 				
 				
