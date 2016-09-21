@@ -216,7 +216,10 @@ public class ControllerServlet extends HttpServlet {
 			
 				sql.setUserBean(newCurrentUser);
 				
-				System.out.println("Setter userbean i SQLdatabase");
+				requestdispatcher = request.getRequestDispatcher("/register.jsp");
+				requestdispatcher.forward(request, response);
+				
+				
 				
 				
 			try {
@@ -227,7 +230,10 @@ public class ControllerServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			}
-		
+			requestdispatcher = request.getRequestDispatcher("/register.jsp");
+			requestdispatcher.forward(request, response);
+			//TODO: vis registration error
+			
 			
 			
 			break;
