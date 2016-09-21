@@ -131,7 +131,7 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
-	public ArrayList<PublicationBean> getPublications(String search) {
+	public ArrayList<PublicationBean> getPublications(String search) { //fungerer ikke helt
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
