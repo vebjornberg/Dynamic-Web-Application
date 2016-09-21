@@ -19,6 +19,22 @@
 	  float:left;
 	  width:50%;
 	}
+	
+	input[type=submit] {
+    width: 50%;
+    background-color: #5252f4;
+    color: white;
+    font-size: 14px;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #434395;
+}
     
 
     </style>
