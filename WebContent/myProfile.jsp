@@ -26,9 +26,9 @@
 
 
 <%
-String username = (String) session.getAttribute("currentUser");
 mySQLconnection con = new mySQLconnection();
-UserBean user = con.getUserInfo(username);
+UserBean user = (UserBean) session.getAttribute("currentUser");
+String username = user.getUsername();
 
 //String firstName, lastname, dob, address, email, password, creditCard = infoFromUsername[0], infoFromUsername[1], infoFromUsername[2], osv..   
 %>
