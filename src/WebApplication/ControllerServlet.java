@@ -52,11 +52,55 @@ public class ControllerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(-1);
 		session.setAttribute("wrongPassword", false);
 		
+		String action = request.getParameter("action");
+		 
+		System.out.println("requested action: " + action);
+		
+		RequestDispatcher requestdispatcher;
+		
+		// Checks parameter action
+		switch(action){
 		
 		
+		
+			
+		
+		case "simpleSearch":
+			String searchWord = request.getParameter("search");
+			System.out.println(searchWord);
+			
+			ArrayList<PublicationBean> results = sql.getPublications(searchWord);
+			request.setAttribute("searchResults", results);
+
+			
+			requestdispatcher = request.getRequestDispatcher("/results.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+			
+		case "advancedSearch":
+			String firstname = request.getParameter("authorFirstName");
+			String lastName = request.getParameter("authorLastName");
+			String title = request.getParameter("title");
+			String year = request.getParameter("year");
+			String type = request.getParameter("pubType");
+			System.out.println(firstname + lastName + title + year + type );
+			
+			
+			
+
+			
+			requestdispatcher = request.getRequestDispatcher("/advancedResults.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+		
+		
+		
+		}
 	}
 
 	
@@ -114,20 +158,7 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher.forward(request, response);
 			
 			break;
-			
-		
-		case "simpleSearch":
-			String searchWord = request.getParameter("search");
-			System.out.println(searchWord);
-			
-			ArrayList<PublicationBean> results = sql.getPublications(searchWord);
-			request.setAttribute("searchResults", results);
-
-			
-			requestdispatcher = request.getRequestDispatcher("/results.jsp");
-			requestdispatcher.forward(request, response);
-			
-			break;
+	
 			
 		
 		

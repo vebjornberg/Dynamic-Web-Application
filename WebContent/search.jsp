@@ -118,7 +118,7 @@ input[type=text]:focus {
 
 <h2>Welcome <%=username %>!</h2>
 
-<form action = "ControllerServlet" method = "post">
+<form action = "ControllerServlet">
 	<input type = "hidden" name = "action" value = "simpleSearch" >
  	<input type="text" name="search" placeholder="Search in publication database">
 </form>
