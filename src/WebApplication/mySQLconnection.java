@@ -254,10 +254,32 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
-	
-	public void testPrint(){
-		System.out.println("DRITTTEST HELVETE SATAN");
+	public ArrayList<AuthorBean> getAuthors(String search) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT author_table.* "
+					+ "FROM author_table "
+					+ "WHERE author_table.firstname LIKE '%" + search + "%' OR author_table.lastname LIKE '%" + search +"%'";
+			ResultSet result = statement.executeQuery(sql);
+			ArrayList<AuthorBean> authors = new ArrayList<AuthorBean>();
+			while(result.next()) {
+				AuthorBean authorbean = new AuthorBean();
+				authorbean.setAuthorid(result.getInt("authorid"));
+				authorbean.setFirstname(result.getString("firstname"));
+				authorbean.setLastname(result.getString("lastname"));
+				authors.add(authorbean);
+			}
+			result.close();
+			closeConnection();
+			return authors;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			// TODO: handle exception
+		}
 	}
+	
 
 }
 
