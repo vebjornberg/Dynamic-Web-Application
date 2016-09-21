@@ -1,12 +1,25 @@
-<%@page import="WebApplication.*"%>
+<%@page import="WebApplication.*" import="java.sql.DriverManager" import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%
-UserBean user = (UserBean) session.getAttribute("currentUser");
-String username =  (user.getUsername());
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<%-- The website HOME PAGE for searching for books --%>
+
+</head>
+
+
+
+
+<% 
+	mySQLconnection sqlConnection = new mySQLconnection();
+	String password = sqlConnection.getPassword("vebjorbe");
+	UserBean user = (UserBean) session.getAttribute("currentUser");
+	String username =  user.getUsername();
+
 %>
 
 <style>
@@ -17,7 +30,6 @@ ul {
     overflow: hidden;
     background-color: #333;
     width: 50%;
-
 }
 
 li {
@@ -61,6 +73,39 @@ li.dropdown {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+input[type=text], select {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    font-size: 14px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 50%;
+    background-color: #5252f4;
+    color: white;
+    font-size: 14px;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #434395;
+}
+
+
+
+
+
+    
 </style>
 </head>
 <body>
@@ -82,5 +127,31 @@ li.dropdown {
     </div>
   </li>
 </ul><br>
+
+<h2>Advanced search</h2>
+
+
+
+<form action = "ControllerServlet" method = "post">
+	<input type = "hidden" name = "action" value = "advancedSearch" >
+	
+
+ 	<input type="text" name="authorFirstName" placeholder="First name author"><br>
+	<input type="text" name="authorLastName" placeholder="Last name author"><br>
+	<input type="text" name="title" placeholder="Publication Title"><br>
+	<input type="text" name="year" placeholder="Realeas year"><br>
+
+	<select id="pubType" name="pubType">
+		<option value="book">Book</option>
+		<option value="article">Article</option>
+		<option value="other">Other</option>
+	</select>
+  
+	<input type="submit" value="Submit">
+</form>
+
+
+
+
 </body>
 </html>

@@ -28,6 +28,7 @@ public class ControllerServlet extends HttpServlet {
 	mySQLconnection sql = new mySQLconnection();
 	
 	
+	
 
     public ControllerServlet() {
         super();
@@ -37,11 +38,7 @@ public class ControllerServlet extends HttpServlet {
     
     // init
     public void init(ServletConfig config) throws ServletException {
-    	
-    
-
-    
-    	
+  
     	
     	super.init(config);
     }
@@ -50,13 +47,8 @@ public class ControllerServlet extends HttpServlet {
     
 	// DO GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(-1);
-		session.setAttribute("wrongPassword", false);
-		
-		
-		
+		System.out.println("This is doGet();");
+	
 	}
 
 	
@@ -64,7 +56,8 @@ public class ControllerServlet extends HttpServlet {
 	
 	// DO POST
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.println("This is doPost();");
+
 		HttpSession session = request.getSession();
 		session.setAttribute("wrongPassword", false);
 		
@@ -100,22 +93,6 @@ public class ControllerServlet extends HttpServlet {
 			}
 			break;
 			
-		case "Create new user":
-			
-			// Redirects to register.jsp
-			requestdispatcher = request.getRequestDispatcher("/register.jsp");
-			requestdispatcher.forward(request, response);
-			
-			break;
-			
-		case "Forgot password":
-			
-			requestdispatcher = request.getRequestDispatcher("/forgotPassword.jsp");
-			requestdispatcher.forward(request, response);
-			
-			break;
-			
-		
 		case "simpleSearch":
 			String searchWord = request.getParameter("search");
 			System.out.println(searchWord);
@@ -129,11 +106,41 @@ public class ControllerServlet extends HttpServlet {
 			
 			break;
 			
-		
-		
-		
-		
-		
+			
+		case "advancedSearch":
+			String firstName = request.getParameter("authorFirstName");
+			String lastName = request.getParameter("authorLastName");
+			String title = request.getParameter("title");
+			String year = request.getParameter("year");
+			String type = request.getParameter("pubType");
+			System.out.println(firstName + lastName + title + year + type );
+			
+			ArrayList<PublicationBean> advancedResults = sql.getPublicationsAdvanced(type, title, firstName, lastName, year);
+			request.setAttribute("AdvancedResults", advancedResults);
+			
+
+			
+			requestdispatcher = request.getRequestDispatcher("/advancedResults.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+			
+		case "Create new user":
+			
+			// Redirects to register.jsp
+			requestdispatcher = request.getRequestDispatcher("/register.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+		case "Forgot password":
+			session.setAttribute("getPasswordPressed", false);
+			requestdispatcher = request.getRequestDispatcher("/forgotPassword.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+	
 		
 		
 		case "Register user":
@@ -214,21 +221,27 @@ public class ControllerServlet extends HttpServlet {
 				System.out.println("usr: " + newCurrentUser.getUsername() + "\nadress: " + newCurrentUser.getAddress() + "\nemail: "
 						+ newCurrentUser.getEmail() + "\nDoB: " + newCurrentUser.getDateOfBirth()
 				);
-				sql.testPrint();
+			
 				sql.setUserBean(newCurrentUser);
 				
-				System.out.println("Setter userbean i SQLdatabase");
+				requestdispatcher = request.getRequestDispatcher("/register.jsp");
+				requestdispatcher.forward(request, response);
+				
+				
 				
 				
 			try {
-				EmailSender.sendEmail(request.getParameter("email"), "Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + confirmLink + "\nRegards, \nDBL tema :)");
+				EmailSender.sendEmail(request.getParameter("email"), "Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + confirmLink + "\n\nRegards, \nDBL team :)");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				
 				e.printStackTrace();
 			}
 			}
-		
+			requestdispatcher = request.getRequestDispatcher("/register.jsp");
+			requestdispatcher.forward(request, response);
+			//TODO: vis registration error
+			
 			
 			
 			break;
@@ -244,11 +257,24 @@ public class ControllerServlet extends HttpServlet {
 			
 			
 		case "Get password":
-			//if email exists in db, get password and send
-				//es.sendEmail(email, content)
-			break;
+			
+			String emailForgot = request.getParameter("forgottenPwMail");
+			
+			UserBean userForgot = sql.getUserInfoFromEmail(emailForgot);
+			if (sql.getEmails().contains(emailForgot)){
+				
+				try {
+					EmailSender.sendEmail(emailForgot, "Hi,\n\n\nYour password is: \n\n" + userForgot.getPassword() + "\n\nRegards,\nTeam dbl.\n\n#secure");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			
+			}
+			session.setAttribute("getPasswordPressed", true);
+			requestdispatcher = request.getRequestDispatcher("/forgotPassword.jsp");
+			requestdispatcher.forward(request, response);
 		
-		
+		break;
 		
 		
 		

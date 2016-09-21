@@ -29,13 +29,12 @@ tr:first-child {
 <body>
 
 <%
-ArrayList<PublicationBean> results = (ArrayList<PublicationBean>) request.getAttribute("searchResults");
-String keyWord = request.getParameter("search");
+ArrayList<PublicationBean> results = (ArrayList<PublicationBean>) request.getAttribute("AdvancedResults");
 %>
 
 <table>
 <tr>
-	<th>Results for search word: "<%=keyWord %>" - click on each entry to get more info</th>
+	<th>click on each entry to get more info</th>
 </tr>
 
 <%for(PublicationBean pubBean : results){

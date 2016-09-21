@@ -13,15 +13,6 @@
 
 
 
-
-<% 
-	mySQLconnection sqlConnection = new mySQLconnection();
-	String password = sqlConnection.getPassword("vebjorbe");
-	UserBean user = (UserBean) session.getAttribute("currentUser");
-	String username =  user.getUsername();
-
-%>
-
 <style>
 ul {
     list-style-type: none;
@@ -95,6 +86,13 @@ input[type=text]:focus {
 
     
 </style>
+
+
+<% 
+	UserBean user = (UserBean) session.getAttribute("currentUser");
+	String username =  user.getUsername();
+
+%>
 </head>
 <body>
 
