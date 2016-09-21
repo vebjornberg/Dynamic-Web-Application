@@ -8,6 +8,11 @@
 
 <%-- JSP file for adding books for users --%>
 
+
+<%
+String username = (String) session.getAttribute("currentUser");
+
+%>
 </head>
 <style>
 ul {
@@ -74,7 +79,7 @@ li.dropdown {
   
   
   <li style="float:right" class="dropdown">
-    <a class="dropbtn">"reguest.getParameter("username")</a>
+    <a class="dropbtn"><%=username %></a>
     <div class="dropdown-content">
       <a href="myProfile.jsp">My Profile</a>
       <a href="">Log Out</a>
