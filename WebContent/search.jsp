@@ -17,7 +17,6 @@
 <% 
 	mySQLconnection sqlConnection = new mySQLconnection();
 	String password = sqlConnection.getPassword("vebjorbe");
-	sqlConnection.setUser("torjus.saethre@gmail.com", "torjussa", "Torjus", "Saethre", "50 Coogee street", "123456789", "26041993", "torjussapass");
 	UserBean user = (UserBean) session.getAttribute("currentUser");
 	String username =  (user.getUsername());
 
