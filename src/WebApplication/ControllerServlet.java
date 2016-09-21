@@ -115,14 +115,18 @@ public class ControllerServlet extends HttpServlet {
 			break;
 			
 		
-		case "simple search":
-			String searchWord = request.getParameter("keyWord");
-			//ArrayList<PublicationBean> result = getResultsSimpleSearch(String searchWord);
-			//request.setParameter("results", result)";
+		case "simpleSearch":
+			String searchWord = request.getParameter("search");
+			System.out.println(searchWord);
+			
+			ArrayList<PublicationBean> results = sql.getPublications(searchWord);
+			request.setAttribute("searchResults", results);
 
 			
 			requestdispatcher = request.getRequestDispatcher("/results.jsp");
 			requestdispatcher.forward(request, response);
+			
+			break;
 			
 		
 		
