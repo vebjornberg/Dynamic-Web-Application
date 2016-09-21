@@ -118,19 +118,6 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
-	public void setUser(String email, String username, String firstname, String lastname, String address, String creditCard, String dateOfBirth, String password) {
-		try {
-			establishConnection();
-			Statement statement = connection.createStatement();
-			String sql = "INSERT INTO user_table VALUES " +
-			"('" + email + "', '" + username + "', '" + firstname + "', '" + lastname + "', '" + address + "', '" + creditCard + "', '" + dateOfBirth + "', 0, '" + password + "', 0)";
-			statement.executeUpdate(sql);
-			System.out.println(sql);
-			closeConnection();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
 	public void setUserBean(UserBean userbean) {
 		try {
 			establishConnection();
@@ -138,7 +125,7 @@ public class mySQLconnection {
 			String sql = "INSERT INTO user_table VALUES " +
 			"('" + userbean.getEmail() + "', '" + userbean.getUsername() + "', '" + userbean.getFirstname() + "', '" 
 					+ userbean.getLastname() + "', '" + userbean.getAddress() + "', '" + userbean.getCreditCard() 
-					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0)";
+					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0, " + userbean.getConfirmationHash() + ")";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
 			closeConnection();
@@ -221,6 +208,7 @@ public class mySQLconnection {
 				userbean.setDateOfBirth(result.getString("dateOfBirth"));
 				userbean.setAdmin(result.getInt("admin"));
 				userbean.setActivated(result.getInt("activated"));
+				userbean.setConfirmationHash(result.getString("confirmationHash"));
 			}
 			result.close();
 			closeConnection();
