@@ -222,7 +222,7 @@ public class mySQLconnection {
 	public void updateUser(UserBean userbean) {
 		
 	}
-	public void addPublication(PublicationBean publicationbean, AuthorBean authorbean) {
+	public void addPublication(PublicationBean publicationbean) {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
@@ -231,11 +231,8 @@ public class mySQLconnection {
 			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "')";
 			String sqlAuthoredBy = "INSERT INTO authoredby_table VALUES " +
 					"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getAuthorid() + "')";
-			String sqlAuthor = "INSERT INTO author_table VALUES " +
-					"('" + authorbean.getAuthorid() + "', '" + authorbean.getFirstname() + "', '" + authorbean.getLastname() + "')";
 			statement.executeUpdate(sqlPublication);
 			statement.executeUpdate(sqlAuthoredBy);
-			statement.execute(sqlAuthor);
 			closeConnection();
 		} catch (Exception e) {
 			// TODO: handle exception
