@@ -155,7 +155,7 @@ public class mySQLconnection {
 					+ "ON authoredby_table.publicationid = publication_table.publicationid "
 					+ "INNER JOIN author_table ON author_table.authorid = authoredby_table.authorid "
 					+ "WHERE publication_table.type LIKE '%" + search + "%' OR publication_table.title LIKE '%" + search +"%' OR "
-					+ "publication_table.date LIKE '%"+ search + "%' OR publication_table.price LIKE '%" + search + "%' OR "
+					+ "publication_table.year LIKE '%"+ search + "%' OR publication_table.price LIKE '%" + search + "%' OR "
 					+ "author_table.firstname LIKE '%" + search + "%' OR author_table.lastname LIKE '%" + search + "%'";
 			ResultSet result = statement.executeQuery(sql);
 			ArrayList<PublicationBean> publications = new ArrayList<PublicationBean>();
@@ -164,7 +164,7 @@ public class mySQLconnection {
 				publicationbean.setAuthorid(result.getInt("authorid"));
 				publicationbean.setPublicationid(result.getInt("publicationid"));
 				publicationbean.setType(result.getString("type"));
-				publicationbean.setDate(result.getString("date"));
+				publicationbean.setYear(result.getString("year"));
 				publicationbean.setPrice(result.getString("price"));
 				publicationbean.setFirstname(result.getString("firstname"));
 				publicationbean.setLastname(result.getString("lastname"));
