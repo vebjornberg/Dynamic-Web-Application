@@ -37,11 +37,7 @@ public class ControllerServlet extends HttpServlet {
     
     // init
     public void init(ServletConfig config) throws ServletException {
-    	
-    
-
-    
-    	
+  
     	
     	super.init(config);
     }
@@ -50,57 +46,8 @@ public class ControllerServlet extends HttpServlet {
     
 	// DO GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("wrongPassword", false);
-		
-		String action = request.getParameter("action");
-		 
-		System.out.println("requested action: " + action);
-		
-		RequestDispatcher requestdispatcher;
-		
-		// Checks parameter action
-		switch(action){
-		
-		
-		
-			
-		
-		case "simpleSearch":
-			String searchWord = request.getParameter("search");
-			System.out.println(searchWord);
-			
-			ArrayList<PublicationBean> results = sql.getPublications(searchWord);
-			request.setAttribute("searchResults", results);
-
-			
-			requestdispatcher = request.getRequestDispatcher("/results.jsp");
-			requestdispatcher.forward(request, response);
-			
-			break;
-			
-			
-		case "advancedSearch":
-			String firstname = request.getParameter("authorFirstName");
-			String lastName = request.getParameter("authorLastName");
-			String title = request.getParameter("title");
-			String year = request.getParameter("year");
-			String type = request.getParameter("pubType");
-			System.out.println(firstname + lastName + title + year + type );
-			
-			
-			
-
-			
-			requestdispatcher = request.getRequestDispatcher("/advancedResults.jsp");
-			requestdispatcher.forward(request, response);
-			
-			break;
-		
-		
-		
-		}
+		System.out.println("This is doGet();");
+	
 	}
 
 	
@@ -108,7 +55,8 @@ public class ControllerServlet extends HttpServlet {
 	
 	// DO POST
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.println("This is doPost();");
+
 		HttpSession session = request.getSession();
 		session.setAttribute("wrongPassword", false);
 		
@@ -144,6 +92,39 @@ public class ControllerServlet extends HttpServlet {
 			}
 			break;
 			
+		case "simpleSearch":
+			String searchWord = request.getParameter("search");
+			System.out.println(searchWord);
+			
+			ArrayList<PublicationBean> results = sql.getPublications(searchWord);
+			request.setAttribute("searchResults", results);
+
+			
+			requestdispatcher = request.getRequestDispatcher("/results.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+			
+		case "advancedSearch":
+			String firstName = request.getParameter("authorFirstName");
+			String lastName = request.getParameter("authorLastName");
+			String title = request.getParameter("title");
+			String year = request.getParameter("year");
+			String type = request.getParameter("pubType");
+			System.out.println(firstName + lastName + title + year + type );
+			
+			ArrayList<PublicationBean> advancedResults = sql.getPublicationsAdvanced(type, title, firstName, lastName, year);
+			request.setAttribute("AdvancedResults", advancedResults);
+			
+
+			
+			requestdispatcher = request.getRequestDispatcher("/advancedResults.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+			
 		case "Create new user":
 			
 			// Redirects to register.jsp
@@ -159,12 +140,6 @@ public class ControllerServlet extends HttpServlet {
 			
 			break;
 	
-			
-		
-		
-		
-		
-		
 		
 		
 		case "Register user":

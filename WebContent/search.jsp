@@ -13,15 +13,6 @@
 
 
 
-
-<% 
-	mySQLconnection sqlConnection = new mySQLconnection();
-	String password = sqlConnection.getPassword("vebjorbe");
-	UserBean user = (UserBean) session.getAttribute("currentUser");
-	String username =  user.getUsername();
-
-%>
-
 <style>
 ul {
     list-style-type: none;
@@ -95,6 +86,13 @@ input[type=text]:focus {
 
     
 </style>
+
+
+<% 
+	UserBean user = (UserBean) session.getAttribute("currentUser");
+	String username =  user.getUsername();
+
+%>
 </head>
 <body>
 
@@ -118,7 +116,7 @@ input[type=text]:focus {
 
 <h2>Welcome <%=username %>!</h2>
 
-<form action = "ControllerServlet">
+<form action = "ControllerServlet" method = "post">
 	<input type = "hidden" name = "action" value = "simpleSearch" >
  	<input type="text" name="search" placeholder="Search in publication database">
 </form>

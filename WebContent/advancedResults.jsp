@@ -8,8 +8,42 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 40%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:first-child {
+    background-color: #dddddd;
+}
+</style>
 <body>
-advanced results
+
+<%
+ArrayList<PublicationBean> results = (ArrayList<PublicationBean>) request.getAttribute("AdvancedResults");
+%>
+
+<table>
+<tr>
+	<th>click on each entry to get more info</th>
+</tr>
+
+<%for(PublicationBean pubBean : results){
+	String title = pubBean.getTitle();%>
+		<tr>
+			<td><%=title %></td>
+		</tr>
+		<%}%>
+</table>
 
 
 
