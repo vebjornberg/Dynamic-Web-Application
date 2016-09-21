@@ -223,18 +223,19 @@ public class mySQLconnection {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
-			String sql = "UPDATE user_table SET user_table.email='" + userbean.getEmail() + "' user_table.username='" + userbean.getUsername() +"' "
-					+ "user_table.firstname='" + userbean.getFirstname() + "' user_table.lastname='" + userbean.getLastname() + "' "
-					+ "user_table.address='" + userbean.getAddress() + "' user_table.creditCard='" + userbean.getCreditCard() + "' "
-					+ "user_table.dateOfBirth='" + userbean.getDateOfBirth() + "' user_table.admin=" + userbean.getAdmin()
-					+ " user_table.password='" + userbean.getPassword() + "' user_table.activated=" + userbean.getActivated()
-					+ " user_table.confirmationHash='" + userbean.getConfirmationHash() + "' "
+			String sql = "UPDATE user_table SET user_table.email='" + userbean.getEmail() + "', user_table.username='" + userbean.getUsername() +"', "
+					+ "user_table.firstname='" + userbean.getFirstname() + "', user_table.lastname='" + userbean.getLastname() + "', "
+					+ "user_table.address='" + userbean.getAddress() + "', user_table.creditCard='" + userbean.getCreditCard() + "', "
+					+ "user_table.dateOfBirth='" + userbean.getDateOfBirth() + "', user_table.admin=" + userbean.getAdmin()
+					+ ", user_table.password='" + userbean.getPassword() + "', user_table.activated=" + userbean.getActivated()
+					+ ", user_table.confirmationHash='" + userbean.getConfirmationHash() + "' "
 					+ "WHERE user_table.username='" + userbean.getUsername() + "'";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
 			closeConnection();
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 	}
 	public void addPublication(PublicationBean publicationbean) {
