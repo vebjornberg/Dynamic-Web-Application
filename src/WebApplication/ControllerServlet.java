@@ -81,14 +81,15 @@ public class ControllerServlet extends HttpServlet {
 			
 			
 		case "advancedSearch":
-			String firstname = request.getParameter("authorFirstName");
+			String firstName = request.getParameter("authorFirstName");
 			String lastName = request.getParameter("authorLastName");
 			String title = request.getParameter("title");
 			String year = request.getParameter("year");
 			String type = request.getParameter("pubType");
-			System.out.println(firstname + lastName + title + year + type );
+			System.out.println(firstName + lastName + title + year + type );
 			
-			
+			ArrayList<PublicationBean> advancedResults = sql.getPublicationsAdvanced(type, title, firstName, lastName, year);
+			request.setAttribute("DdvancedResults", advancedResults);
 			
 
 			
