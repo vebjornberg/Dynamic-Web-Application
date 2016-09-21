@@ -234,7 +234,6 @@ public class mySQLconnection {
 			System.out.println(sql);
 			closeConnection();
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println(e.getMessage());
 		}
 	}
@@ -254,9 +253,64 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
-	
-	public void testPrint(){
-		System.out.println("DRITTTEST HELVETE SATAN");
+	public ArrayList<AuthorBean> getAuthors(String search) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT author_table.* "
+					+ "FROM author_table "
+					+ "WHERE author_table.firstname LIKE '%" + search + "%' OR author_table.lastname LIKE '%" + search +"%'";
+			ResultSet result = statement.executeQuery(sql);
+			ArrayList<AuthorBean> authors = new ArrayList<AuthorBean>();
+			while(result.next()) {
+				AuthorBean authorbean = new AuthorBean();
+				authorbean.setAuthorid(result.getInt("authorid"));
+				authorbean.setFirstname(result.getString("firstname"));
+				authorbean.setLastname(result.getString("lastname"));
+				authors.add(authorbean);
+			}
+			result.close();
+			closeConnection();
+			return authors;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			// TODO: handle exception
+		}
+	}
+	public ArrayList<PublicationBean> getPublicationsAdvanced(String type, String title, String firstname, String lastname, String year) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT publication_table.*, author_table.* "
+					+ "FROM publication_table INNER JOIN authoredby_table "
+					+ "ON authoredby_table.publicationid = publication_table.publicationid "
+					+ "INNER JOIN author_table ON author_table.authorid = authoredby_table.authorid "
+					+ "WHERE publication_table.type LIKE '%" + type + "%' AND publication_table.title LIKE '%" + title +"%' AND "
+					+ "publication_table.year LIKE '%"+ year + "%' AND "
+					+ "author_table.firstname LIKE '%" + firstname + "%' AND author_table.lastname LIKE '%" + lastname + "%'";
+			ResultSet result = statement.executeQuery(sql);
+			ArrayList<PublicationBean> publications = new ArrayList<PublicationBean>();
+			while(result.next()) {
+				PublicationBean publicationbean = new PublicationBean();
+				publicationbean.setAuthorid(result.getInt("authorid"));
+				publicationbean.setPublicationid(result.getInt("publicationid"));
+				publicationbean.setType(result.getString("type"));
+				publicationbean.setYear(result.getString("year"));
+				publicationbean.setPrice(result.getString("price"));
+				publicationbean.setFirstname(result.getString("firstname"));
+				publicationbean.setLastname(result.getString("lastname"));
+				publicationbean.setTitle(result.getString("title"));
+				publications.add(publicationbean);
+			}
+			result.close();
+			closeConnection();
+			return publications;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			// TODO: handle exception
+		}
 	}
 
 }
