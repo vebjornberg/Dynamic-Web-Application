@@ -32,6 +32,7 @@ if (currentUserBean.getActivated()==0){
 	
 	if (currentUserBean.getConfirmationHash().equals(hash)){
 		currentUserBean.setActivated(1);
+		sql.updateUser(currentUserBean);
 		System.out.println("UserBean has been activated");
 %>
 
