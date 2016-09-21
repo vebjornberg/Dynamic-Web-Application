@@ -27,6 +27,7 @@ public class ControllerServlet extends HttpServlet {
 	mySQLconnection sql = new mySQLconnection();
 	
 	
+	
 
     public ControllerServlet() {
         super();
@@ -133,7 +134,7 @@ public class ControllerServlet extends HttpServlet {
 			break;
 			
 		case "Forgot password":
-			
+			session.setAttribute("getPasswordPressed", false);
 			requestdispatcher = request.getRequestDispatcher("/forgotPassword.jsp");
 			requestdispatcher.forward(request, response);
 			
@@ -194,7 +195,7 @@ public class ControllerServlet extends HttpServlet {
 				
 				
 			try {
-				EmailSender.sendEmail(request.getParameter("email"), "Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + confirmLink + "\nRegards, \nDBL tema :)");
+				EmailSender.sendEmail(request.getParameter("email"), "Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + confirmLink + "\n\nRegards, \nDBL team :)");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				
@@ -217,11 +218,24 @@ public class ControllerServlet extends HttpServlet {
 			
 			
 		case "Get password":
-			//if email exists in db, get password and send
-				//es.sendEmail(email, content)
-			break;
+			
+			String emailForgot = request.getParameter("forgottenPwMail");
+			
+			UserBean userForgot = sql.getUserInfoFromEmail(emailForgot);
+			if (sql.getEmails().contains(emailForgot)){
+				
+				try {
+					EmailSender.sendEmail(emailForgot, "Hi,\n\n\nYour password is: \n\n" + userForgot.getPassword() + "\n\nRegards,\nTeam dbl.\n\n#secure");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			
+			}
+			session.setAttribute("getPasswordPressed", true);
+			requestdispatcher = request.getRequestDispatcher("/forgotPassword.jsp");
+			requestdispatcher.forward(request, response);
 		
-		
+		break;
 		
 		
 		

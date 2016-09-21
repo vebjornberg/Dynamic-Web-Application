@@ -8,7 +8,7 @@ import javax.annotation.Generated;
 
 public class EmailSender {
 	
-	public static boolean sendEmail(String recipient, String link) throws Exception {
+	public static boolean sendEmail(String recipient, String content) throws Exception {
 		Properties props = System.getProperties();
 	    props.put("mail.smtp.starttls.enable", true); 
 	    props.put("mail.smtp.host", "smtp.gmail.com");
@@ -34,7 +34,7 @@ public class EmailSender {
 	        // Create your text message part
 	        BodyPart messageBodyPart = new MimeBodyPart();
 	        
-	        messageBodyPart.setText("Hi and welcome to DBL, \n Please click the below link to confirm your email and create your account\n\n" + link + "\nRegards, \nDBL tema :)");
+	        messageBodyPart.setText(content);
 
 	        // Add the text part to the multipart
 	        multipart.addBodyPart(messageBodyPart);
@@ -55,7 +55,7 @@ public class EmailSender {
 	        transport.connect("smtp.gmail.com", "noreplylibrarydb@gmail.com", "inderentilandy");
 	     
 	        transport.sendMessage(message, message.getAllRecipients());
-
+	        System.out.println("Email is being sent");
 	        return true;
 	    } catch (AddressException e) {
 	        e.printStackTrace();
