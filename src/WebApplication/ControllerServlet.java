@@ -25,7 +25,7 @@ public class ControllerServlet extends HttpServlet {
    
 	EmailSender es = new EmailSender();
 	mySQLconnection sql = new mySQLconnection();
-	UserBean userBean;
+	
 	
 
     public ControllerServlet() {
@@ -115,14 +115,18 @@ public class ControllerServlet extends HttpServlet {
 			break;
 			
 		
-		case "simple search":
-			String searchWord = request.getParameter("keyWord");
-			//ArrayList<PublicationBean> result = getResultsSimpleSearch(String searchWord);
-			//request.setParameter("results", result)";
+		case "simpleSearch":
+			String searchWord = request.getParameter("search");
+			System.out.println(searchWord);
+			
+			ArrayList<PublicationBean> results = sql.getPublications(searchWord);
+			request.setAttribute("searchResults", results);
 
 			
 			requestdispatcher = request.getRequestDispatcher("/results.jsp");
 			requestdispatcher.forward(request, response);
+			
+			break;
 			
 		
 		
@@ -156,23 +160,31 @@ public class ControllerServlet extends HttpServlet {
 			System.out.println(ok + " "+ session.getAttribute("registrationError"));
 			if(ok){
 				UserBean newCurrentUser = new UserBean();
-				session.setAttribute("currentUser", newCurrentUser);
 				
-				newCurrentUser.setActivated(0);
+				session.setAttribute("currentUser", newCurrentUser);
+				newCurrentUser.setUsername(request.getParameter("username"));
+				
 				newCurrentUser.setAddress(request.getParameter("adress"));
-				newCurrentUser.setAdmin(0);
+				
 				newCurrentUser.setCreditCard(request.getParameter("creditCardNr"));
 				newCurrentUser.setEmail(request.getParameter("email"));
 				newCurrentUser.setDateOfBirth(request.getParameter("bDate"));
 				newCurrentUser.setFirstname(request.getParameter("fname"));
 				newCurrentUser.setLastname(request.getParameter("lname"));
 				newCurrentUser.setPassword(request.getParameter("pass"));
+				
 				String confirmLink = getConfirmationLink(request.getParameter("username"));
 				String hash = confirmLink.substring(confirmLink.length()-8);
 				System.out.println(hash);
-				newCurrentUser.setConfirmationHash(hash);
 				
+				newCurrentUser.setConfirmationHash(hash);
+				System.out.println("usr: " + newCurrentUser.getUsername() + "\nadress: " + newCurrentUser.getAddress() + "\nemail: "
+						+ newCurrentUser.getEmail() + "\nDoB: " + newCurrentUser.getDateOfBirth()
+				);
+				sql.testPrint();
 				sql.setUserBean(newCurrentUser);
+				
+				System.out.println("Setter userbean i SQLdatabase");
 				
 				
 			try {

@@ -35,7 +35,7 @@
 		<label>First name:</label><input type="text" name="fname"><br>
 		<label>Last name:</label><input type="text" name="lname"><br>
 		<label>Date of Birth:</label> <input type=text name="bDate" placeholder="ddmmyyyy"><br><br>
-		<label>Address:</label><input type="text" name="address"><br><br>
+		<label>Address:</label><input type="text" name="adress"><br><br>
 		
 		<label>Email</label><input type="text" name="email"><br>
 		<label>Repeat email:</label> <input type="text" name="emailRep"><br><br>

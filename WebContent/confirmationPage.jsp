@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Confirm your profile</title>
 </head>
 
 <%ControllerServlet servlet;
@@ -30,14 +30,18 @@ UserBean currentUserBean = sql.getUserInfo(username);
 if (currentUserBean.getActivated()==0){
 	System.out.println("Hash stored in bean; "+ currentUserBean.getConfirmationHash());
 	
-	if (currentUserBean.getConfirmationHash() == hash){
+	if (currentUserBean.getConfirmationHash().equals(hash)){
 		currentUserBean.setActivated(1);
+		sql.updateUser(currentUserBean);
 		System.out.println("UserBean has been activated");
 %>
 
 <h1>Your profile is now confirmed and ready to use</h1>
 
 <%
+	}
+	else{
+		%><h1>Not valid confirmation link</h1><% 
 	}
 }
 else{
@@ -46,7 +50,7 @@ else{
 
 
 
-<%System.out.println("Already acivated");
+<%System.out.println("Already activated");
 } %>
 
 <form action="goToSignin" method="post">
