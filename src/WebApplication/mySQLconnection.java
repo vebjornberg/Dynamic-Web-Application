@@ -125,12 +125,12 @@ public class mySQLconnection {
 			String sql = "INSERT INTO user_table VALUES " +
 			"('" + userbean.getEmail() + "', '" + userbean.getUsername() + "', '" + userbean.getFirstname() + "', '" 
 					+ userbean.getLastname() + "', '" + userbean.getAddress() + "', '" + userbean.getCreditCard() 
-					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0, " + userbean.getConfirmationHash() + ")";
+					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0, '" + userbean.getConfirmationHash() + "')";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
 			closeConnection();
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
 	}
 	public ArrayList<PublicationBean> getPublications(String search) {
@@ -252,6 +252,10 @@ public class mySQLconnection {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+	
+	public void testPrint(){
+		System.out.println("DRITTTEST HELVETE SATAN");
 	}
 
 }
