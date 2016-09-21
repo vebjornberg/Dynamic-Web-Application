@@ -8,22 +8,38 @@
 </head>
 
 <%ControllerServlet servlet;
-mySQLconnection sql;
+mySQLconnection sql =new mySQLconnection();
 
 
-%>
+String username = request.getParameter("user");
+String hash = request.getParameter("hash");
+
+UserBean currentUserBean = sql.getUserInfo(username);
+
+
+ %>
+
+
+
 <%-- JSP file to send users to when they press their confirmation link in the email --%>
 
 <body><center>
-<% if (true){%>
-
-<%-- <h1>Your profile has already been confirmed</h1>   --%>
-<% 
-//}	else{
+<%
+if (currentUserBean.getActivated()==0){
+	if ((username == (String)currentUserBean.getUsername()) && (hash == (String)currentUserBean.getConfirmationHash())){
+		currentUserBean.setActivated(1);
 %>
-<h1>Your profile is now confirmed and ready to use</h1>
-<%} %>
 
+<h1>Your profile is now confirmed and ready to use</h1>
+
+<%
+	}
+}
+else{
+%>
+<h1>Your profile has already been activated</h1>
+
+<%} %>
 
 <form action="goToSignin" method="post">
 <button value="Sign in here" ></button></form>
