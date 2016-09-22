@@ -158,6 +158,7 @@ public class mySQLconnection {
 				publicationbean.setTitle(result.getString("title"));
 				publicationbean.setSale(result.getInt("sale"));
 				publicationbean.setNumsold(result.getInt("numsold"));
+				publicationbean.setNumremoved(result.getInt("numremoved"));
 				publications.add(publicationbean);
 			}
 			result.close();
@@ -274,9 +275,9 @@ public class mySQLconnection {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
-			String sqlPublication = "INSERT INTO publication_table (publication_table.type, publication_table.title, publication_table.year, publication_table.price, publication_table.sale, publication_table.numsold) VALUES " +
+			String sqlPublication = "INSERT INTO publication_table (publication_table.type, publication_table.title, publication_table.year, publication_table.price, publication_table.sale, publication_table.numsold, publication_table.numremoved) VALUES " +
 			"('" + publicationbean.getType() + "', '" + publicationbean.getTitle() 
-			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "', 1, 0)";
+			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "', 1, 0, 0)";
 			String sqlAuthoredBy = "INSERT INTO authoredby_table (authoredby_table.authorid) VALUES " +
 					"(" + publicationbean.getAuthorid() + ")";
 			//Add which user has added the publicaiton for sale
@@ -364,6 +365,7 @@ public class mySQLconnection {
 				publicationbean.setTitle(result.getString("title"));
 				publicationbean.setSale(result.getInt("sale"));
 				publicationbean.setNumsold(result.getInt("numsold"));
+				publicationbean.setNumremoved(result.getInt("numremoved"));
 				publications.add(publicationbean);
 			}
 			result.close();
@@ -381,7 +383,7 @@ public class mySQLconnection {
 			Statement statement = connection.createStatement();
 			String sql = "UPDATE publication_table SET publication_table.publicationid=" + publicationbean.getPublicationid() + ", publication_table.type='" + publicationbean.getType() +"', "
 					+ "publication_table.title='" + publicationbean.getTitle() + "', publication_table.year='" + publicationbean.getYear() + "', "
-					+ "publication_table.price='" + publicationbean.getPrice() + "', publication_table.sale=" + publicationbean.getSale() + ", publication_table.numsold=" + publicationbean.getNumsold() + " "
+					+ "publication_table.price='" + publicationbean.getPrice() + "', publication_table.sale=" + publicationbean.getSale() + ", publication_table.numsold=" + publicationbean.getNumsold() + ", publication_table.numremoved=" + publicationbean.getNumremoved() + " "
 					+ "WHERE publication_table.publicationid=" + publicationbean.getPublicationid();
 			statement.executeUpdate(sql);
 			System.out.println(sql);
@@ -467,6 +469,7 @@ public class mySQLconnection {
 				publicationbean.setTitle(result.getString("title"));
 				publicationbean.setSale(result.getInt("sale"));
 				publicationbean.setNumsold(result.getInt("numsold"));
+				publicationbean.setNumremoved(result.getInt("numremoved"));
 			}
 			result.close();
 			closeConnection();
@@ -526,6 +529,7 @@ public class mySQLconnection {
 				publicationbean.setTitle(result.getString("title"));
 				publicationbean.setSale(result.getInt("sale"));
 				publicationbean.setNumsold(result.getInt("numsold"));
+				publicationbean.setNumremoved(result.getInt("numremoved"));
 				publications.add(publicationbean);
 			}
 			result.close();
