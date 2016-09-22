@@ -16,7 +16,7 @@
 ArrayList<UserBean> allUsers = (ArrayList<UserBean>)session.getAttribute("allUsers");
 %>
 <form action="bannuser" method="post">
-<table>
+<table border="1">
 <tr height="30px">
 	<td style="font-style: italic;" width="150px">Username</td>
 	<td style="font-style: italic;" width="100px">Banned</td>

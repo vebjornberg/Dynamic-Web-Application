@@ -15,13 +15,17 @@
 <%
 ArrayList<PublicationBean> allPublications = (ArrayList<PublicationBean>)session.getAttribute("allPublications");
 %>
+<form action="newUser" method="post" >
+			<input type="submit" name ="action" value = "Sort by #Sold">
+			<input type="submit" name = "action" value = "Sort by #Removed">
+		</form>
 <form action="bannuser" method="post">
-<table>
+<table border="1">
 <tr height="30px">
-	<td style="font-style: italic;" width="150px">Title</td>
-	<td style="font-style: italic;" width="50px">For Sale</td>
+	<td style="font-style: italic;" width="250px">Title</td>
+	<td style="font-style: italic;" width="50px">For Sale </td>
 	<td style="font-style: italic;" width="50px">#Sold</td>
-	<td style="font-style: italic;" width="50px">#RemovedFromCart</td>
+	<td style="font-style: italic;" width="50px">#Removed</td>
 	<td width="20px"></td>
 </tr>
 
@@ -31,16 +35,18 @@ for (PublicationBean pub: allPublications){
 
 <tr>
 	<td><%out.println(pub.getTitle()); %></td>
+	
+	 <td><%=pub.getSale()==1 ? "yes" : "no"%></td>
 	 <td><%=pub.getNumsold() %></td>
 	 <td><%=pub.getNumremoved()%></td> 
-	 <td><%=pub.getSale()%></td>
+	 
 	 <td><input type="checkbox" name ="publCheckbox" value ="<%=i%>" ></td>
 
 
 </tr>
 <%i++;} %>
 </table>
- <input type="submit" name="action" value="Toggle banned">
+ <input type="submit" name="action" value="Toggle for sale">
 </form>
 
 </center></body>

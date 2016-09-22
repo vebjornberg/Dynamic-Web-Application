@@ -470,12 +470,59 @@ public class ControllerServlet extends HttpServlet {
 			
 			
 		case "Publication DB":
-			
-			requestdispatcher = request.getRequestDispatcher("/adminUserDB.jsp");
+			ArrayList<PublicationBean> allPublications = sql.getPublications("");
+			session.setAttribute("allPublications", allPublications);
+			requestdispatcher = request.getRequestDispatcher("/adminPublicationDB.jsp");
 			requestdispatcher.forward(request, response);
 			
 			
 			break;
+			
+		case "Sort by #Removed":
+			ArrayList<PublicationBean> nspr = (ArrayList<PublicationBean>)session.getAttribute("allPublications");
+			
+			Collections.sort(nspr, (p2, p1) -> p1.getNumremoved() - p2.getNumremoved());
+			
+			session.setAttribute("allPublications", nspr);
+			requestdispatcher = request.getRequestDispatcher("/adminPublicationDB.jsp");
+			requestdispatcher.forward(request, response);
+			break;
+			
+			
+		case "Sort by #Sold":
+			ArrayList<PublicationBean> nsp = (ArrayList<PublicationBean>)session.getAttribute("allPublications");
+			
+			Collections.sort(nsp, (p2, p1) -> p1.getNumsold() - p2.getNumsold());
+			
+			session.setAttribute("allPublications", nsp);
+			requestdispatcher = request.getRequestDispatcher("/adminPublicationDB.jsp");
+			requestdispatcher.forward(request, response);
+			break;
+			
+			
+		case "Toggle for sale":
+			String admPubCheckboxValues[] = request.getParameterValues("publCheckbox");
+			
+			ArrayList<PublicationBean> allPubs2 = (ArrayList<PublicationBean>)session.getAttribute("allPublications");
+			for (String str: admPubCheckboxValues){
+				if (allPubs2.get(Integer.parseInt(str)).getSale() == 0){
+					allPubs2.get(Integer.parseInt(str)).setSale(1);
+					sql.updatePublicationBean(allPubs2.get(Integer.parseInt(str)));
+				}else if(allPubs2.get(Integer.parseInt(str)).getSale() == 1){
+					allPubs2.get(Integer.parseInt(str)).setSale(0);
+					sql.updatePublicationBean(allPubs2.get(Integer.parseInt(str)));
+				}
+				
+			}
+			session.setAttribute("allPublications", allPubs2);
+			requestdispatcher = request.getRequestDispatcher("/adminPublicationDB.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+		
+			
+			
 		case "Toggle banned":
 			String admCheckboxValues[] = request.getParameterValues("userCheckbox");
 			
