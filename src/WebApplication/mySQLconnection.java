@@ -125,7 +125,7 @@ public class mySQLconnection {
 			String sql = "INSERT INTO user_table VALUES " +
 			"('" + userbean.getEmail() + "', '" + userbean.getUsername() + "', '" + userbean.getFirstname() + "', '" 
 					+ userbean.getLastname() + "', '" + userbean.getAddress() + "', '" + userbean.getCreditCard() 
-					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0, '" + userbean.getConfirmationHash() + "')";
+					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0, '" + userbean.getConfirmationHash() + "', 0)";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
 			closeConnection();
@@ -211,6 +211,7 @@ public class mySQLconnection {
 				userbean.setAdmin(result.getInt("admin"));
 				userbean.setActivated(result.getInt("activated"));
 				userbean.setConfirmationHash(result.getString("confirmationHash"));
+				userbean.setBanned(result.getInt("banned"));
 			}
 			result.close();
 			closeConnection();
@@ -240,6 +241,7 @@ public class mySQLconnection {
 				userbean.setAdmin(result.getInt("admin"));
 				userbean.setActivated(result.getInt("activated"));
 				userbean.setConfirmationHash(result.getString("confirmationHash"));
+				userbean.setBanned(result.getInt("banned"));
 			}
 			result.close();
 			closeConnection();
@@ -259,7 +261,7 @@ public class mySQLconnection {
 					+ "user_table.address='" + userbean.getAddress() + "', user_table.creditCard='" + userbean.getCreditCard() + "', "
 					+ "user_table.dateOfBirth='" + userbean.getDateOfBirth() + "', user_table.admin=" + userbean.getAdmin()
 					+ ", user_table.password='" + userbean.getPassword() + "', user_table.activated=" + userbean.getActivated()
-					+ ", user_table.confirmationHash='" + userbean.getConfirmationHash() + "' "
+					+ ", user_table.confirmationHash='" + userbean.getConfirmationHash() + "', " + "user_table.banned=" + userbean.getBanned() + " "
 					+ "WHERE user_table.username='" + userbean.getUsername() + "'";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
