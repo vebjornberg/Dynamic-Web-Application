@@ -329,13 +329,13 @@ for(PublicationBean publication : publications){
 
 
 <div class="profileButtons">
-    <form action="ControllerServlet">
+    <form action="ControllerServlet" method = "post">
     	<input type = "hidden" name = "action" value = "removePublication" >
     	
     	<input type="submit" value="Remove publication from database" class = "button button1">
    	</form>
 
-     <form action="ControllerServlet">
+     <form action="ControllerServlet" method = "post">
     	<input type = "hidden" name = "action" value = "pausePublication" >
     	<input type="submit" value="Pause publication" class = "button button1">
    	</form>

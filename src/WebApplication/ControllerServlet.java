@@ -484,7 +484,27 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher = request.getRequestDispatcher("/shoppingCart.jsp");
 			requestdispatcher.forward(request, response);
 			break;
-		
+			
+		case "removePublication":
+			//TODO: - Torjus =)=)=)=)
+			//Kjør deletePublication(Publicationbean publication) på alle checked publications i myProfilePublications
+
+			
+			requestdispatcher = request.getRequestDispatcher("/myProfilePublications.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+		case "pausePublication":
+			//TODO: - Torjus =)=)=)=)
+			//Set publication.setSale(0) og kjør den gjennom update 
+			//på alle checked publications i myProfilePublications
+
+			
+			requestdispatcher = request.getRequestDispatcher("/myProfilePublications.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
 		
 		
 		}
