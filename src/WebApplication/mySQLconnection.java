@@ -277,8 +277,8 @@ public class mySQLconnection {
 			String sqlPublication = "INSERT INTO publication_table (publication_table.type, publication_table.title, publication_table.year, publication_table.price, publication_table.sale, publication_table.numsold) VALUES " +
 			"('" + publicationbean.getType() + "', '" + publicationbean.getTitle() 
 			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "', 1, 0)";
-			String sqlAuthoredBy = "INSERT INTO authoredby_table VALUES " +
-					"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getAuthorid() + "')";
+			String sqlAuthoredBy = "INSERT INTO authoredby_table (authoredby_table.authorid) VALUES " +
+					"(" + publicationbean.getAuthorid() + ")";
 			statement.executeUpdate(sqlPublication);
 			statement.executeUpdate(sqlAuthoredBy);
 			closeConnection();
