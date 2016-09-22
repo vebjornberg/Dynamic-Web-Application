@@ -105,9 +105,9 @@ public class ControllerServlet extends HttpServlet {
 						requestdispatcher.forward(request, response);
 					}
 					else{
-						// Sets current User
+						// Sets current User and his cart form db
 						session.setAttribute("currentUser", loginUser);
-						
+						session.setAttribute("cart", sql.getCart(username));
 
 						//Sets the random List
 						session.setAttribute("randomList", getRandomList());
@@ -416,7 +416,33 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher = request.getRequestDispatcher("/forgotPassword.jsp");
 			requestdispatcher.forward(request, response);
 		
-		break;
+			break;
+		
+		
+		case "Remove from Cart":
+			
+			String checkboxValues[] = request.getParameterValues("cartcheckbox");
+			
+			ArrayList<PublicationBean> cart = (ArrayList<PublicationBean>)session.getAttribute("cart");
+			System.out.println(cart.size());
+			
+			if(!(checkboxValues==null)){
+				
+				int i=0;
+				for (String s:checkboxValues){
+					cart.remove((Integer.parseInt(s)-i));
+					i++;
+					
+					
+				}
+				UserBean userBean = (UserBean)session.getAttribute("currentUser");
+				System.out.println(cart.size());
+				sql.addCart(userBean.getUsername(), cart);
+			}
+			
+			requestdispatcher = request.getRequestDispatcher("/shoppingCart.jsp");
+			requestdispatcher.forward(request, response);
+			break;
 		
 		
 		
