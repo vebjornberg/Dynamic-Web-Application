@@ -30,7 +30,7 @@ if ((Boolean)session.getAttribute("wrongPassword")== null){
 			<input type="submit" name="action" value = "Sign in"><br>
 		</form>
 		<%if ((Boolean)session.getAttribute("wrongPassword") == true){ %>
-		<p style="color: red">Username or password is incorrect.<p>
+		<p style="color: red"><%=session.getAttribute("loginError") %><p>
 		<%}else{ %>
 		
 		<br><br><%} %>
