@@ -276,7 +276,7 @@ public class mySQLconnection {
 			Statement statement = connection.createStatement();
 			String sqlPublication = "INSERT INTO publication_table (publication_table.type, publication_table.title, publication_table.year, publication_table.price, publication_table.sale, publication_table.numsold) VALUES " +
 			"('" + publicationbean.getType() + "', '" + publicationbean.getTitle() 
-			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "', "+ publicationbean.getSale() + ", " + publicationbean.getNumsold() + ")";
+			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "', 1, 0)";
 			String sqlAuthoredBy = "INSERT INTO authoredby_table VALUES " +
 					"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getAuthorid() + "')";
 			statement.executeUpdate(sqlPublication);
@@ -395,6 +395,25 @@ public class mySQLconnection {
 			statement.executeUpdate(sqlAuthor);
 			closeConnection();
 		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	public int getAuthorIdByName(String firstName, String lastName) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT author_table.authorid FROM author_table WHERE author_table.firstname='" + firstName + "' AND author_table.lastname='" + lastName + "'";
+			ResultSet result = statement.executeQuery(sql);
+			int id = 0;
+			while(result.next()) {
+				id = result.getInt("authorid");
+			}
+			result.close();
+			closeConnection();
+			return id;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return 0;
 			// TODO: handle exception
 		}
 	}

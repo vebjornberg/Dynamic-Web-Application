@@ -156,17 +156,23 @@ public class ControllerServlet extends HttpServlet {
 		case "addPublication":
 			PublicationBean newPub = new PublicationBean();
 			
-			newPub.setFirstname(request.getParameter("authorFirstName"));
-			newPub.setLastname(request.getParameter("authorLastName"));
+			String[] fullName = request.getParameter("author").split(" ");
+			
+			lastName = fullName[fullName.length - 1];
+			firstName = "";
+			for (int i = 0; i < fullName.length-1; i++) {
+				firstName+=fullName[i] + " ";
+			}
+			
+			newPub.setLastname(lastName);
+			newPub.setFirstname(firstName);
+			newPub.setAuthorid(sql.getAuthorIdByName(firstName, lastName));
 			newPub.setPrice(request.getParameter("price"));
 			newPub.setTitle(request.getParameter("title"));
 			newPub.setType(request.getParameter("pubType"));
 			newPub.setYear(request.getParameter("year"));
 			
-			
 			sql.addPublication(newPub);
-			
-			
 			
 			
 			break;
@@ -178,7 +184,7 @@ public class ControllerServlet extends HttpServlet {
 			lastName = request.getParameter("authorLastName");
 		
 			
-			//sql.addAuthor(firstName, lastName);
+			sql.addAuthor(firstName, lastName);
 			
 			requestdispatcher = request.getRequestDispatcher("/addBook.jsp");
 			requestdispatcher.forward(request, response);
