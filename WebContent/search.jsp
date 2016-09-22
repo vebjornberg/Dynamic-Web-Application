@@ -12,15 +12,27 @@
 </head>
 
 
-
 <style>
+
+html *
+{
+   font-family: Arial !important;
+}
+
+.searchField{
+text-align: center;
+}
+input{
+   text-align:center;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
-    width: 50%;
+    background-color: #b5b5b5;
+    width: 100%;
 }
 
 li {
@@ -29,68 +41,80 @@ li {
 
 li a, .dropbtn {
     display: inline-block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 li a:hover, .dropdown:hover .dropbtn {
-    background-color: #555;
+    background-color: #e3e3e3;
 }
 
 li.dropdown {
-    display: inline-block;
+	direction: rtl;
+	
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #333;
+    background-color:#b5b5b5;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .dropdown-content a {
-    color: white;
+    color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     text-align: left;
 }
 
-.dropdown-content a:hover {background-color: #555}
+.dropdown-content a:hover {background-color: #e3e3e3}
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-input[type=text] {
-    width: 250px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
+h2 {
+    text-align: center;
+}
+
+input[type=text], select {
+	width:50%;
+    padding: 12px 20px;
     font-size: 14px;
-    background-color: white;
-    background-image: url('searchicon.png');
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-    padding: 12px 20px 12px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-input[type=text]:focus {
+input[type=submit] {
     width: 50%;
+    background-color: #5252f4;
+    color: white;
+    font-size: 14px;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
 }
 
-    
+input[type=submit]:hover {
+    background-color: #9e9d9d;
+}
+ 
 </style>
 
 
 <% 
 	UserBean user = (UserBean) session.getAttribute("currentUser");
 	String username =  user.getUsername();
+	
 
 %>
 </head>
@@ -114,12 +138,15 @@ input[type=text]:focus {
   </li>
 </ul><br>
 
-<h2>Welcome <%=username %>!</h2>
 
+
+<h2>Welcome <%=username %>!</h2>
+<div class = searchField>
 <form action = "ControllerServlet" method = "post">
 	<input type = "hidden" name = "action" value = "simpleSearch" >
  	<input type="text" name="search" placeholder="Search in publication database">
 </form>
+</div>
 
 
 then a list of 10 random publications;<br>
@@ -135,7 +162,7 @@ String keyWord = request.getParameter("search");
 </tr>
 
 <%for(PublicationBean pubBean : randomList){
-	String title = pubBean.getTitle();%>
+ 	String title = pubBean.getTitle();%>
 		<tr>
 			<td><%=title %></td>
 		</tr>
