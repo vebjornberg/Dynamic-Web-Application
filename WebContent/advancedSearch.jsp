@@ -103,7 +103,7 @@ input[type=text], select {
 
 input[type=submit] {
     width: 50%;
-    background-color: #5252f4;
+    background-color: #1406cb;
     color: white;
     font-size: 14px;
     padding: 14px 20px;
@@ -114,7 +114,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #9e9d9d;
+    background-color: #090079;
 }
 </style>
 </head>
@@ -147,15 +147,15 @@ input[type=submit]:hover {
 	
 
  	<input type="text" name="authorFirstName" placeholder="First name author"><br><br>
-	<input type="text" name="authorLastName" placeholder="Last name author"><br>
-	<input type="text" name="title" placeholder="Publication Title"><br>
-	<input type="text" name="year" placeholder="Release year"><br>
+	<input type="text" name="authorLastName" placeholder="Last name author"><br><br>
+	<input type="text" name="title" placeholder="Publication Title"><br><br>
+	<input type="text" name="year" placeholder="Release year"><br><br>
 
 	<select id="pubType" name="pubType">
 		<option value="book">Book</option>
 		<option value="article">Article</option>
 		<option value="other">Other</option>
-	</select>
+	</select><br>
   
 	<input type="submit" value="Submit">
 </form>

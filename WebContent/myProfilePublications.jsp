@@ -1,4 +1,3 @@
-<%@page import="java.util.ArrayList"%>
 <%@page import="WebApplication.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -6,23 +5,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>DLD - My Profile</title>
 
-<%-- JSP file for adding books for users --%>
+<%-- JSP for viewing and editing your profile --%>
+
+
 
 
 <%
+mySQLconnection con = new mySQLconnection();
 UserBean user = (UserBean) session.getAttribute("currentUser");
 String username = user.getUsername();
-mySQLconnection sql = new mySQLconnection();
 
-ArrayList<AuthorBean> authors = sql.getAuthors();
-
-
-		
-
+//String firstName, lastname, dob, address, email, password, creditCard = infoFromUsername[0], infoFromUsername[1], infoFromUsername[2], osv..   
 %>
-</head>
 <style>
 html *
 {
@@ -103,7 +99,17 @@ input[type=text], select {
     box-sizing: border-box;
 }
 
-input[type=submit] {
+input[type=password], select {
+	width:50%;
+    padding: 12px 20px;
+    font-size: 14px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input.button1{
     width: 50%;
     background-color: #1406cb;
     color: white;
@@ -115,11 +121,37 @@ input[type=submit] {
     cursor: pointer;
 }
 
-input[type=submit]:hover {
+input.button1:hover {
     background-color: #090079;
 }
-</style>
 
+input.button2 {
+    display: inline;
+ 	width: 25%;
+    background-color: #b5b5b5;
+    color: black;
+    font-size: 16px;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+input.button2:hover {
+     background-color: #e3e3e3;
+}
+
+.profileButtons{
+    text-align: center;
+
+}
+.profileButtons form,
+.profileButtons form div {
+display:inline;
+}
+
+</style>
 </head>
 <body>
 
@@ -134,52 +166,33 @@ input[type=submit]:hover {
   <li style="float:right" class="dropdown">
     <a class="dropbtn"><%=username %></a>
     <div class="dropdown-content">
-      <a href="myProfile.jsp">My Profile</a>
-      <a href="logoutRedirect.jsp">Log Out</a>
+      <a href="logoutRedirect.jsp">My Profile</a>
+      <a href="">Log Out</a>
 
     </div>
   </li>
 </ul><br>
 
-<h2>Add Publication for sale</h2>
+
+<h2> Profile Overview - <%=user.getFirstname()%> <%=user.getLastname() %> </h2>
 
 
-<div class = searchField>
-<form action = "ControllerServlet" method = "post">
-	<input type = "hidden" name = "action" value = addPublication >
-	
-	Choose publication type<br>
-	<select id="pubType" name="pubType">
-		<option value="book book">Book Book</option>
-		<option value="article">Article</option>
-		<option value="other">Other</option>
-	</select><br><br>
-	
-	Choose Author (if you can't find the correct author, you can simply add him/her to the database <a href="addAuthor.jsp">here</a>)<br>
-	<select id="author" name="author">
-		<% 
- 		for(AuthorBean author: authors){
- 			String firstName = author.getFirstname();
- 			String lastName = author.getLastname();
- 			String fullName = firstName + " " + lastName;
- 			
-			%>
-		<option value="<%=fullName %>"><%=fullName %></option>
-		<% }%>
-	</select><br><br>
+<div class="profileButtons">
+    <form action="myProfile.jsp">
+		<input type = 'submit' name='action' value='Personal Info' class = "button button2">
+	</form>
 
- 	
-	<input type="text" name="title" placeholder="Publication Title"><br><br>
-	<input type="text" name="year" placeholder="Release year"><br><br>
-	<input type="text" name="price" placeholder="Price (in AUD)"><br><br>
-	
-
-  
-	<input type="submit" value="Add Publication">
-</form>
-</div>
+    <form action="myProfilePublications.jsp">
+		<input type = 'submit' name='action' value='My Publications' class = "button button2">
+	</form>
+</div><br>
 
 
+
+
+
+</head>
+<body>
 
 </body>
 </html>
