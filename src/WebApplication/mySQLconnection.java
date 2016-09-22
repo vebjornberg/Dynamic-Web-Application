@@ -270,7 +270,7 @@ public class mySQLconnection {
 			System.out.println(e.getMessage());
 		}
 	}
-	public void addPublication(PublicationBean publicationbean) {
+	public void addPublication(PublicationBean publicationbean, String username) {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
@@ -279,8 +279,12 @@ public class mySQLconnection {
 			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "', 1, 0)";
 			String sqlAuthoredBy = "INSERT INTO authoredby_table (authoredby_table.authorid) VALUES " +
 					"(" + publicationbean.getAuthorid() + ")";
+			//Add which user has added the publicaiton for sale
+			String sqlAddedBy = "INSERT INTO addedby_table (addedby_table.username, addedby_table.publicationid) VALUES "
+					+ "('" + username + "', " + publicationbean.getPublicationid() + ")";
 			statement.executeUpdate(sqlPublication);
 			statement.executeUpdate(sqlAuthoredBy);
+			statement.executeUpdate(sqlAddedBy);
 			closeConnection();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -527,6 +531,30 @@ public class mySQLconnection {
 			result.close();
 			closeConnection();
 			return publications;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			// TODO: handle exception
+		}
+	}
+	public ArrayList<PublicationBean> getPublicationsAddedByUser(String username) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT addedby_table.* "
+					+ "FROM addedby_table "
+					+ "WHERE addedby_table.username='" + username + "'";
+			ResultSet result = statement.executeQuery(sql);
+			ArrayList<PublicationBean> cart = new ArrayList<PublicationBean>();
+			while(result.next()) {
+				int publicationid = result.getInt("publicationid");
+				PublicationBean publicationbean = new PublicationBean();
+				publicationbean = getPublicationById(publicationid);
+				cart.add(publicationbean);
+			}
+			result.close();
+			closeConnection();
+			return cart;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;
