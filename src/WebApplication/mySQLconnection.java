@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -577,6 +578,23 @@ public class mySQLconnection {
 		}
 	}
 	
+	public ArrayList<PublicationBean> generateRandomList(){
+		ArrayList<PublicationBean> randomPublications = new ArrayList<PublicationBean>();
+		Random random = new Random();
+		PublicationBean randomPublication;
+		
+		while(randomPublications.size() < 10){
+			int num = random.nextInt(getPublications("").size()) + 1 ;
+			randomPublication = getPublications("").get(num); 
+			if(randomPublication.getSale() == 1){
+				if(!randomPublications.contains(randomPublication)){
+					randomPublications.add(randomPublication);
+				}
+			}
+		}
+		return randomPublications;
+	}
+
 
 }
 
