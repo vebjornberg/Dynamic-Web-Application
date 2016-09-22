@@ -73,20 +73,28 @@ public class ControllerServlet extends HttpServlet {
 		
 		case "Sign in":
 			
-			String username  = request.getParameter("username");
-			String password = request.getParameter("pass");
+			String username  = request.getParameter("loginUsername");
+			String password = request.getParameter("loginPass");
 			
-						
-			//TODO: Check if username and password matches in database.
-			//TODO: Send to search/home page
-			session.setAttribute("currentUser", sql.getUserInfo(username));
-			if(true){ // (isvalid(username, password){
+			//If username exists
+			if (!isAvailableUsername(username)){
+				UserBean loginUser = sql.getUserInfo(username);			
 				
-		
-				requestdispatcher = request.getRequestDispatcher("/search.jsp");
-				requestdispatcher.forward(request, response);
+				
+				
+				// Checks for username and password up against db
+				if(loginUser.getPassword().equals(password)){ 
+					
+					// Sets current User
+					session.setAttribute("currentUser", loginUser);
+					
+					//Redirects to search.jsp/HOME page
+					requestdispatcher = request.getRequestDispatcher("/search.jsp");
+					requestdispatcher.forward(request, response);
+				}
 			}
 			else{
+				
 				session.setAttribute("wrongPassword", true);
 				requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
 				requestdispatcher.forward(request, response);
@@ -349,9 +357,7 @@ public class ControllerServlet extends HttpServlet {
 	
 	// HELP METHODS
 	
-	public boolean isCorrectLogin(String username, String password){
-		return true;
-	}
+	
 	//Check if username is valid
 	public boolean isValidUsername(String username){
         if(!username.matches("^[a-zA-Z0-9]*$")){

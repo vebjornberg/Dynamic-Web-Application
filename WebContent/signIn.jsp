@@ -25,8 +25,8 @@ if ((Boolean)session.getAttribute("wrongPassword")== null){
 		<t1>Digital Library Database</t1>
 		<br><br>
 		<form action="login" method="post">
-			Username : <input type="text" name="username"><br>
-			Password : <input type="password" name="pass"><br>
+			Username : <input type="text" name="loginUsername"><br>
+			Password : <input type="password" name="loginPass"><br>
 			<input type="submit" name="action" value = "Sign in"><br>
 		</form>
 		<%if ((Boolean)session.getAttribute("wrongPassword") == true){ %>
