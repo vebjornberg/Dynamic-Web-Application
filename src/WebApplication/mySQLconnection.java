@@ -125,7 +125,7 @@ public class mySQLconnection {
 			String sql = "INSERT INTO user_table VALUES " +
 			"('" + userbean.getEmail() + "', '" + userbean.getUsername() + "', '" + userbean.getFirstname() + "', '" 
 					+ userbean.getLastname() + "', '" + userbean.getAddress() + "', '" + userbean.getCreditCard() 
-					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0, '" + userbean.getConfirmationHash() + "')";
+					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0, '" + userbean.getConfirmationHash() + "', 0)";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
 			closeConnection();
@@ -156,6 +156,8 @@ public class mySQLconnection {
 				publicationbean.setFirstname(result.getString("firstname"));
 				publicationbean.setLastname(result.getString("lastname"));
 				publicationbean.setTitle(result.getString("title"));
+				publicationbean.setSale(result.getInt("sale"));
+				publicationbean.setNumsold(result.getInt("numsold"));
 				publications.add(publicationbean);
 			}
 			result.close();
@@ -209,6 +211,7 @@ public class mySQLconnection {
 				userbean.setAdmin(result.getInt("admin"));
 				userbean.setActivated(result.getInt("activated"));
 				userbean.setConfirmationHash(result.getString("confirmationHash"));
+				userbean.setBanned(result.getInt("banned"));
 			}
 			result.close();
 			closeConnection();
@@ -238,6 +241,7 @@ public class mySQLconnection {
 				userbean.setAdmin(result.getInt("admin"));
 				userbean.setActivated(result.getInt("activated"));
 				userbean.setConfirmationHash(result.getString("confirmationHash"));
+				userbean.setBanned(result.getInt("banned"));
 			}
 			result.close();
 			closeConnection();
@@ -257,7 +261,7 @@ public class mySQLconnection {
 					+ "user_table.address='" + userbean.getAddress() + "', user_table.creditCard='" + userbean.getCreditCard() + "', "
 					+ "user_table.dateOfBirth='" + userbean.getDateOfBirth() + "', user_table.admin=" + userbean.getAdmin()
 					+ ", user_table.password='" + userbean.getPassword() + "', user_table.activated=" + userbean.getActivated()
-					+ ", user_table.confirmationHash='" + userbean.getConfirmationHash() + "' "
+					+ ", user_table.confirmationHash='" + userbean.getConfirmationHash() + "', " + "user_table.banned=" + userbean.getBanned() + " "
 					+ "WHERE user_table.username='" + userbean.getUsername() + "'";
 			statement.executeUpdate(sql);
 			System.out.println(sql);
@@ -272,7 +276,7 @@ public class mySQLconnection {
 			Statement statement = connection.createStatement();
 			String sqlPublication = "INSERT INTO publication_table VALUES " +
 			"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getType() + "', '" + publicationbean.getTitle() 
-			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "')";
+			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "', "+ publicationbean.getSale() + ", " + publicationbean.getNumsold() + ")";
 			String sqlAuthoredBy = "INSERT INTO authoredby_table VALUES " +
 					"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getAuthorid() + "')";
 			statement.executeUpdate(sqlPublication);
@@ -330,6 +334,8 @@ public class mySQLconnection {
 				publicationbean.setFirstname(result.getString("firstname"));
 				publicationbean.setLastname(result.getString("lastname"));
 				publicationbean.setTitle(result.getString("title"));
+				publicationbean.setSale(result.getInt("sale"));
+				publicationbean.setNumsold(result.getInt("numsold"));
 				publications.add(publicationbean);
 			}
 			result.close();
@@ -339,6 +345,21 @@ public class mySQLconnection {
 			System.out.println(e.getMessage());
 			return null;
 			// TODO: handle exception
+		}
+	}
+	public void updatePublicationBean(PublicationBean publicationbean) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "UPDATE publication_table SET publication_table.publicationid=" + publicationbean.getPublicationid() + ", publication_table.type='" + publicationbean.getType() +"', "
+					+ "publication_table.title='" + publicationbean.getTitle() + "', publication_table.year='" + publicationbean.getYear() + "', "
+					+ "publication_table.price='" + publicationbean.getPrice() + "', publication_table.sale=" + publicationbean.getSale() + ", publication_table.numsold=" + publicationbean.getNumsold() + " "
+					+ "WHERE publication_table.publicationid=" + publicationbean.getPublicationid();
+			statement.executeUpdate(sql);
+			System.out.println(sql);
+			closeConnection();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
