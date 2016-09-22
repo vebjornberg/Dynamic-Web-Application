@@ -110,8 +110,7 @@ public class ControllerServlet extends HttpServlet {
 						session.setAttribute("currentUser", loginUser);
 						session.setAttribute("cart", sql.getCart(username));
 
-						//Sets the random List
-						session.setAttribute("randomList", getRandomList());
+					
 						
 						session.setAttribute("wrongPassword", false);
 						
@@ -568,7 +567,27 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher = request.getRequestDispatcher("/shoppingCart.jsp");
 			requestdispatcher.forward(request, response);
 			break;
-		
+			
+		case "removePublication":
+			//TODO: - Torjus =)=)=)=)
+			//Kjør deletePublication(Publicationbean publication) på alle checked publications i myProfilePublications
+
+			
+			requestdispatcher = request.getRequestDispatcher("/myProfilePublications.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+		case "pausePublication":
+			//TODO: - Torjus =)=)=)=)
+			//Set publication.setSale(0) og kjør den gjennom update 
+			//på alle checked publications i myProfilePublications
+
+			
+			requestdispatcher = request.getRequestDispatcher("/myProfilePublications.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
 		
 		
 		}
@@ -707,38 +726,6 @@ public class ControllerServlet extends HttpServlet {
 		}
 		return sb.toString();
 	}
-	
-	//Generate random numbers
-	public ArrayList<Integer> generateRandomNumbers(){
-		ArrayList<Integer> randomList = new ArrayList<Integer>();
-		Random random = new Random();
-		while (randomList.size()<10){
-			int ran = random.nextInt(allPublications.size());
-			if (!randomList.contains(ran)){
-				randomList.add(ran);
-			}
-		
-		}
-		return randomList;
-	}
-	
-	//Generate the random list
-	public ArrayList<PublicationBean> getRandomList(){
-		//Generate the random list
-		ArrayList<PublicationBean> randomPublications = new ArrayList<PublicationBean>();
-		//List containing random numbers
-		ArrayList<Integer> randomNumbers = new ArrayList<Integer>();
-		randomNumbers = generateRandomNumbers();
-		//Generate the random elements into randomPublications
-		for (int r : randomNumbers){
-			randomPublications.add(allPublications.get(r));
-		}
-		return randomPublications;
-	}
-	
-	
-	
-	
 	
 	
 	
