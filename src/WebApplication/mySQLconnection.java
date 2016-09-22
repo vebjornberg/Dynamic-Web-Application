@@ -280,8 +280,8 @@ public class mySQLconnection {
 			String sqlAuthoredBy = "INSERT INTO authoredby_table (authoredby_table.authorid) VALUES " +
 					"(" + publicationbean.getAuthorid() + ")";
 			//Add which user has added the publicaiton for sale
-			String sqlAddedBy = "INSERT INTO addedby_table (addedby_table.username, addedby_table.publicationid) VALUES "
-					+ "('" + username + "', " + publicationbean.getPublicationid() + ")";
+			String sqlAddedBy = "INSERT INTO addedby_table (addedby_table.username) VALUES "
+					+ "('" + username + "')";
 			statement.executeUpdate(sqlPublication);
 			statement.executeUpdate(sqlAuthoredBy);
 			statement.executeUpdate(sqlAddedBy);
