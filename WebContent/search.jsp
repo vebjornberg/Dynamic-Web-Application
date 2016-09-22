@@ -212,7 +212,6 @@ table tr:hover td {
 <% 
 	UserBean user = (UserBean) session.getAttribute("currentUser");
 	String username =  user.getUsername();	
-	String keyWord = request.getParameter("search");
 	mySQLconnection sql = new mySQLconnection();
 	ArrayList<PublicationBean> randomList = sql.generateRandomList();
 %>
@@ -272,6 +271,8 @@ for(PublicationBean publication : randomList){
 			<td><%=publication.getFirstname()%> <%=publication.getLastname() %></td>
 			<td><%=publication.getPrice() %></td>
 			<td><%=publication.getYear() %></td>
+			<td><input type="checkbox" name="checkbox" value="" form = "remove" > </td>
+			
 
 		</tr>
 		<%}}
