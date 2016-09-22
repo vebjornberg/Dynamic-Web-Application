@@ -38,7 +38,7 @@ public class ControllerServlet extends HttpServlet {
     
     // init
     public void init(ServletConfig config) throws ServletException {
-  
+    	System.out.println("init()");
     	
     	super.init(config);
     }
@@ -48,6 +48,8 @@ public class ControllerServlet extends HttpServlet {
 	// DO GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("This is doGet();");
+		HttpSession session = request.getSession();
+		session.setAttribute("wrongPassword", false);
 		
 
 					
@@ -90,10 +92,17 @@ public class ControllerServlet extends HttpServlet {
 					
 
 					if (loginUser.getActivated() ==0){
-						session.setAttribute("loginError", "User is not activated");
+						session.setAttribute("loginError", "User is not activated, please check your email.");
+						session.setAttribute("wrongPassword", true);
+						requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
+						requestdispatcher.forward(request, response);
 					}
 					else if (loginUser.getBanned() ==1){
+						
+						session.setAttribute("wrongPassword", true);
 						session.setAttribute("loginError", "User is banned");
+						requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
+						requestdispatcher.forward(request, response);
 					}
 					else{
 						// Sets current User
@@ -103,11 +112,14 @@ public class ControllerServlet extends HttpServlet {
 						//Sets the random List
 						session.setAttribute("randomList", getRandomList());
 						
+						session.setAttribute("wrongPassword", false);
+						
 						//Redirects to search.jsp/HOME page
 						requestdispatcher = request.getRequestDispatcher("/search.jsp");
 						requestdispatcher.forward(request, response);
 					}
 				}else{
+					session.setAttribute("wrongPassword", true);
 					session.setAttribute("loginError", "Username and password does not match");
 					requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
 					requestdispatcher.forward(request, response);
@@ -116,7 +128,7 @@ public class ControllerServlet extends HttpServlet {
 			}
 			else{
 				
-				
+				session.setAttribute("wrongPassword", true);
 				session.setAttribute("loginError", "Username and password does not match");
 				requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
 				requestdispatcher.forward(request, response);
