@@ -173,6 +173,9 @@ public class ControllerServlet extends HttpServlet {
 		case "addPublication":
 			PublicationBean newPub = new PublicationBean();
 			
+			UserBean currUser = (UserBean)session.getAttribute("currentUser");
+			username = currUser.getUsername();
+			
 			String[] fullName = request.getParameter("author").split(" ");
 			
 			lastName = fullName[fullName.length - 1];
@@ -189,7 +192,7 @@ public class ControllerServlet extends HttpServlet {
 			newPub.setType(request.getParameter("pubType"));
 			newPub.setYear(request.getParameter("year"));
 			
-			sql.addPublication(newPub);
+			sql.addPublication(newPub, username);
 			
 			
 			break;

@@ -21,15 +21,27 @@
 	String username =  user.getUsername();
 
 %>
-
 <style>
+html *
+{
+   font-family: Arial !important;
+}
+
+.searchField{
+text-align: center;
+}
+
+input{
+   text-align:center;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
-    width: 50%;
+    background-color: #b5b5b5;
+    width: 100%;
 }
 
 li {
@@ -38,46 +50,50 @@ li {
 
 li a, .dropbtn {
     display: inline-block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 li a:hover, .dropdown:hover .dropbtn {
-    background-color: #555;
+    background-color: #e3e3e3;
 }
 
 li.dropdown {
-    display: inline-block;
+	direction: rtl;
+	
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #333;
+    background-color:#b5b5b5;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .dropdown-content a {
-    color: white;
+    color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     text-align: left;
 }
 
-.dropdown-content a:hover {background-color: #555}
+.dropdown-content a:hover {background-color: #e3e3e3}
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
+h2 {
+    text-align: center;
+}
+
 input[type=text], select {
-    width: 50%;
+	width:50%;
     padding: 12px 20px;
-    margin: 8px 0;
     font-size: 14px;
     display: inline-block;
     border: 1px solid #ccc;
@@ -98,14 +114,8 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #434395;
+    background-color: #9e9d9d;
 }
-
-
-
-
-
-    
 </style>
 </head>
 <body>
@@ -131,12 +141,12 @@ input[type=submit]:hover {
 <h2>Advanced search</h2>
 
 
-
+<div class = searchField>
 <form action = "ControllerServlet" method = "post">
 	<input type = "hidden" name = "action" value = "advancedSearch" >
 	
 
- 	<input type="text" name="authorFirstName" placeholder="First name author"><br>
+ 	<input type="text" name="authorFirstName" placeholder="First name author"><br><br>
 	<input type="text" name="authorLastName" placeholder="Last name author"><br>
 	<input type="text" name="title" placeholder="Publication Title"><br>
 	<input type="text" name="year" placeholder="Release year"><br>
@@ -149,6 +159,7 @@ input[type=submit]:hover {
   
 	<input type="submit" value="Submit">
 </form>
+</div>
 
 
 

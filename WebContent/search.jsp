@@ -4,16 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-
-<%-- The website HOME PAGE for searching for books --%>
-
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>FinePoint Electrical</title>
 </head>
 
-
 <style>
-
 html *
 {
    font-family: Arial !important;
@@ -22,6 +17,7 @@ html *
 .searchField{
 text-align: center;
 }
+
 input{
    text-align:center;
 }
@@ -107,9 +103,7 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: #9e9d9d;
 }
- 
 </style>
-
 
 <% 
 	UserBean user = (UserBean) session.getAttribute("currentUser");
