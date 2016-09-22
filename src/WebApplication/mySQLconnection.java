@@ -277,8 +277,8 @@ public class mySQLconnection {
 			String sqlPublication = "INSERT INTO publication_table (publication_table.type, publication_table.title, publication_table.year, publication_table.price, publication_table.sale, publication_table.numsold) VALUES " +
 			"('" + publicationbean.getType() + "', '" + publicationbean.getTitle() 
 			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "', 1, 0)";
-			String sqlAuthoredBy = "INSERT INTO authoredby_table VALUES " +
-					"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getAuthorid() + "')";
+			String sqlAuthoredBy = "INSERT INTO authoredby_table (authoredby_table.authorid) VALUES " +
+					"(" + publicationbean.getAuthorid() + ")";
 			statement.executeUpdate(sqlPublication);
 			statement.executeUpdate(sqlAuthoredBy);
 			closeConnection();
@@ -414,6 +414,76 @@ public class mySQLconnection {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return 0;
+			// TODO: handle exception
+		}
+	}
+	public ArrayList<PublicationBean> getCart(String username) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT cart_table.* "
+					+ "FROM cart_table "
+					+ "WHERE cart_table.username='" + username + "'";
+			ResultSet result = statement.executeQuery(sql);
+			ArrayList<PublicationBean> cart = new ArrayList<PublicationBean>();
+			while(result.next()) {
+				int publicationid = result.getInt("publicationid");
+				PublicationBean publicationbean = new PublicationBean();
+				publicationbean = getPublicationById(publicationid);
+				cart.add(publicationbean);
+			}
+			result.close();
+			closeConnection();
+			return cart;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			// TODO: handle exception
+		}
+	}
+	public PublicationBean getPublicationById(int publicationid) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT publication_table.*, author_table.* "
+					+ "FROM publication_table INNER JOIN authoredby_table "
+					+ "ON authoredby_table.publicationid = publication_table.publicationid "
+					+ "INNER JOIN author_table ON author_table.authorid = authoredby_table.authorid "
+					+ "WHERE publication_table.publicationid=" + publicationid + "";
+			ResultSet result = statement.executeQuery(sql);
+			PublicationBean publicationbean = new PublicationBean();
+			while(result.next()) {
+				publicationbean.setAuthorid(result.getInt("authorid"));
+				publicationbean.setPublicationid(result.getInt("publicationid"));
+				publicationbean.setType(result.getString("type"));
+				publicationbean.setYear(result.getString("year"));
+				publicationbean.setPrice(result.getString("price"));
+				publicationbean.setFirstname(result.getString("firstname"));
+				publicationbean.setLastname(result.getString("lastname"));
+				publicationbean.setTitle(result.getString("title"));
+				publicationbean.setSale(result.getInt("sale"));
+				publicationbean.setNumsold(result.getInt("numsold"));
+			}
+			result.close();
+			closeConnection();
+			return publicationbean;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			// TODO: handle exception
+		}
+	}
+	public void addCart(String username, ArrayList<PublicationBean> cart) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			for(int i=0; i<cart.size(); i++) {
+				String sqlCart = "INSERT INTO cart_table (cart_table.username, cart_table.publicationid) VALUES "
+						+ "('" + username + "', " + cart.get(i).getPublicationid() + ")";
+				statement.executeUpdate(sqlCart);
+			}
+			closeConnection();
+		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
