@@ -134,6 +134,42 @@ public class ControllerServlet extends HttpServlet {
 			break;
 			
 			
+		case "addPublication":
+			PublicationBean newPub = new PublicationBean();
+			
+			newPub.setFirstname(request.getParameter("authorFirstName"));
+			newPub.setLastname(request.getParameter("authorLastName"));
+			newPub.setPrice(request.getParameter("price"));
+			newPub.setTitle(request.getParameter("title"));
+			newPub.setType(request.getParameter("pubType"));
+			newPub.setYear(request.getParameter("year"));
+			
+			
+			sql.addPublication(newPub);
+			
+			
+			
+			
+			break;
+			
+		case "addAuthor":
+			
+			
+			firstName = request.getParameter("authorFirstName");
+			lastName = request.getParameter("authorLastName");
+		
+			
+			//sql.addAuthor(firstName, lastName);
+			
+			requestdispatcher = request.getRequestDispatcher("/addBook.jsp");
+			requestdispatcher.forward(request, response);
+			
+			
+			
+			
+			break;
+			
+			
 		case "Create new user":
 			
 			// Redirects to register.jsp

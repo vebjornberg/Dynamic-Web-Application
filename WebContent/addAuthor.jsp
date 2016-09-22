@@ -1,4 +1,3 @@
-<%@page import="java.util.ArrayList"%>
 <%@page import="WebApplication.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -7,22 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
-<%-- JSP file for adding books for users --%>
-
+</head>
 
 <%
 UserBean user = (UserBean) session.getAttribute("currentUser");
 String username = user.getUsername();
-mySQLconnection sql = new mySQLconnection();
-
-//ArrayList<AuthorBean> authors = sql.getAuthors();
-
-
-		
 
 %>
-</head>
+
 <style>
 ul {
     list-style-type: none;
@@ -126,38 +117,17 @@ input[type=submit]:hover {
   </li>
 </ul><br>
 
-<h2>Add Publication for sale</h2>
+<h2>Add Author to system</h2>
 
 
 
 <form action = "ControllerServlet" method = "post">
-	<input type = "hidden" name = "action" value = addPublication >
-	
-	<select id="pubType" name="pubType">
-		<option value="book">Book</option>
-		<option value="article">Article</option>
-		<option value="other">Other</option>
-	</select>
-	
-	<select id="authors" name="authors">
-		<% 
-		for(AuthorBean author: authors){
-			String firstName = author.getFirstname();
-			String lastName = author.getLastname();
-			String fullName = firstName + " " + lastName;
-			%>
-		<option value=<%=fullName %>><%=fullName %></option>
-		<%} %>
-	</select>
+	<input type = "hidden" name = "action" value = addAuthor >
 
- 	
-	<input type="text" name="title" placeholder="Publication Title"><br>
-	<input type="text" name="year" placeholder="Release year"><br>
-	<input type="text" name="price" placeholder="Price"><br>
-	
+ 	<input type="text" name="authorFirstName" placeholder="First name author"><br>
+	<input type="text" name="authorLastName" placeholder="Last name author"><br>
 
-  
-	<input type="submit" value="Add Publication">
+	<input type="submit" value="Add Author">
 </form>
 
 
