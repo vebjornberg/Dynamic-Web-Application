@@ -2,6 +2,7 @@ package WebApplication;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -229,6 +230,12 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher.forward(request, response);
 			
 			break;
+			
+			
+		case "Buy items":
+			//TODO: oppdater purchased, slett cart ++
+			
+			break;
 	
 			
 		case "Confirm Changes":
@@ -449,7 +456,7 @@ public class ControllerServlet extends HttpServlet {
 		case "User DB":
 			ArrayList<String> allUsernames = sql.getUsernames();
 			ArrayList<UserBean> allUsers = new ArrayList<UserBean>();
-			
+			Collections.sort(allUsernames.subList(1, allUsernames.size()));
 			for (String u :allUsernames){
 				allUsers.add(sql.getUserInfo(u));
 				
@@ -460,6 +467,36 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher.forward(request, response);
 			break;
 			
+			
+			
+		case "Publication DB":
+			
+			requestdispatcher = request.getRequestDispatcher("/adminUserDB.jsp");
+			requestdispatcher.forward(request, response);
+			
+			
+			break;
+		case "Toggle banned":
+			String admCheckboxValues[] = request.getParameterValues("userCheckbox");
+			
+			ArrayList<UserBean> allUsers2 = (ArrayList<UserBean>)session.getAttribute("allUsers");
+			for (String str: admCheckboxValues){
+				if (allUsers2.get(Integer.parseInt(str)).getBanned() == 0){
+					allUsers2.get(Integer.parseInt(str)).setBanned(1);
+					sql.updateUser(allUsers2.get(Integer.parseInt(str)));
+				}else if(allUsers2.get(Integer.parseInt(str)).getBanned() == 1){
+					allUsers2.get(Integer.parseInt(str)).setBanned(0);
+					sql.updateUser(allUsers2.get(Integer.parseInt(str)));
+				}
+				
+			}
+			session.setAttribute("allUsers", allUsers2);
+			requestdispatcher = request.getRequestDispatcher("/adminUserDB.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+		
 		case "Remove from Cart":
 			
 			String checkboxValues[] = request.getParameterValues("cartcheckbox");
@@ -671,6 +708,10 @@ public class ControllerServlet extends HttpServlet {
 		}
 		return randomPublications;
 	}
+	
+	
+	
+	
 	
 	
 	
