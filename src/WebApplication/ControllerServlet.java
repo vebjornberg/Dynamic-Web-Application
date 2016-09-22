@@ -67,7 +67,7 @@ public class ControllerServlet extends HttpServlet {
 		
 		RequestDispatcher requestdispatcher;
 		
-		// Checks parameter action
+		// Checks parameter 'action'
 		switch(action){
 		
 		
@@ -478,6 +478,10 @@ public class ControllerServlet extends HttpServlet {
 		}
 		return sb.toString();
 	}
+	
+	
+	
+	
 	
 	
 }
