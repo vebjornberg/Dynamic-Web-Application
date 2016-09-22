@@ -274,13 +274,14 @@ public class mySQLconnection {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
+			Statement statement2 = connection.createStatement();
 			String sqlPublication = "INSERT INTO publication_table (publication_table.type, publication_table.title, publication_table.year, publication_table.price, publication_table.sale, publication_table.numsold) VALUES " +
 			"('" + publicationbean.getType() + "', '" + publicationbean.getTitle() 
 			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "', "+ publicationbean.getSale() + ", " + publicationbean.getNumsold() + ")";
 			String sqlAuthoredBy = "INSERT INTO authoredby_table VALUES " +
 					"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getAuthorid() + "')";
 			statement.executeUpdate(sqlPublication);
-			statement.executeUpdate(sqlAuthoredBy);
+			statement2.executeUpdate(sqlAuthoredBy);
 			closeConnection();
 		} catch (Exception e) {
 			// TODO: handle exception
