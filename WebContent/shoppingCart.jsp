@@ -1,4 +1,4 @@
-<%@page import="WebApplication.*"%>
+<%@page import="WebApplication.*" import= "java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,6 +11,9 @@
 <%
 UserBean user = (UserBean) session.getAttribute("currentUser");
 String username =  (user.getUsername());
+mySQLconnection sql = new mySQLconnection();
+int totalPrice=0;
+
 %>
 <style>
 ul {
@@ -85,6 +88,72 @@ li.dropdown {
     </div>
   </li>
 </ul><br>
-
+<center>
+<h1>My Cart</h1>
+<form action="removefromcart" method="post">
+<table>
+			
+ <tr>
+    <td width="200"></td>
+    <td width="50"></td>
+    <td width="25"></td>
+  </tr>
+   				<tr height = "20px">
+   			
+   				<%
+       			ArrayList<PublicationBean> cartList =  (ArrayList<PublicationBean>)session.getAttribute("cart");
+   				
+   				int i = 0;
+   				if (!cartList.isEmpty()){
+					for (PublicationBean publication : cartList){
+						%>
+					<% totalPrice += Integer.parseInt(publication.getPrice());
+					%>
+	   				
+	  				<td><a href="<%out.println(publication.getTitle());%>"><%out.println(publication.getTitle()); %></a></td>
+	  				<td><a ><%out.println("$" + publication.getPrice()); %></a></td>
+					<td><input type="checkbox" name ="cartcheckbox" value ="<%=i%>" ></td>
+	   				
+	   				
+					</tr>
+					<%
+	   				i++;
+					
+					}
+				}
+   				%>
+   				<% if(!cartList.isEmpty()){ %>
+   					<tr height = "30px">
+   					<td>Total Price: </td>
+	  				<td><a ><%out.println("$" +totalPrice); %></a></td>
+					<td></td>
+					</tr>
+					<%} %>
+   				</table>
+   				<% 
+   				if(cartList.isEmpty()){ 
+   					
+   					
+   					
+   				%>
+   				<h2>Your cart has no items</h2>
+   				<input type="submit"  name ="action" value="Remove from Cart" disabled="disabled">
+				</form>
+   				
+   				<%} 
+   				else{%>
+   				
+				
+  			
+	
+				
+				<input type="submit"  name ="action" value="Remove from Cart">
+		</form>
+		<% }%>
+		<form action="newsearch" method="post">
+			<input name = "action" type = "submit" value="New Search" >
+		</form>
+		<p style="color:grey"><%=cartList.size()%> item(s) in cart.</p>
+	</center>
 </body>
 </html>
