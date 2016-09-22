@@ -3,7 +3,7 @@ package WebApplication;
 public class PublicationBean {
 	
 	private String firstname, lastname, title, year, price, type;
-	private int publicationid, authorid, sale, numsold;
+	private int publicationid, authorid, sale, numsold, numremoved;
 	
 	
 	public PublicationBean() {
@@ -68,6 +68,12 @@ public class PublicationBean {
 	}
 	public void setNumsold(int numsold) {
 		this.numsold = numsold;
+	}
+	public int getNumremoved() {
+		return numremoved;
+	}
+	public void setNumremoved(int numremoved) {
+		this.numremoved = numremoved;
 	}
 	
 	

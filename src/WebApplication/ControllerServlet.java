@@ -420,8 +420,46 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher.forward(request, response);
 		
 			break;
+			
+			
+		case "Administrator login":
+			String admUsername  = request.getParameter("loginUsername");
+			String admPassword = request.getParameter("loginPass");
+			
+			//If username exists
+			if (!isAvailableUsername(admUsername)){
+				UserBean loginUser = sql.getUserInfo(admUsername);			
+				
+				
+				
+				// Checks for username and password up against db
+				if(loginUser.getPassword().equals(admPassword) && loginUser.getAdmin()==1){ 
+					session.setAttribute("adm", true);
+					requestdispatcher = request.getRequestDispatcher("/adminHome.jsp");
+					requestdispatcher.forward(request, response);
+				}
+				else{requestdispatcher = request.getRequestDispatcher("/adminLogin.jsp");
+				requestdispatcher.forward(request, response);}
+			}
+			else{requestdispatcher = request.getRequestDispatcher("/adminLogin.jsp");
+			requestdispatcher.forward(request, response);}
+			
+			break;
 		
-		
+		case "User DB":
+			ArrayList<String> allUsernames = sql.getUsernames();
+			ArrayList<UserBean> allUsers = new ArrayList<UserBean>();
+			
+			for (String u :allUsernames){
+				allUsers.add(sql.getUserInfo(u));
+				
+				
+			}
+			session.setAttribute("allUsers", allUsers);
+			requestdispatcher = request.getRequestDispatcher("/adminUserDB.jsp");
+			requestdispatcher.forward(request, response);
+			break;
+			
 		case "Remove from Cart":
 			
 			String checkboxValues[] = request.getParameterValues("cartcheckbox");
