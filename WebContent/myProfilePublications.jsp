@@ -189,28 +189,7 @@ display:inline;
 
 
 
-<div class = searchField>
-<form action='Edit Account' method='post'>
-		<div class="container">
-		
-		<label>First name</label><br>
-		<input type="text" name="fname" value= "<%=user.getFirstname() %>"><br><br>
-		<label>Last name</label><br>
-		<input type="text" name="lname" value= "<%=user.getLastname() %>"><br><br>
-		<label>Date of Birth</label><br>
-		<input type=text name="bDate" placeholder="ddmmyyyy" value= "<%=user.getDateOfBirth() %>"><br><br>
-		<label>Address</label><br>
-		<input type="text" name="address" value= "<%=user.getAddress()%>"><br><br>	
-		<label>Email</label><br>
-		<input type="text" name="email" value = "<%=user.getEmail() %>"><br><br>
-		<label>Password</label><br>
-		<input type="password" name="pass" value= "<%=user.getPassword() %>"><br><br>
-		<label>Credit card number</label><br>
-		<input type="text" name="creditCardNr" value = "<%=user.getCreditCard() %>"><br><br>
-		</div>
-	<input type = 'submit' name='action' value='Confirm Changes' class = "button button1">
-</form>
-</div>
+
 
 </head>
 <body>
