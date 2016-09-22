@@ -9,20 +9,109 @@
 
 <%-- JSP for viewing and editing your profile --%>
 
- <style type="text/css">
-    .container label {
-	  float:left;
-	  width:25%;
-	  margin-right:5px;
-	}
-	.container input {
-	  float:left;
-	  width:50%;
-	}
+
+
+
+<%
+mySQLconnection con = new mySQLconnection();
+UserBean user = (UserBean) session.getAttribute("currentUser");
+String username = user.getUsername();
+
+//String firstName, lastname, dob, address, email, password, creditCard = infoFromUsername[0], infoFromUsername[1], infoFromUsername[2], osv..   
+%>
+<style>
+html *
+{
+   font-family: Arial !important;
+}
+
+.searchField{
+text-align: center;
+}
+
+input{
+   text-align:center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #b5b5b5;
+    width: 100%;
+}
+
+li {
+    float: left;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+    background-color: #e3e3e3;
+}
+
+li.dropdown {
+	direction: rtl;
 	
-	input[type=submit] {
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color:#b5b5b5;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #e3e3e3}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+h2 {
+    text-align: center;
+}
+
+input[type=text], select {
+	width:50%;
+    padding: 12px 20px;
+    font-size: 14px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=password], select {
+	width:50%;
+    padding: 12px 20px;
+    font-size: 14px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
     width: 50%;
-    background-color: #5252f4;
+    background-color: #1406cb;
     color: white;
     font-size: 14px;
     padding: 14px 20px;
@@ -33,72 +122,7 @@
 }
 
 input[type=submit]:hover {
-    background-color: #434395;
-}
-    
-
-    </style>
-
-
-<%
-mySQLconnection con = new mySQLconnection();
-UserBean user = (UserBean) session.getAttribute("currentUser");
-String username = user.getUsername();
-
-//String firstName, lastname, dob, address, email, password, creditCard = infoFromUsername[0], infoFromUsername[1], infoFromUsername[2], osv..   
-%>
-
-<style>
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    width: 50%;
-
-}
-
-li {
-    float: left;
-}
-
-li a, .dropbtn {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-li a:hover, .dropdown:hover .dropbtn {
-    background-color: #555;
-}
-
-li.dropdown {
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #333;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-
-.dropdown-content a:hover {background-color: #555}
-
-.dropdown:hover .dropdown-content {
-    display: block;
+    background-color: #090079;
 }
 </style>
 </head>
@@ -124,6 +148,8 @@ li.dropdown {
 
 
 <h2> Profile Overview - <%=user.getFirstname()%> <%=user.getLastname() %> </h2>
+
+<div class = searchField>
 <form action='Edit Account' method='post'>
 		<div class="container">
 		
@@ -144,6 +170,7 @@ li.dropdown {
 		</div>
 	<input type = 'submit' name='action' value='Confirm Changes'>
 </form>
+</div>
 
 </head>
 <body>

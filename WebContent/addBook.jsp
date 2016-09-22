@@ -24,13 +24,26 @@ ArrayList<AuthorBean> authors = sql.getAuthors();
 %>
 </head>
 <style>
+html *
+{
+   font-family: Arial !important;
+}
+
+.searchField{
+text-align: center;
+}
+
+input{
+   text-align:center;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
-    width: 50%;
+    background-color: #b5b5b5;
+    width: 100%;
 }
 
 li {
@@ -39,46 +52,50 @@ li {
 
 li a, .dropbtn {
     display: inline-block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 li a:hover, .dropdown:hover .dropbtn {
-    background-color: #555;
+    background-color: #e3e3e3;
 }
 
 li.dropdown {
-    display: inline-block;
+	direction: rtl;
+	
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #333;
+    background-color:#b5b5b5;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .dropdown-content a {
-    color: white;
+    color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     text-align: left;
 }
 
-.dropdown-content a:hover {background-color: #555}
+.dropdown-content a:hover {background-color: #e3e3e3}
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
+h2 {
+    text-align: center;
+}
+
 input[type=text], select {
-    width: 50%;
+	width:50%;
     padding: 12px 20px;
-    margin: 8px 0;
     font-size: 14px;
     display: inline-block;
     border: 1px solid #ccc;
@@ -88,7 +105,7 @@ input[type=text], select {
 
 input[type=submit] {
     width: 50%;
-    background-color: #5252f4;
+    background-color: #1406cb;
     color: white;
     font-size: 14px;
     padding: 14px 20px;
@@ -99,11 +116,9 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #434395;
+    background-color: #090079;
 }
- 
 </style>
-
 
 </head>
 <body>
@@ -129,18 +144,18 @@ input[type=submit]:hover {
 <h2>Add Publication for sale</h2>
 
 
-
+<div class = searchField>
 <form action = "ControllerServlet" method = "post">
 	<input type = "hidden" name = "action" value = addPublication >
 	
-	Publication type<br>
+	Choose publication type<br>
 	<select id="pubType" name="pubType">
 		<option value="book book">Book Book</option>
 		<option value="article">Article</option>
 		<option value="other">Other</option>
-	</select><br>
+	</select><br><br>
 	
-	Author (if you can't find the correct author, you can simply add him/her to the database <a href="addAuthor.jsp">here</a>)<br>
+	Choose Author (if you can't find the correct author, you can simply add him/her to the database <a href="addAuthor.jsp">here</a>)<br>
 	<select id="author" name="author">
 		<% 
  		for(AuthorBean author: authors){
@@ -151,18 +166,18 @@ input[type=submit]:hover {
 			%>
 		<option value="<%=fullName %>"><%=fullName %></option>
 		<% }%>
-	</select>
+	</select><br><br>
 
  	
-	<input type="text" name="title" placeholder="Publication Title"><br>
-	<input type="text" name="year" placeholder="Release year"><br>
-	<input type="text" name="price" placeholder="Price"><br>
+	<input type="text" name="title" placeholder="Publication Title"><br><br>
+	<input type="text" name="year" placeholder="Release year"><br><br>
+	<input type="text" name="price" placeholder="Price (in AUD)"><br><br>
 	
 
   
 	<input type="submit" value="Add Publication">
 </form>
-
+</div>
 
 
 
