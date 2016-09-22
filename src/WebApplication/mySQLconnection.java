@@ -274,8 +274,8 @@ public class mySQLconnection {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
-			String sqlPublication = "INSERT INTO publication_table VALUES " +
-			"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getType() + "', '" + publicationbean.getTitle() 
+			String sqlPublication = "INSERT INTO publication_table (publication_table.type, publication_table.title, publication_table.year, publication_table.price, publication_table.sale, publication_table.numsold) VALUES " +
+			"('" + publicationbean.getType() + "', '" + publicationbean.getTitle() 
 			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "', "+ publicationbean.getSale() + ", " + publicationbean.getNumsold() + ")";
 			String sqlAuthoredBy = "INSERT INTO authoredby_table VALUES " +
 					"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getAuthorid() + "')";
@@ -360,6 +360,18 @@ public class mySQLconnection {
 			closeConnection();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+		}
+	}
+	public void addAuthor(String firstname, String lastname) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sqlAuthor = "INSERT INTO author_table (author_table.firstname, author_table.lastname) VALUES " +
+			"('" + firstname + "', '" + lastname + "')";
+			statement.executeUpdate(sqlAuthor);
+			closeConnection();
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 
