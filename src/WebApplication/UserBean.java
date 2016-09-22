@@ -13,13 +13,11 @@ public class UserBean {
 	private String confirmationHash;
 	private int admin;
 	private int activated;
+	private int banned;
 	
 	
 	public UserBean() {
-		
 	}
-	
-	
 	public String getConfirmationHash() {
 		return confirmationHash;
 	}
@@ -85,6 +83,12 @@ public class UserBean {
 	}
 	public void setActivated(int activated) {
 		this.activated = activated;
+	}
+	public int getBanned() {
+		return banned;
+	}
+	public void setBanned(int banned) {
+		this.banned = banned;
 	}
 	
 	
