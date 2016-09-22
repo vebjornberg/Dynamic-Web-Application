@@ -1,4 +1,4 @@
-<%@page import="WebApplication.*" import="java.sql.DriverManager" import="java.sql.Connection"%>
+<%@page import="WebApplication.*" import="java.sql.DriverManager" import="java.sql.Connection" import= "java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -108,7 +108,7 @@ input[type=text]:focus {
     <a class="dropbtn"><%=username %></a>
     <div class="dropdown-content">
       <a href="myProfile.jsp">My Profile</a>
-      <a href="">Log Out</a>
+      <a href="logoutRedirect.jsp">Log Out</a>
 
     </div>
   </li>
@@ -123,5 +123,24 @@ input[type=text]:focus {
 
 
 then a list of 10 random publications;<br>
+
+<%
+ArrayList<PublicationBean> randomList = (ArrayList<PublicationBean>) session.getAttribute("randomList");
+String keyWord = request.getParameter("search");
+%>
+
+<table>
+<tr>
+	<th>Random List</th>
+</tr>
+
+<%for(PublicationBean pubBean : randomList){
+	String title = pubBean.getTitle();%>
+		<tr>
+			<td><%=title %></td>
+		</tr>
+		<%}%>
+</table>
+
 </body>
 </html>

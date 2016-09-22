@@ -37,13 +37,13 @@
 		<label>Date of Birth:</label> <input type=text name="bDate" placeholder="ddmmyyyy"><br><br>
 		<label>Address:</label><input type="text" name="adress"><br><br>
 		
-		<label>Email</label><input type="text" name="email"><br>
-		<label>Repeat email:</label> <input type="text" name="emailRep"><br><br>
+		<label>Email</label><input type="text" name="email" placeholder="Must contain @ to be valid"><br>
+		<label>Repeat email:</label> <input type="text" name="emailRep" placeholder="Emails must be equal"><br><br>
 		
-		<label>Password:</label><input type="password" name="pass"><br>
-		<label>Repeat password:</label><input type="password" name="passRep"><br><br>
+		<label>Password:</label><input type="password" name="pass" placeholder="Must be at least 6 characters"><br>
+		<label>Repeat password:</label><input type="password" name="passRep" placeholder = "Passwords must be equal"><br><br>
 		
-		<label>Credit card#:</label><input type="text" name="creditCardNr"><br><br>
+		<label>Credit card#:</label><input type="text" name="creditCardNr" placeholder="Must be 8 digits"><br><br>
 		
 		</div>
 		<input type="submit" name = action value="Register user"><br>
