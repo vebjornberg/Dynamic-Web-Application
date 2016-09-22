@@ -157,6 +157,7 @@ public class mySQLconnection {
 				publicationbean.setLastname(result.getString("lastname"));
 				publicationbean.setTitle(result.getString("title"));
 				publicationbean.setSale(result.getInt("sale"));
+				publicationbean.setNumsold(result.getInt("numsold"));
 				publications.add(publicationbean);
 			}
 			result.close();
@@ -273,7 +274,7 @@ public class mySQLconnection {
 			Statement statement = connection.createStatement();
 			String sqlPublication = "INSERT INTO publication_table VALUES " +
 			"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getType() + "', '" + publicationbean.getTitle() 
-			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "' , "+ publicationbean.getSale() +")";
+			+ "', '" + publicationbean.getYear() + "', '" + publicationbean.getPrice() + "', "+ publicationbean.getSale() + ", " + publicationbean.getNumsold() + ")";
 			String sqlAuthoredBy = "INSERT INTO authoredby_table VALUES " +
 					"('" + publicationbean.getPublicationid() + "', '" + publicationbean.getAuthorid() + "')";
 			statement.executeUpdate(sqlPublication);
@@ -332,6 +333,7 @@ public class mySQLconnection {
 				publicationbean.setLastname(result.getString("lastname"));
 				publicationbean.setTitle(result.getString("title"));
 				publicationbean.setSale(result.getInt("sale"));
+				publicationbean.setNumsold(result.getInt("numsold"));
 				publications.add(publicationbean);
 			}
 			result.close();
@@ -349,7 +351,7 @@ public class mySQLconnection {
 			Statement statement = connection.createStatement();
 			String sql = "UPDATE publication_table SET publication_table.publicationid=" + publicationbean.getPublicationid() + ", publication_table.type='" + publicationbean.getType() +"', "
 					+ "publication_table.title='" + publicationbean.getTitle() + "', publication_table.year='" + publicationbean.getYear() + "', "
-					+ "publication_table.price='" + publicationbean.getPrice() + "', publication_table.sale=" + publicationbean.getSale() + " "
+					+ "publication_table.price='" + publicationbean.getPrice() + "', publication_table.sale=" + publicationbean.getSale() + ", publication_table.numsold=" + publicationbean.getNumsold() + " "
 					+ "WHERE publication_table.publicationid=" + publicationbean.getPublicationid();
 			statement.executeUpdate(sql);
 			System.out.println(sql);
