@@ -499,6 +499,40 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
+	public ArrayList<PublicationBean> getBoughtPublications(int biggerthan) { //Kan egentlig bare bruke getPublications, do logic in business layer
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT publication_table.*, author_table.* "
+					+ "FROM publication_table INNER JOIN authoredby_table "
+					+ "ON authoredby_table.publicationid = publication_table.publicationid "
+					+ "INNER JOIN author_table ON author_table.authorid = authoredby_table.authorid "
+					+ "WHERE publication_table.numsold>0";
+			ResultSet result = statement.executeQuery(sql);
+			ArrayList<PublicationBean> publications = new ArrayList<PublicationBean>();
+			while(result.next()) {
+				PublicationBean publicationbean = new PublicationBean();
+				publicationbean.setAuthorid(result.getInt("authorid"));
+				publicationbean.setPublicationid(result.getInt("publicationid"));
+				publicationbean.setType(result.getString("type"));
+				publicationbean.setYear(result.getString("year"));
+				publicationbean.setPrice(result.getString("price"));
+				publicationbean.setFirstname(result.getString("firstname"));
+				publicationbean.setLastname(result.getString("lastname"));
+				publicationbean.setTitle(result.getString("title"));
+				publicationbean.setSale(result.getInt("sale"));
+				publicationbean.setNumsold(result.getInt("numsold"));
+				publications.add(publicationbean);
+			}
+			result.close();
+			closeConnection();
+			return publications;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			// TODO: handle exception
+		}
+	}
 
 }
 
