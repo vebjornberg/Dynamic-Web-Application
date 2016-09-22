@@ -477,11 +477,23 @@ public class mySQLconnection {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
+			deleteCart(username);
 			for(int i=0; i<cart.size(); i++) {
 				String sqlCart = "INSERT INTO cart_table (cart_table.username, cart_table.publicationid) VALUES "
 						+ "('" + username + "', " + cart.get(i).getPublicationid() + ")";
 				statement.executeUpdate(sqlCart);
 			}
+			closeConnection();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	public void deleteCart(String username) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sqlCart = "DELETE FROM cart_table WHERE cart_table.username='" + username + "'";
+			statement.executeUpdate(sqlCart);
 			closeConnection();
 		} catch (Exception e) {
 			// TODO: handle exception
