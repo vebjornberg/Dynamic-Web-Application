@@ -85,17 +85,26 @@ public class ControllerServlet extends HttpServlet {
 				// Checks for username and password up against db
 				if(loginUser.getPassword().equals(password)){ 
 					
-					// Sets current User
-					session.setAttribute("currentUser", loginUser);
-					
-					//Redirects to search.jsp/HOME page
-					requestdispatcher = request.getRequestDispatcher("/search.jsp");
-					requestdispatcher.forward(request, response);
+					if (loginUser.getActivated() ==0){
+						session.setAttribute("loginError", "User is not activated");
+					}
+					else if (loginUser.getBanned() ==1){
+						session.setAttribute("loginError", "User is banned");
+					}
+					else{
+						// Sets current User
+						session.setAttribute("currentUser", loginUser);
+						
+						//Redirects to search.jsp/HOME page
+						requestdispatcher = request.getRequestDispatcher("/search.jsp");
+						requestdispatcher.forward(request, response);
+					}
 				}
 			}
 			else{
 				
-				session.setAttribute("wrongPassword", true);
+				
+				session.setAttribute("loginError", "Username and password does not match");
 				requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
 				requestdispatcher.forward(request, response);
 			}
