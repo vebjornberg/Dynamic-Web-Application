@@ -136,7 +136,7 @@ li.dropdown {
 		<label>Address</label><br>
 		<input type="text" name="address" value= "<%=user.getAddress()%>"><br><br>	
 		<label>Email</label><br>
-		<input type="text" name="email" value = "<%=user.getAddress() %>"><br><br>
+		<input type="text" name="email" value = "<%=user.getEmail() %>"><br><br>
 		<label>Password</label><br>
 		<input type="password" name="pass" value= "<%=user.getPassword() %>"><br><br>
 		<label>Credit card number</label><br>

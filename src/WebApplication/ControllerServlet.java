@@ -141,7 +141,65 @@ public class ControllerServlet extends HttpServlet {
 			
 			break;
 	
+			
+		case "Confirm Changes":
 		
+			boolean okChange = true;
+			session.setAttribute("updateProfileError", "");
+			
+			if (!isValidFirstName(request.getParameter("fname"))){
+				session.setAttribute("updateProfileError", "Not valid firstname, only letters a-z.");
+				okChange=false;
+			}
+			else if (!isValidLastName(request.getParameter("lname"))){
+				session.setAttribute("updateProfileError", "Not valid lastname, only letters a-z.");
+				okChange=false;
+			}
+			
+			else if (!isValidDOB(request.getParameter("bDate"))){
+				session.setAttribute("updateProfileError", "Not valid date of birth, ex: 01031989.");
+				okChange=false;
+			}
+			else if(!isValidAddress(request.getParameter("address"))){
+				session.setAttribute("updateProfileError", "Address is not valid, please try again.");
+				okChange=false;
+			}
+			else if (!isValidEmailAddress(request.getParameter("email"))){
+				session.setAttribute("updateProfileError", "Not valid email, ex: john@gmail.com.");
+				okChange=false;
+			}
+			else if (!isValidPassword(request.getParameter("pass"))){
+				session.setAttribute("updateProfileError", "Not a valid password. Must be minimum"
+						+ " six characters long.");
+				okChange=false;
+			}
+			
+			System.out.println(okChange + " "+ session.getAttribute("updateProfileError"));
+			if(okChange){
+				UserBean newUpdateUser = (UserBean)session.getAttribute("currentUser");
+				
+				newUpdateUser.setUsername(newUpdateUser.getUsername());
+				
+				newUpdateUser.setAddress(request.getParameter("address"));
+				
+				newUpdateUser.setCreditCard(request.getParameter("creditCardNr"));
+				newUpdateUser.setEmail(request.getParameter("email"));
+				newUpdateUser.setDateOfBirth(request.getParameter("bDate"));
+				newUpdateUser.setFirstname(request.getParameter("fname"));
+				newUpdateUser.setLastname(request.getParameter("lname"));
+				newUpdateUser.setPassword(request.getParameter("pass"));
+				
+				System.out.println("usr: " + newUpdateUser.getUsername() + "\nadress: " + newUpdateUser.getAddress() + "\nemail: "
+						+ newUpdateUser.getEmail() + "\nDoB: " + newUpdateUser.getDateOfBirth()
+				);
+			
+				sql.updateUser(newUpdateUser);
+				}
+				requestdispatcher = request.getRequestDispatcher("/myProfile.jsp");
+				requestdispatcher.forward(request, response);
+				//TODO: vis registration error
+				break;
+			
 		
 		case "Register user":
 			
