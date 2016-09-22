@@ -32,7 +32,7 @@ for (PublicationBean pub: allPublications){
 <tr>
 	<td><%out.println(pub.getTitle()); %></td>
 	 <td><%=pub.getNumsold() %></td>
-	 <td><%=pub.getNumremoved()%></td>
+	 <td><%=pub.getNumremoved()%></td> 
 	 <td><%=pub.getSale()%></td>
 	 <td><input type="checkbox" name ="publCheckbox" value ="<%=i%>" ></td>
 
