@@ -110,7 +110,7 @@ input[type=password], select {
 }
 
 input.button1{
-    width: 50%;
+    width: 30%;
     background-color: #1406cb;
     color: white;
     font-size: 14px;
@@ -183,7 +183,7 @@ display:inline;
 	</form>
 
     <form action="myProfilePublications.jsp">
-		<input type = 'submit' name='action' value='My Publications' class = "button button2">
+		<input type = 'submit' name='action' value='Publications added by me' class = "button button2">
 	</form>
 </div><br>
 

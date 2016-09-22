@@ -102,7 +102,7 @@ input[type=text], select {
 }
 
 input[type=submit] {
-    width: 50%;
+    width: 30%;
     background-color: #1406cb;
     color: white;
     font-size: 14px;
