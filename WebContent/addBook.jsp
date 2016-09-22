@@ -84,7 +84,7 @@ li.dropdown {
     <a class="dropbtn"><%=username %></a>
     <div class="dropdown-content">
       <a href="myProfile.jsp">My Profile</a>
-      <a href="">Log Out</a>
+      <a href="logoutRedirect.jsp">Log Out</a>
 
     </div>
   </li>
