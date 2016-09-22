@@ -584,7 +584,7 @@ public class mySQLconnection {
 		PublicationBean randomPublication;
 		
 		while(randomPublications.size() < 10){
-			int num = random.nextInt(getPublications("").size()) + 1 ;
+			int num = random.nextInt( getPublications("").size() ) ;
 			randomPublication = getPublications("").get(num); 
 			if(randomPublication.getSale() == 1){
 				if(!randomPublications.contains(randomPublication)){

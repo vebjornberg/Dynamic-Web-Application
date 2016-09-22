@@ -215,7 +215,6 @@ table tr:hover td {
 	String keyWord = request.getParameter("search");
 	mySQLconnection sql = new mySQLconnection();
 	ArrayList<PublicationBean> randomList = sql.generateRandomList();
-
 %>
 </head>
 <body>
