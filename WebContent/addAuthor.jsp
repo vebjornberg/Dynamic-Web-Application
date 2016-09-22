@@ -11,7 +11,6 @@
 <%
 UserBean user = (UserBean) session.getAttribute("currentUser");
 String username = user.getUsername();
-
 %>
 
 <style>

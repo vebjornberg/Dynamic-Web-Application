@@ -16,7 +16,7 @@ UserBean user = (UserBean) session.getAttribute("currentUser");
 String username = user.getUsername();
 mySQLconnection sql = new mySQLconnection();
 
-//ArrayList<AuthorBean> authors = sql.getAuthors();
+ArrayList<AuthorBean> authors = sql.getAuthors();
 
 
 		
@@ -133,21 +133,24 @@ input[type=submit]:hover {
 <form action = "ControllerServlet" method = "post">
 	<input type = "hidden" name = "action" value = addPublication >
 	
+	Publication type<br>
 	<select id="pubType" name="pubType">
-		<option value="book">Book</option>
+		<option value="book book">Book Book</option>
 		<option value="article">Article</option>
 		<option value="other">Other</option>
-	</select>
+	</select><br>
 	
-	<select id="authors" name="authors">
+	Author (if you can't find the correct author, you can simply add him/her to the database <a href="addAuthor.jsp">here</a>)<br>
+	<select id="author" name="author">
 		<% 
-		for(AuthorBean author: authors){
-			String firstName = author.getFirstname();
-			String lastName = author.getLastname();
-			String fullName = firstName + " " + lastName;
+ 		for(AuthorBean author: authors){
+ 			String firstName = author.getFirstname();
+ 			String lastName = author.getLastname();
+ 			String fullName = firstName + " " + lastName;
+ 			
 			%>
-		<option value=<%=fullName %>><%=fullName %></option>
-		<%} %>
+		<option value="<%=fullName %>"><%=fullName %></option>
+		<% }%>
 	</select>
 
  	
