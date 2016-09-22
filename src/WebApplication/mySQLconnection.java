@@ -565,6 +565,18 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
+	public void deletePublication(PublicationBean publicationbean) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sqlCart = "DELETE FROM publication_table WHERE publication_table.publicationid='" + publicationbean.getPublicationid() + "'";
+			statement.executeUpdate(sqlCart);
+			closeConnection();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
 
 }
 
