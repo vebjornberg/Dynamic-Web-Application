@@ -107,6 +107,11 @@ public class ControllerServlet extends HttpServlet {
 						requestdispatcher = request.getRequestDispatcher("/search.jsp");
 						requestdispatcher.forward(request, response);
 					}
+				}else{
+					session.setAttribute("loginError", "Username and password does not match");
+					requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
+					requestdispatcher.forward(request, response);
+					
 				}
 			}
 			else{

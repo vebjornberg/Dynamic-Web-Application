@@ -10,10 +10,12 @@
 <body>
 <%
 UserBean prevUser = (UserBean)session.getAttribute("currentUser");
+//CartBean cartBean = (CartBean)session.getAttribute("cart");
 System.out.println(prevUser.getUsername() + " has been signed out");
 
 session.invalidate();
 request.getSession();
+//session.setAttribute("cart", cartBean);
 // if ( (UserBean)session.getAttribute("currentUser") == null){
 // 	System.out.println("Ingen current user");
 // }else{
