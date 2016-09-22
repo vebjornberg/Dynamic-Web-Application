@@ -3,6 +3,7 @@ package WebApplication;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -72,20 +73,28 @@ public class ControllerServlet extends HttpServlet {
 		
 		case "Sign in":
 			
-			String username  = request.getParameter("username");
-			String password = request.getParameter("pass");
+			String username  = request.getParameter("loginUsername");
+			String password = request.getParameter("loginPass");
 			
-						
-			//TODO: Check if username and password matches in database.
-			//TODO: Send to search/home page
-			session.setAttribute("currentUser", sql.getUserInfo(username));
-			if(true){ // (isvalid(username, password){
+			//If username exists
+			if (!isAvailableUsername(username)){
+				UserBean loginUser = sql.getUserInfo(username);			
 				
-		
-				requestdispatcher = request.getRequestDispatcher("/search.jsp");
-				requestdispatcher.forward(request, response);
+				
+				
+				// Checks for username and password up against db
+				if(loginUser.getPassword().equals(password)){ 
+					
+					// Sets current User
+					session.setAttribute("currentUser", loginUser);
+					
+					//Redirects to search.jsp/HOME page
+					requestdispatcher = request.getRequestDispatcher("/search.jsp");
+					requestdispatcher.forward(request, response);
+				}
 			}
 			else{
+				
 				session.setAttribute("wrongPassword", true);
 				requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
 				requestdispatcher.forward(request, response);
@@ -140,14 +149,72 @@ public class ControllerServlet extends HttpServlet {
 			
 			break;
 	
+			
+		case "Confirm Changes":
 		
+			boolean okChange = true;
+			session.setAttribute("updateProfileError", "");
+			
+			if (!isValidFirstName(request.getParameter("fname"))){
+				session.setAttribute("updateProfileError", "Not valid firstname, only letters a-z.");
+				okChange=false;
+			}
+			else if (!isValidLastName(request.getParameter("lname"))){
+				session.setAttribute("updateProfileError", "Not valid lastname, only letters a-z.");
+				okChange=false;
+			}
+			
+			else if (!isValidDOB(request.getParameter("bDate"))){
+				session.setAttribute("updateProfileError", "Not valid date of birth, ex: 01031989.");
+				okChange=false;
+			}
+			else if(!isValidAddress(request.getParameter("address"))){
+				session.setAttribute("updateProfileError", "Address is not valid, please try again.");
+				okChange=false;
+			}
+			else if (!isValidEmailAddress(request.getParameter("email"))){
+				session.setAttribute("updateProfileError", "Not valid email, ex: john@gmail.com.");
+				okChange=false;
+			}
+			else if (!isValidPassword(request.getParameter("pass"))){
+				session.setAttribute("updateProfileError", "Not a valid password. Must be minimum"
+						+ " six characters long.");
+				okChange=false;
+			}
+			
+			System.out.println(okChange + " "+ session.getAttribute("updateProfileError"));
+			if(okChange){
+				UserBean newUpdateUser = (UserBean)session.getAttribute("currentUser");
+				
+				newUpdateUser.setUsername(newUpdateUser.getUsername());
+				
+				newUpdateUser.setAddress(request.getParameter("address"));
+				
+				newUpdateUser.setCreditCard(request.getParameter("creditCardNr"));
+				newUpdateUser.setEmail(request.getParameter("email"));
+				newUpdateUser.setDateOfBirth(request.getParameter("bDate"));
+				newUpdateUser.setFirstname(request.getParameter("fname"));
+				newUpdateUser.setLastname(request.getParameter("lname"));
+				newUpdateUser.setPassword(request.getParameter("pass"));
+				
+				System.out.println("usr: " + newUpdateUser.getUsername() + "\nadress: " + newUpdateUser.getAddress() + "\nemail: "
+						+ newUpdateUser.getEmail() + "\nDoB: " + newUpdateUser.getDateOfBirth()
+				);
+			
+				sql.updateUser(newUpdateUser);
+				}
+				requestdispatcher = request.getRequestDispatcher("/myProfile.jsp");
+				requestdispatcher.forward(request, response);
+				//TODO: vis registration error
+				break;
+			
 		
 		case "Register user":
 			
 			boolean ok = true;
 			session.setAttribute("registrationError", "");
 			
-			if (isAvailableUsername(request.getParameter("username"))){
+			if (!isAvailableUsername(request.getParameter("username"))){
 				session.setAttribute("registrationError", "Not valid username, already taken.");
 				ok=false;
 			}
@@ -155,14 +222,46 @@ public class ControllerServlet extends HttpServlet {
 				session.setAttribute("registrationError", "Not valid username, only letters a-z and numbers.");
 				ok=false;
 			}
+			else if (!isValidFirstName(request.getParameter("fname"))){
+				session.setAttribute("registrationError", "Not valid firstname, only letters a-z.");
+				ok=false;
+			}
+			else if (!isValidLastName(request.getParameter("lname"))){
+				session.setAttribute("registrationError", "Not valid lastname, only letters a-z.");
+				ok=false;
+			}
+			
 			else if (!isValidDOB(request.getParameter("bDate"))){
 				session.setAttribute("registrationError", "Not valid date of birth, ex: 01031989.");
 				ok=false;
 			}
-//			else if (!isValidEmailAddress("email")){
-//				session.setAttribute("registrationError", "Not valid email, ex: john@gmail.com.");
-//				ok=false;
-//			}
+			//Check Address here!
+			else if(!isValidAddress(request.getParameter("adress"))){
+				session.setAttribute("registrationError", "Address is not valid, please try again.");
+				ok=false;
+			}
+			else if (!isAvailableEmailAddress(request.getParameter("email"))){
+				session.setAttribute("registrationError", "Email already exists. Please try another one.");
+				ok = false;
+			}
+			else if (!isValidEmailAddress(request.getParameter("email"))){
+				session.setAttribute("registrationError", "Not valid email, ex: john@gmail.com.");
+				ok=false;
+			}
+			else if (!isValidRepeatedEmail(request.getParameter("emailRep"), request.getParameter("email"))){
+				session.setAttribute("registrationError", "Email addresses should be equal, please try again.");
+				ok=false;
+			}
+			else if (!isValidPassword(request.getParameter("pass"))){
+				session.setAttribute("registrationError", "Not a valid password. Must be minimum"
+						+ " six characters long.");
+				ok=false;
+			}
+			else if(!isValidRepeatedPassword(request.getParameter("pass"), request.getParameter("passRep"))){
+				session.setAttribute("registrationError", "Passwords not equal, please try again.");
+				ok=false;
+			}
+			
 			
 			System.out.println(ok + " "+ session.getAttribute("registrationError"));
 			if(ok){
@@ -191,7 +290,8 @@ public class ControllerServlet extends HttpServlet {
 			
 				sql.setUserBean(newCurrentUser);
 				
-				System.out.println("Setter userbean i SQLdatabase");
+				
+				
 				
 				
 			try {
@@ -202,7 +302,10 @@ public class ControllerServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			}
-		
+			requestdispatcher = request.getRequestDispatcher("/register.jsp");
+			requestdispatcher.forward(request, response);
+			//TODO: vis registration error
+			
 			
 			
 			break;
@@ -254,32 +357,40 @@ public class ControllerServlet extends HttpServlet {
 	
 	// HELP METHODS
 	
-	public boolean isCorrectLogin(String username, String password){
-		return true;
-	}
 	
-	
-	
+	//Check if username is valid
 	public boolean isValidUsername(String username){
         if(!username.matches("^[a-zA-Z0-9]*$")){
-            return false;}
+            return false;
+        }
 		return true;
 	}
-	
-	
+	//Check if username already exists 
 	public boolean isAvailableUsername(String username){
-		if (!sql.getUsernames().contains(username)) {
+		if (sql.getUsernames().contains(username)) {
 			return false;
 		}
 		return true;
 	}
-	
-	
-	
-	// Checks birthdate
+	//Check if firstname is valid
+	public boolean isValidFirstName(String firstname){
+		boolean result = true;
+		if (firstname.isEmpty()){
+			result = false;
+		}
+		return result;
+	}
+	//Check if lastname is valid
+	public boolean isValidLastName(String lastname){
+		boolean result = true;
+		if (lastname.isEmpty() || lastname.contains("[0-9]*@!#%&/§∞€£™|[]≈{}¶‰¢¥®¡Ÿ()=?+^:;,§")){
+			result = false;
+		}
+		return result;
+	}
+	// Check if birthdate is valid
 	public boolean isValidDOB(String dob){
 		if(!(dob.trim().length()==8)){
-			System.out.println("ikke riktig antall");
 			return false;
 		}
 		if(!dob.matches("[0-9]+")){
@@ -293,20 +404,58 @@ public class ControllerServlet extends HttpServlet {
 				}
 		return true;
 	}
-	
-	// Checks email address
-	public boolean isValidEmailAddress(String email) {
-		   boolean result = true;
-		  
-		   //TODO: check email
-		   
-		   ArrayList<String> emails = sql.getEmails();
-//		   System.out.println(emails);
-		 if (emails.contains(email)) {
-			result = false;}
-		   return result;
+	//Check if address is valid
+	public boolean isValidAddress(String address){
+		boolean result = true;
+		if (address.isEmpty()){
+			result = false;
+		}
+		return result;
 	}
-	
+	//Check if email is valid
+	public boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+           InternetAddress emailAddr = new InternetAddress(email);
+           emailAddr.validate();
+        } catch (AddressException ex) {
+           result = false;
+        }
+        return result;
+    }
+	//Checks if email already exists
+	public boolean isAvailableEmailAddress(String email){
+		boolean result = true;
+		ArrayList<String> emails = sql.getEmails();
+		if (emails.contains(email)) {
+			result = false;
+		}
+		return result;
+	}
+	//Check if repeated email is equal to the first one 
+	public boolean isValidRepeatedEmail(String repeatedEmail, String email){
+		boolean result = true;
+		if (!repeatedEmail.equals(email)){
+			result = false;
+		}
+		return result;
+	}
+	//Check if password is long enough 
+	public boolean isValidPassword(String password){
+		boolean result = true;
+		if (password.length()<6){
+			result = false;
+		}
+		return result;
+	}
+	//Check if repeated password is equal to the first one
+	public boolean isValidRepeatedPassword(String repeatedPassword, String password){
+		boolean result = true;
+		if (!repeatedPassword.equals(password)){
+			result = false;
+		}
+		return result;
+	}
 	
 	
 	public String getConfirmationLink(String username){

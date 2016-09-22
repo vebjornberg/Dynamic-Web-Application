@@ -139,7 +139,7 @@ input[type=submit]:hover {
  	<input type="text" name="authorFirstName" placeholder="First name author"><br>
 	<input type="text" name="authorLastName" placeholder="Last name author"><br>
 	<input type="text" name="title" placeholder="Publication Title"><br>
-	<input type="text" name="year" placeholder="Realeas year"><br>
+	<input type="text" name="year" placeholder="Release year"><br>
 
 	<select id="pubType" name="pubType">
 		<option value="book">Book</option>
