@@ -27,8 +27,8 @@ public class ControllerServlet extends HttpServlet {
 	EmailSender es = new EmailSender();
 	mySQLconnection sql = new mySQLconnection();
 	
-	
-	
+	//All publications
+	ArrayList<PublicationBean> allPublications = sql.getPublications("");
 
     public ControllerServlet() {
         super();
@@ -48,8 +48,11 @@ public class ControllerServlet extends HttpServlet {
 	// DO GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("This is doGet();");
-	
+		
+
+					
 	}
+
 
 	
 	
@@ -85,6 +88,7 @@ public class ControllerServlet extends HttpServlet {
 				// Checks for username and password up against db
 				if(loginUser.getPassword().equals(password)){ 
 					
+
 					if (loginUser.getActivated() ==0){
 						session.setAttribute("loginError", "User is not activated");
 					}
@@ -94,6 +98,10 @@ public class ControllerServlet extends HttpServlet {
 					else{
 						// Sets current User
 						session.setAttribute("currentUser", loginUser);
+						
+
+						//Sets the random List
+						session.setAttribute("randomList", getRandomList());
 						
 						//Redirects to search.jsp/HOME page
 						requestdispatcher = request.getRequestDispatcher("/search.jsp");
@@ -108,6 +116,8 @@ public class ControllerServlet extends HttpServlet {
 				requestdispatcher = request.getRequestDispatcher("/signIn.jsp");
 				requestdispatcher.forward(request, response);
 			}
+			
+			
 			break;
 			
 		case "simpleSearch":
@@ -486,6 +496,34 @@ public class ControllerServlet extends HttpServlet {
 		    sb.append(c);
 		}
 		return sb.toString();
+	}
+	
+	//Generate random numbers
+	public ArrayList<Integer> generateRandomNumbers(){
+		ArrayList<Integer> randomList = new ArrayList<Integer>();
+		Random random = new Random();
+		while (randomList.size()<10){
+			int ran = random.nextInt(allPublications.size());
+			if (!randomList.contains(ran)){
+				randomList.add(ran);
+			}
+		
+		}
+		return randomList;
+	}
+	
+	//Generate the random list
+	public ArrayList<PublicationBean> getRandomList(){
+		//Generate the random list
+		ArrayList<PublicationBean> randomPublications = new ArrayList<PublicationBean>();
+		//List containing random numbers
+		ArrayList<Integer> randomNumbers = new ArrayList<Integer>();
+		randomNumbers = generateRandomNumbers();
+		//Generate the random elements into randomPublications
+		for (int r : randomNumbers){
+			randomPublications.add(allPublications.get(r));
+		}
+		return randomPublications;
 	}
 	
 	
