@@ -473,6 +473,20 @@ public class mySQLconnection {
 			// TODO: handle exception
 		}
 	}
+	public void addCart(String username, ArrayList<PublicationBean> cart) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			for(int i=0; i<cart.size(); i++) {
+				String sqlCart = "INSERT INTO cart_table (cart_table.username, cart_table.publicationid) VALUES "
+						+ "('" + username + "', " + cart.get(i).getPublicationid() + ")";
+				statement.executeUpdate(sqlCart);
+			}
+			closeConnection();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 
 }
 

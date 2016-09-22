@@ -10,8 +10,11 @@
 <body>
 <%
 UserBean prevUser = (UserBean)session.getAttribute("currentUser");
-//CartBean cartBean = (CartBean)session.getAttribute("cart");
+CartBean cartBean = (CartBean)session.getAttribute("cart");
 System.out.println(prevUser.getUsername() + " has been signed out");
+
+mySQLconnection connection = new mySQLconnection();
+connection.addCart(prevUser.getUsername(), cartBean.getShoppingCart());
 
 session.invalidate();
 request.getSession();
