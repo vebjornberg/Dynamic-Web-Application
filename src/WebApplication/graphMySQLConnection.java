@@ -13,6 +13,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import org.eclipse.jdt.internal.compiler.batch.Main;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.mysql.jdbc.Driver;
 
@@ -26,6 +28,8 @@ public class graphMySQLConnection {
 	
 	static DataSource datasource = null;
 	static Connection connection = null;
+	
+	ArrayList<JSONObject> graph = new ArrayList<JSONObject>();
 	
 
 	public void establishConnection() {
@@ -46,51 +50,33 @@ public class graphMySQLConnection {
 				e.printStackTrace();
 			}
 		}
-	}
-	public ArrayList<GraphBean> entityStore() {
+	}	
+	public ArrayList<JSONObject> graphStore() {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
-			String sql ="SELECT * FROM entity_store"; 
-			ResultSet result = statement.executeQuery(sql);
-			ArrayList<GraphBean> edgeEntities = new ArrayList<GraphBean>();
-			while(result.next()) {
-				GraphBean graphEntityBean = new GraphBean();
-				graphEntityBean.setNode_from(result.getString("entity_id"));
-				graphEntityBean.setEdge(result.getString("entity_attribute"));
-				graphEntityBean.setNode_to(result.getString("attribute_value"));
-				edgeEntities.add(graphEntityBean);
-			}
-			result.close();
-			closeConnection();
-			return edgeEntities;
-		} catch (Exception e) {
-			return null;
-			// TODO: handle exception
-		}
-	}
-	
-	public ArrayList<GraphBean> graphStore() {
-		try {
-			establishConnection();
-			Statement statement = connection.createStatement();
+			ArrayList<JSONObject> graph = new ArrayList<JSONObject>();
 			String sql ="SELECT * FROM graph_store"; 
 			ResultSet result = statement.executeQuery(sql);
-			ArrayList<GraphBean> edgeEntities = new ArrayList<GraphBean>();
 			while(result.next()) {
-				GraphBean graphEntityBean = new GraphBean();
-				graphEntityBean.setNode_from(result.getString("node_from"));
-				graphEntityBean.setEdge(result.getString("edge"));
-				graphEntityBean.setNode_to(result.getString("node_to"));
-				edgeEntities.add(graphEntityBean);
+				JSONObject oJsonInner = new JSONObject();
+				JSONArray arr = new JSONArray();
+				oJsonInner.put("source",result.getString("node_from"));
+				oJsonInner.put("target",result.getString("node_to"));
+				graph.add(oJsonInner);
 			}
 			result.close();
 			closeConnection();
-			return edgeEntities;
+			System.out.println(graph);
+			return graph;
 		} catch (Exception e) {
 			return null;
 			// TODO: handle exception
 		}
+	}
+	public static void main(String[] args) {
+		graphMySQLConnection con = new graphMySQLConnection();
+		con.graphStore();
 	}
 
 }
