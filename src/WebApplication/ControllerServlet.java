@@ -2,6 +2,7 @@ package WebApplication;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -109,8 +110,7 @@ public class ControllerServlet extends HttpServlet {
 						session.setAttribute("currentUser", loginUser);
 						session.setAttribute("cart", sql.getCart(username));
 
-						//Sets the random List
-						session.setAttribute("randomList", getRandomList());
+					
 						
 						session.setAttribute("wrongPassword", false);
 						
@@ -227,6 +227,12 @@ public class ControllerServlet extends HttpServlet {
 			session.setAttribute("getPasswordPressed", false);
 			requestdispatcher = request.getRequestDispatcher("/forgotPassword.jsp");
 			requestdispatcher.forward(request, response);
+			
+			break;
+			
+			
+		case "Buy items":
+			//TODO: oppdater purchased, slett cart ++
 			
 			break;
 	
@@ -449,7 +455,7 @@ public class ControllerServlet extends HttpServlet {
 		case "User DB":
 			ArrayList<String> allUsernames = sql.getUsernames();
 			ArrayList<UserBean> allUsers = new ArrayList<UserBean>();
-			
+			Collections.sort(allUsernames.subList(1, allUsernames.size()));
 			for (String u :allUsernames){
 				allUsers.add(sql.getUserInfo(u));
 				
@@ -460,6 +466,83 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher.forward(request, response);
 			break;
 			
+			
+			
+		case "Publication DB":
+			ArrayList<PublicationBean> allPublications = sql.getPublications("");
+			session.setAttribute("allPublications", allPublications);
+			requestdispatcher = request.getRequestDispatcher("/adminPublicationDB.jsp");
+			requestdispatcher.forward(request, response);
+			
+			
+			break;
+			
+		case "Sort by #Removed":
+			ArrayList<PublicationBean> nspr = (ArrayList<PublicationBean>)session.getAttribute("allPublications");
+			
+			Collections.sort(nspr, (p2, p1) -> p1.getNumremoved() - p2.getNumremoved());
+			
+			session.setAttribute("allPublications", nspr);
+			requestdispatcher = request.getRequestDispatcher("/adminPublicationDB.jsp");
+			requestdispatcher.forward(request, response);
+			break;
+			
+			
+		case "Sort by #Sold":
+			ArrayList<PublicationBean> nsp = (ArrayList<PublicationBean>)session.getAttribute("allPublications");
+			
+			Collections.sort(nsp, (p2, p1) -> p1.getNumsold() - p2.getNumsold());
+			
+			session.setAttribute("allPublications", nsp);
+			requestdispatcher = request.getRequestDispatcher("/adminPublicationDB.jsp");
+			requestdispatcher.forward(request, response);
+			break;
+			
+			
+		case "Toggle for sale":
+			String admPubCheckboxValues[] = request.getParameterValues("publCheckbox");
+			
+			ArrayList<PublicationBean> allPubs2 = (ArrayList<PublicationBean>)session.getAttribute("allPublications");
+			for (String str: admPubCheckboxValues){
+				if (allPubs2.get(Integer.parseInt(str)).getSale() == 0){
+					allPubs2.get(Integer.parseInt(str)).setSale(1);
+					sql.updatePublicationBean(allPubs2.get(Integer.parseInt(str)));
+				}else if(allPubs2.get(Integer.parseInt(str)).getSale() == 1){
+					allPubs2.get(Integer.parseInt(str)).setSale(0);
+					sql.updatePublicationBean(allPubs2.get(Integer.parseInt(str)));
+				}
+				
+			}
+			session.setAttribute("allPublications", allPubs2);
+			requestdispatcher = request.getRequestDispatcher("/adminPublicationDB.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+		
+			
+			
+		case "Toggle banned":
+			String admCheckboxValues[] = request.getParameterValues("userCheckbox");
+			
+			ArrayList<UserBean> allUsers2 = (ArrayList<UserBean>)session.getAttribute("allUsers");
+			for (String str: admCheckboxValues){
+				if (allUsers2.get(Integer.parseInt(str)).getBanned() == 0){
+					allUsers2.get(Integer.parseInt(str)).setBanned(1);
+					sql.updateUser(allUsers2.get(Integer.parseInt(str)));
+				}else if(allUsers2.get(Integer.parseInt(str)).getBanned() == 1){
+					allUsers2.get(Integer.parseInt(str)).setBanned(0);
+					sql.updateUser(allUsers2.get(Integer.parseInt(str)));
+				}
+				
+			}
+			session.setAttribute("allUsers", allUsers2);
+			requestdispatcher = request.getRequestDispatcher("/adminUserDB.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+		
 		case "Remove from Cart":
 			
 			String checkboxValues[] = request.getParameterValues("cartcheckbox");
@@ -484,7 +567,27 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher = request.getRequestDispatcher("/shoppingCart.jsp");
 			requestdispatcher.forward(request, response);
 			break;
-		
+			
+		case "removePublication":
+			//TODO: - Torjus =)=)=)=)
+			//Kjør deletePublication(Publicationbean publication) på alle checked publications i myProfilePublications
+
+			
+			requestdispatcher = request.getRequestDispatcher("/myProfilePublications.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
+			
+		case "pausePublication":
+			//TODO: - Torjus =)=)=)=)
+			//Set publication.setSale(0) og kjør den gjennom update 
+			//på alle checked publications i myProfilePublications
+
+			
+			requestdispatcher = request.getRequestDispatcher("/myProfilePublications.jsp");
+			requestdispatcher.forward(request, response);
+			
+			break;
 		
 		
 		}
@@ -622,34 +725,6 @@ public class ControllerServlet extends HttpServlet {
 		    sb.append(c);
 		}
 		return sb.toString();
-	}
-	
-	//Generate random numbers
-	public ArrayList<Integer> generateRandomNumbers(){
-		ArrayList<Integer> randomList = new ArrayList<Integer>();
-		Random random = new Random();
-		while (randomList.size()<10){
-			int ran = random.nextInt(allPublications.size());
-			if (!randomList.contains(ran)){
-				randomList.add(ran);
-			}
-		
-		}
-		return randomList;
-	}
-	
-	//Generate the random list
-	public ArrayList<PublicationBean> getRandomList(){
-		//Generate the random list
-		ArrayList<PublicationBean> randomPublications = new ArrayList<PublicationBean>();
-		//List containing random numbers
-		ArrayList<Integer> randomNumbers = new ArrayList<Integer>();
-		randomNumbers = generateRandomNumbers();
-		//Generate the random elements into randomPublications
-		for (int r : randomNumbers){
-			randomPublications.add(allPublications.get(r));
-		}
-		return randomPublications;
 	}
 	
 	

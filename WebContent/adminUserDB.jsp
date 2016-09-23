@@ -11,27 +11,33 @@
 <title>User DB</title>
 </head>
 <body><center>
+<h1>All users</h1>
 <%
 ArrayList<UserBean> allUsers = (ArrayList<UserBean>)session.getAttribute("allUsers");
 %>
-<table>
-<tr>
-	<td width="200px"></td>
-	<td width="100px"></td>
+<form action="bannuser" method="post">
+<table border="1">
+<tr height="30px">
+	<td style="font-style: italic;" width="150px">Username</td>
+	<td style="font-style: italic;" width="100px">Banned</td>
 	<td width="20px"></td>
 </tr>
-<% for (UserBean user: allUsers){
+
+<% int i = 0;
+for (UserBean user: allUsers){
 	%>
 
 <tr>
 	<td><%out.println(user.getUsername()); %></td>
-	 <td><%out.println(user.getUsername()); %></td>
-	 <td><input type="checkbox" name ="userCheckbox" value ="box" ></td>
+	 <td><%=(user.getBanned()==0) ? ("-"):("banned")%></td>
+	 <td><input type="checkbox" name ="userCheckbox" value ="<%=i%>" ></td>
 
 
 </tr>
-<%} %>
+<%i++;} %>
 </table>
+ <input type="submit" name="action" value="Toggle banned">
+</form>
 
 </center></body>
 </html>

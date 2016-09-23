@@ -205,7 +205,7 @@ input[type=submit]:hover {
 		</form>
 		<% }%>
 		<form action="newsearch" method="post">
-			<input name = "action" type = "submit" value="New Search" >
+			<input name = "action" type = "submit" value="Buy items" >
 		</form>
 		<p style="color:grey"><%=cartList.size()%> item(s) in cart.</p>
 	</center>
