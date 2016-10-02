@@ -17,17 +17,23 @@
 <body>
 <div id="viz"></div>
 
+
+<%ArrayList<JSONObject> graph2 = new ArrayList<JSONObject>(); 
+
+graphMySQLConnection connection = new graphMySQLConnection();
+//out.println(connection);
+graph2 = connection.graphStore();
+out.println(graph2);%>
+
 <script>
 
-
-
-  /**var graph = [ {"source": "p1", "target": "p2"},
+  var graph = [ {"source": "p1", "target": "p2"},
                 {"source": "p1", "target": "pb4"},
                 {"source": "p1", "target": "a2"},
                 {"source": "p1", "target": "e2"},
                 {"source": "a2", "target": "p5"},
                 {"source": "p5", "target": "e2"},
-	                {"source": "p5", "target": "e3"},
+	            {"source": "p5", "target": "e3"},
                 {"source": "e3", "target": "p3"},
                 {"source": "p3", "target": "pb4"},
                 {"source": "pb4", "target": "p6"},
@@ -35,18 +41,13 @@
                 {"source": "p6", "target": "a4"},
                 {"source": "a4", "target": "p2"},
                 {"source": "p9", "target": "e2"},
-                {"source": "p9", "target": "a4"}]**/
+                {"source": "p9", "target": "a4"}]
 
-                ArrayList<JSONObject> graph2 = new ArrayList<JSONObject>(); 
-
-            	graphMySQLConnection connection = new graphMySQLConnection();
-            	graph2 = connection.graphStore();
-            	out.println(graph2);
-                
+            	
   var visualization = d3plus.viz()
     .container("#viz")
     .type("network")   
-    .edges(graph2) 
+    .edges(graph) 
     .id("name")
     .draw()          
 </script>
