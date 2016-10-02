@@ -177,14 +177,18 @@ input[type=submit]:hover {
 	Choose publication type<br>
 	<div class="styled-select">
 	<select id="pubType" name="pubType">
-		<option value="book book">Book</option>
+		<option value="book">Book</option>
 		<option value="article">Article</option>
+		<option value="phdthesis">Phdthesis</option>
+		<option value="inproceedings">Inproceedings</option>
+		<option value="journal">Journal</option>
+		<option value="conference">Conference</option>
 		<option value="other">Other</option>
 	</select>
 	</div><br>
 	
 	
-	Choose Author (if you can't find the correct author, you can simply add him/her to the database <a href="addAuthor.jsp">here</a>)<br>
+	Choose Author (if author is not in the list, you can add him/her to the database <a href="addAuthor.jsp">here</a>)<br>
 	<div class="styled-select">
 	<select id="author" name="author">
 		<% 
