@@ -51,32 +51,28 @@ public class graphMySQLConnection {
 			}
 		}
 	}	
-	public ArrayList<JSONObject> graphStore() {
+	public JSONArray graphStore() {
 		try {
 			establishConnection();
 			Statement statement = connection.createStatement();
-			ArrayList<JSONObject> graph = new ArrayList<JSONObject>();
+			//ArrayList<JSONObject> graph = new ArrayList<JSONObject>();
+			JSONArray array = new JSONArray();
 			String sql ="SELECT * FROM graph_store"; 
 			ResultSet result = statement.executeQuery(sql);
 			while(result.next()) {
 				JSONObject oJsonInner = new JSONObject();
-				JSONArray arr = new JSONArray();
 				oJsonInner.put("source",result.getString("node_from"));
 				oJsonInner.put("target",result.getString("node_to"));
-				graph.add(oJsonInner);
+				array.add(oJsonInner);
 			}
 			result.close();
 			closeConnection();
-			System.out.println(graph);
-			return graph;
+			return array;
 		} catch (Exception e) {
 			return null;
 			// TODO: handle exception
 		}
 	}
-	public static void main(String[] args) {
-		graphMySQLConnection con = new graphMySQLConnection();
-		con.graphStore();
-	}
+
 
 }
