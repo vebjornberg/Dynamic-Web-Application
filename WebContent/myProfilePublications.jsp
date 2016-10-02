@@ -323,7 +323,7 @@ for(PublicationBean publication : publications){
 			<td><%=publication.getTitle() %></td>
 			<td><%=publication.getFirstname()%> <%=publication.getLastname() %></td>
 			<td><%=publication.getPrice() %></td>
-			<td><%=publication.getSale() %></td>
+			<td><%=publication.getSale()==1 ? "Yes":"No" %></td>
 			<td><%=publication.getNumsold() %></td>
 			<td><input type="checkbox" name="myPubCheckbox" value="<%=i %>" > </td>
 		</tr>

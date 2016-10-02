@@ -696,7 +696,16 @@ public class ControllerServlet extends HttpServlet {
 			break;
 			
 			
+		case "AddSinglePublicationToCart":
+			PublicationBean newSinglePub = (PublicationBean)session.getAttribute("publicationId");
+			ArrayList<PublicationBean> newCart = sql.getCart((String)session.getAttribute("currentUsername"));
+			newCart.add(newSinglePub);
+			sql.addCart((String)session.getAttribute("currentUsername"), newCart);
+			session.setAttribute("cart", newCart);
 			
+			requestdispatcher = request.getRequestDispatcher("/shoppingCart.jsp");
+			requestdispatcher.forward(request, response);
+			break;
 		}
 		
 		

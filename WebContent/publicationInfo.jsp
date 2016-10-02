@@ -216,6 +216,7 @@ table tr:hover td {
 	String username =  user.getUsername();	
 	mySQLconnection sql = new mySQLconnection();
 	PublicationBean publicationInfo = sql.getPublicationById( Integer.parseInt(request.getParameter("publicationId")) );
+	session.setAttribute("publicationId", publicationInfo);
 %>
 </head>
 <body>
