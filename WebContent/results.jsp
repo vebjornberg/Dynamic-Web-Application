@@ -14,6 +14,10 @@ html *
 {
    font-family: Arial !important;
 }
+body {
+	margin: 0px;
+
+}
 
 .searchField{
 text-align: center;
