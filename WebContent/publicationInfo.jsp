@@ -4,10 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>FinePoint Electrical</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
 </head>
-
 <style>
 html *
 {
@@ -89,8 +88,8 @@ input[type=text], select {
 }
 
 input[type=submit] {
-    width: 50%;
-    background-color: #5252f4;
+    width: 25%;
+    background-color: #1406cb;
     color: white;
     font-size: 14px;
     padding: 14px 20px;
@@ -101,7 +100,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #9e9d9d;
+    background-color: #090079;
 }
 
 table#table1 {
@@ -213,7 +212,7 @@ table tr:hover td {
 	UserBean user = (UserBean) session.getAttribute("currentUser");
 	String username =  user.getUsername();	
 	mySQLconnection sql = new mySQLconnection();
-	ArrayList<PublicationBean> randomList = sql.generateRandomList();
+	PublicationBean publicationInfo = sql.getPublicationById( Integer.parseInt(request.getParameter("publicationId")) );
 %>
 </head>
 <body>
@@ -247,47 +246,45 @@ table tr:hover td {
 </div><br><br><br>
 
 <h3 align="center">
-Random Publications
+Publication Info
 </h3>
 
-<form action="addrantocart" method= "post">
 
 <table cellspacing='0' id="table1">
 	<thead>
 		<tr>
+			<th>ID</th>
 			<th>Title</th>
 			<th>Author</th>
 			<th>Price (AUD)</th>
 			<th>Year</th>
+			<th>Type</th>
+			<th>Units sold</th>
 		
 		</tr>
 	</thead>
 	
 	<tbody>
-<% int i = 0;%>
-<%
-for(PublicationBean publication : randomList){
-
-	String title = publication.getTitle();
-	int publicationId = publication.getPublicationid();
-%>
 		<tr>
-			<td><a href="publicationInfo.jsp?publicationId=<%=publicationId %>"><%=title %></a></td>
-			<td><%=publication.getFirstname()%> <%=publication.getLastname() %></td>
-			<td><%="$" + publication.getPrice() %></td>
-			<td><%=publication.getYear() %></td>
-			<td><input type="checkbox" name="checkbox" value="<%=i%>"> </td>
-			
+			<td> <%=publicationInfo.getPublicationid() %></td>
+			<td> <%=publicationInfo.getTitle() %></td>
+			<td> <%=publicationInfo.getFirstname() %> <%=publicationInfo.getLastname() %></td>
+			<td> <%=publicationInfo.getPrice() %></td>
+			<td> <%=publicationInfo.getYear() %></td>
+			<td> <%=publicationInfo.getType() %></td>
+			<td> <%=publicationInfo.getNumsold() %></td>
 
 		</tr>
-
-		<%}
-		%>
 	</tbody>
 </table>
 
-<input type="submit"  name ="action" value="Add to cart">
+<div class = searchField>
+
+<form action = "ControllerServlet" method = "post">
+	<input type = "hidden" name = "action" value = "AddSinglePublicationToCart" >
+	<input type="submit" value="Add To Cart">
 </form>
+</div>
 
 </body>
 </html>

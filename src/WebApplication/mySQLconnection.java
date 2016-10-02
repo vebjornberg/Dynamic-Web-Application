@@ -582,12 +582,14 @@ public class mySQLconnection {
 	
 	public ArrayList<PublicationBean> generateRandomList(){
 		ArrayList<PublicationBean> randomPublications = new ArrayList<PublicationBean>();
+		ArrayList<PublicationBean> allPublications = getPublications("");
+
 		Random random = new Random();
 		PublicationBean randomPublication;
 		
 		while(randomPublications.size() < 10){
-			int num = random.nextInt( getPublications("").size() ) ;
-			randomPublication = getPublications("").get(num); 
+			int num = random.nextInt( allPublications.size() ) ;
+			randomPublication = allPublications.get(num);
 			if(randomPublication.getSale() == 1){
 				if(!randomPublications.contains(randomPublication)){
 					randomPublications.add(randomPublication);
