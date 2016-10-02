@@ -13,6 +13,10 @@ html *
 {
    font-family: Arial !important;
 }
+body {
+	margin: 0px;
+
+}
 
 .searchField{
 text-align: center;
@@ -88,20 +92,20 @@ input[type=text], select {
     box-sizing: border-box;
 }
 
+
 input[type=submit] {
-    width: 50%;
-    background-color: #5252f4;
+    width: 20%;
+    background-color: #0036ff;
     color: white;
     font-size: 14px;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
-    border-radius: 12px;
     cursor: pointer;
 }
 
 input[type=submit]:hover {
-    background-color: #9e9d9d;
+    background-color:#0026b2;
 }
 
 table#table1 {
@@ -251,7 +255,11 @@ table tr:hover td {
 Random Publications
 </h3>
 
+
+<div class = searchField>
 <form action="addrantocart" method= "post">
+	<input type = "hidden" name = "action" value = "Add to cart" >
+
 
 <table cellspacing='0' id="table1">
 	<thead>
@@ -286,9 +294,10 @@ for(PublicationBean publication : randomList){
 		%>
 	</tbody>
 </table>
+
 	<input type="hidden"  name ="action" value="addRanToCart">
 	<input type="submit"  value="Add to cart">
 </form>
-
+</div>
 </body>
 </html>

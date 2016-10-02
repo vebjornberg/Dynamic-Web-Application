@@ -82,6 +82,14 @@ li.dropdown {
 h2 {
     text-align: center;
 }
+.navButtons{
+    text-align: center;
+
+}
+.navButtons form,
+.navButtons form div {
+display:inline;
+}
 
 input[type=text], select {
 	width:50%;
@@ -93,20 +101,36 @@ input[type=text], select {
     box-sizing: border-box;
 }
 
-input[type=submit] {
-    width: 50%;
-    background-color: #5252f4;
+input.button1{
+    width: 8%;
+    background-color: #b5b5b5;
+    color: Black;
+    font-size: 14px;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+input.button1:hover {
+    background-color:#cdcdcd;
+    
+}
+
+input.button2{
+    width: 20%;
+    background-color: #0036ff;
     color: white;
     font-size: 14px;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
-    border-radius: 12px;
     cursor: pointer;
 }
 
-input[type=submit]:hover {
-    background-color: #9e9d9d;
+input.button2:hover {
+    background-color:#0026b2;
+    
 }
 
 table#table1 {
@@ -245,19 +269,27 @@ table tr:hover td {
 
 
 
-<h2><%=username %></h2>
-<div class = searchField>
-<form action = "ControllerServlet" method = "post">
-	<input type = "hidden" name = "action" value = "simpleSearch" >
- 	<input type="text" name="search" placeholder="Search in publication database">
-</form>
-</div><br><br><br>
-
 <h3 align="center">
 Results from "<%=keyWord %>"
 </h3>
 
-<form action="addtocart" method= "post">
+<div class = "navButtons">
+Search results: <%=results.size()%><br> 
+Now showing: <%if((Integer)session.getAttribute("currentPage") ==(Integer)session.getAttribute("lastPage")){%> 
+												<%=(Integer)session.getAttribute("currentPage")*10+1%>-<%=results.size()%>
+											<%}else{ %> <%=(Integer)session.getAttribute("currentPage")*10+1%>-<%=((Integer)session.getAttribute("currentPage")+1)*10
+											%><%} %><br>
+											
+	<form action = "ControllerServlet" method = "post">
+		<input type = "hidden" name = "action" value = "Previous page" >
+ 		<input type="submit" class = "button button1" value="<< Previous page" <%if((Integer)session.getAttribute("currentPage")==0){ %>disabled="disabled"<%} %> >
+	</form>
+	
+	<form action="changepage" method="post">
+		<input type = "hidden" name = "action" value = "Next page" >
+		<input name = "action" type = "submit" class = "button button1" value="Next page >>" <%if((Integer)session.getAttribute("currentPage")==(Integer)session.getAttribute("lastPage")){ %>disabled="disabled"<%} %> >
+	</form>
+
 
 <table cellspacing='0' id="table1">
 	<thead>
@@ -291,18 +323,13 @@ for (int i = 0; (i<results.size()-(10*currentPage))&&(i<10); i++){
 		%>
 	</tbody>
 </table>
-    	
+	<form action = "ControllerServlet" method = "post">
     	<input type = "hidden" name = "action" value = "addResultToCart" >
-    	<input type = "submit" name = "action" value = "Add to cart" >
-</form>
-<form action="changepage" method="post">
-			<input name = "action" type = "submit" value="Previous page" <%if((Integer)session.getAttribute("currentPage")==0){ %>disabled="disabled"<%} %> >
-			<input name = "action" type = "submit" value="Next page" <%if((Integer)session.getAttribute("currentPage")==(Integer)session.getAttribute("lastPage")){ %>disabled="disabled"<%} %> >
-</form>
-<p style="color:grey;">Search results: <%=results.size()%></p>  
-		<p style="color:grey;">Now showing: <%if((Integer)session.getAttribute("currentPage") ==(Integer)session.getAttribute("lastPage")){%> 
-												<%=(Integer)session.getAttribute("currentPage")*10+1%>-<%=results.size()%>
-											<%}else{ %> <%=(Integer)session.getAttribute("currentPage")*10+1%>-<%=((Integer)session.getAttribute("currentPage")+1)*10
-											%><%} %></p>
+    	<input type = "submit"  class = "button button2" name = "action" value = "Add to cart" >
+	</form>
+</div>
+
+
+
 </body>
 </html>
