@@ -598,6 +598,29 @@ public class mySQLconnection {
 		}
 		return randomPublications;
 	}
+	public UserBean getSeller(PublicationBean publicationbean) {
+		try {
+			establishConnection();
+			Statement statement = connection.createStatement();
+			String sql = "SELECT addedby_table.* "
+					+ "FROM addedby_table "
+					+ "WHERE addedby_table.publicationid=" + publicationbean.getPublicationid() + "";
+			ResultSet result = statement.executeQuery(sql);
+			String username = "";
+			while(result.next()) {
+				username = result.getString("username");
+			}
+			UserBean userbean = new UserBean();
+			userbean = getUserInfo(username);
+			result.close();
+			closeConnection();
+			return userbean;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+			// TODO: handle exception
+		}
+	}
 
 
 }
