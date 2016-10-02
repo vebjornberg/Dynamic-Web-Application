@@ -245,6 +245,8 @@ public class ControllerServlet extends HttpServlet {
 			for (PublicationBean b : buyCart){
 				b.incrementNumsold();
 				sql.updatePublicationBean(b);
+				//TODO: send mail til selger, trenger sql metode for å få USER på PublicationBean(Han som selger)
+				//es.sendEmail(recipient, content)
 			}
 			UserBean ub =(UserBean) session.getAttribute("currentUser");
 			sql.deleteCart(ub.getUsername());
