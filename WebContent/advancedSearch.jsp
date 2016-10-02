@@ -169,12 +169,6 @@ input[type=submit]:hover {
 <form action = "ControllerServlet" method = "post">
 	<input type = "hidden" name = "action" value = "advancedSearch" >
 	
-
- 	<input type="text" name="authorFirstName" placeholder="First name author"><br><br>
-	<input type="text" name="authorLastName" placeholder="Last name author"><br><br>
-	<input type="text" name="title" placeholder="Publication Title"><br><br>
-	<input type="text" name="year" placeholder="Release year"><br><br>
-	
 	<div class="styled-select">
 	<select id="pubType" name="pubType">
 		<option value="book">Book</option>
@@ -186,6 +180,12 @@ input[type=submit]:hover {
 		<option value="other">Other</option>
 	</select>
 	</div><br>
+
+ 	<input type="text" name="authorFirstName" placeholder="First name author"><br><br>
+	<input type="text" name="authorLastName" placeholder="Last name author"><br><br>
+	<input type="text" name="title" placeholder="Publication Title"><br><br>
+	<input type="text" name="year" placeholder="Release year"><br><br>
+	
   
 	<input type="submit" value="Submit">
 </form>
