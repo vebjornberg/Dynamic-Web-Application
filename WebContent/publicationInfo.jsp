@@ -88,8 +88,8 @@ input[type=text], select {
 }
 
 input[type=submit] {
-    width: 50%;
-    background-color: #5252f4;
+    width: 25%;
+    background-color: #1406cb;
     color: white;
     font-size: 14px;
     padding: 14px 20px;
@@ -100,7 +100,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #9e9d9d;
+    background-color: #090079;
 }
 
 table#table1 {
@@ -277,6 +277,14 @@ Publication Info
 		</tr>
 	</tbody>
 </table>
+
+<div class = searchField>
+
+<form action = "ControllerServlet" method = "post">
+	<input type = "hidden" name = "action" value = "AddSinglePublicationToCart" >
+	<input type="submit" value="Add To Cart">
+</form>
+</div>
 
 </body>
 </html>
