@@ -307,11 +307,11 @@ Now showing: <%if((Integer)session.getAttribute("currentPage") ==(Integer)sessio
 <%
 int currentPage = (Integer)session.getAttribute("currentPage");
 for (int i = 0; (i<results.size()-(10*currentPage))&&(i<10); i++){
-
-	
+	String title = results.get(i +10*currentPage).getTitle();
+	int publicationId = results.get(i +10*currentPage).getPublicationid();
 	%>
 		<tr>
-			<td><%=results.get(i +10*currentPage).getTitle() %></td>
+			<td><a href="publicationInfo.jsp?publicationId=<%=publicationId %>"><%=title %></a></td>
 			<td><%=results.get(i +10*currentPage).getFirstname()%> <%=results.get(i+10*currentPage).getLastname() %></td>
 			<td><%="$" +results.get(i+10*currentPage).getPrice() %></td>
 			<td><%=results.get(i+10*currentPage).getYear() %></td>

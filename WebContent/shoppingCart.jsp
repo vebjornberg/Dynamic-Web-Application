@@ -12,6 +12,8 @@
 UserBean user = (UserBean) session.getAttribute("currentUser");
 String username =  (user.getUsername());
 mySQLconnection sql = new mySQLconnection();
+ArrayList<PublicationBean> cartList =  (ArrayList<PublicationBean>)session.getAttribute("cart");
+
 int totalPrice=0;
 
 %>
@@ -24,7 +26,6 @@ body {
 	margin: 0px;
 
 }
-
 .searchField{
 text-align: center;
 }
@@ -48,7 +49,7 @@ li {
 
 li a, .dropbtn {
     display: inline-block;
-    color: black;
+    color: #252525;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -72,7 +73,7 @@ li.dropdown {
 }
 
 .dropdown-content a {
-    color: black;
+    color: #252525;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -109,7 +110,7 @@ input[type=password], select {
     box-sizing: border-box;
 }
 
-input[type=submit] {
+input.button1{
     width: 20%;
     background-color: #0036ff;
     color: white;
@@ -120,9 +121,142 @@ input[type=submit] {
     cursor: pointer;
 }
 
-input[type=submit]:hover {
+input.button1:hover {
     background-color:#0026b2;
+    
 }
+
+input.button2 {
+    display: inline;
+ 	width: 25%;
+    background-color: #b5b5b5;
+    color: black;
+    font-size: 16px;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+input.button2:hover {
+     background-color: #cdcdcd;
+     box-shadow: 1px 1px 1.5px 2px rgba(0, 0, 0, 0.4), -1px -1px 1.5px 2px rgba(0, 0, 0, 0.4); 
+}
+
+.profileButtons{
+    text-align: center;
+
+}
+.profileButtons form,
+.profileButtons form div {
+	display:inline;
+}
+
+table#table1 {
+    width:50%; 
+    margin-left:25%; 
+    margin-right:25%;
+  }
+  
+table a:link {
+	color: #666;
+	font-weight: bold;
+	text-decoration:none;
+}
+table a:visited {
+	color: #999999;
+	font-weight:bold;
+	text-decoration:none;
+}
+table a:active,
+table a:hover {
+	color: #bd5a35;
+	text-decoration:underline;
+}
+table {
+	font-family:Arial;
+	color:#666;
+	font-size:14px;
+	text-shadow: 1px 1px 0px #fff;
+	background:#eaebec;
+	margin:20px;
+	border:#ccc 1px solid;
+
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+
+	-moz-box-shadow: 0 1px 2px #d1d1d1;
+	-webkit-box-shadow: 0 1px 2px #d1d1d1;
+	box-shadow: 0 1px 2px #d1d1d1;
+}
+table th {
+	padding:21px 25px 22px 25px;
+	border-top:1px solid #fafafa;
+	border-bottom:1px solid #e0e0e0;
+	font-size:16px;
+
+	background: black;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+	background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+}
+table th:first-child {
+
+}
+table tr:first-child th:first-child {
+	-moz-border-radius-topleft:3px;
+	-webkit-border-top-left-radius:3px;
+	border-top-left-radius:3px;
+}
+table tr:first-child th:last-child {
+	-moz-border-radius-topright:3px;
+	-webkit-border-top-right-radius:3px;
+	border-top-right-radius:3px;
+}
+table tr {
+	text-align: center;
+	padding-left:20px;
+}
+table td:first-child {
+	text-align: left;
+	padding-left:20px;
+	border-left: 0;
+}
+table td {
+	padding:18px;
+	border-top: 1px solid #ffffff;
+	border-bottom:1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+
+	background: #fafafa;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+	background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+}
+table tr.even td {
+	background: #f6f6f6;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
+	background: -moz-linear-gradient(top,  #f8f8f8,  #f6f6f6);
+}
+table tr:last-child td {
+	border-bottom:0;
+}
+table tr:last-child td:first-child {
+	-moz-border-radius-bottomleft:3px;
+	-webkit-border-bottom-left-radius:3px;
+	border-bottom-left-radius:3px;
+}
+table tr:last-child td:last-child {
+	-moz-border-radius-bottomright:3px;
+	-webkit-border-bottom-right-radius:3px;
+	border-bottom-right-radius:3px;
+}
+table tr:hover td {
+	background: #f2f2f2;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
+	background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);	
+}
+
+
 </style>
 
 </head>
@@ -145,72 +279,53 @@ input[type=submit]:hover {
     </div>
   </li>
 </ul><br>
-<center>
-<h1>My Cart</h1>
-<form action="removefromcart" method="post">
-<table>
-			
- <tr>
-    <td width="200"></td>
-    <td width="50"></td>
-    <td width="25"></td>
-  </tr>
-   				<tr height = "20px">
+
+<h2> Profile  </h2>
+
+<div class="profileButtons">
+    <form action="ControllerServlet" method = "post">
+
+<table cellspacing='0' id="table1">
+	<thead>
+		<tr>
+			<th>Publication Title</th>
+			<th>Author</th>
+			<th>Price</th>
+		    <th>Checkbox</th>
+		</tr>
+	</thead>
+	<tbody>
    			
-   				<%
-       			ArrayList<PublicationBean> cartList =  (ArrayList<PublicationBean>)session.getAttribute("cart");
-   				
+	<%   				
    				int i = 0;
    				if (!cartList.isEmpty()){
 					for (PublicationBean publication : cartList){
-						%>
-					<% totalPrice += Integer.parseInt(publication.getPrice());
-					%>
-	   				
-	  				<td><a href="<%out.println(publication.getTitle());%>"><%out.println(publication.getTitle()); %></a></td>
-	  				<td><a ><%out.println("$" + publication.getPrice()); %></a></td>
-					<td><input type="checkbox" name ="cartcheckbox" value ="<%=i%>" ></td>
-	   				
-	   				
-					</tr>
-					<%
-	   				i++;
 					
-					}
-				}
-   				%>
-   				<% if(!cartList.isEmpty()){ %>
-   					<tr height = "30px">
-   					<td>Total Price: </td>
-	  				<td><a ><%out.println("$" +totalPrice); %></a></td>
-					<td></td>
-					</tr>
-					<%} %>
-   				</table>
-   				<% 
-   				if(cartList.isEmpty()){ 
-   					
-   					
-   					
-   				%>
-   				<h2>Your cart has no items</h2>
-   				<input type="submit"  name ="action" value="Remove from Cart" disabled="disabled">
-				</form>
-   				
-   				<%} 
-   				else{%>
-   				
-				
-  			
-	
-				
-				<input type="submit"  name ="action" value="Remove from Cart">
-		</form>
-		<% }%>
-		<form action="newsearch" method="post">
-			<input name = "action" type = "submit" value="Buy items" >
-		</form>
-		<p style="color:grey"><%=cartList.size()%> item(s) in cart.</p>
-	</center>
+	   					String title = publication.getTitle();
+						int publicationId = publication.getPublicationid();
+							%>
+
+			<tr>
+				<td><a href="publicationInfo.jsp?publicationId=<%=publicationId %>"><%=title %></a></td>
+				<td><%=publication.getFirstname()%> <%=publication.getLastname() %></td>
+				<td><%=publication.getPrice() %></td>
+				<td><input type="checkbox" name="cartcheckbox" value="<%=i %>" > </td>
+			</tr>
+			<% totalPrice += Integer.parseInt(publication.getPrice());
+					%>
+		<%i++;}}
+		%>
+	</tbody>
+</table>
+					Total price: <%=totalPrice %> AUD<br>
+
+
+    	<input type="submit" name = "action" value="Remove from Cart" class = "button button1"><br>
+    	<input type="submit" name ="action" value="Buy items" class = "button button1">
+   	</form>
+
+     
+</div><br>
+
 </body>
 </html>

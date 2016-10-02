@@ -249,7 +249,7 @@ table tr:hover td {
 	<input type = "hidden" name = "action" value = "simpleSearch" >
  	<input type="text" name="search" placeholder="Search in publication database">
 </form>
-</div><br><br><br>
+</div><br><br>
 
 <h3 align="center">
 Random Publications

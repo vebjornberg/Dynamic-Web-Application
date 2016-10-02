@@ -333,7 +333,7 @@ for(PublicationBean publication : publications){
 </table>
 
 
-    	<input type="submit" name = "action" value="Toggle 'for sale' value" class = "button button1">
+    	<input type="submit" name = "action" value="Remove from Cart" class = "button button1">
     	<input type="submit" name ="action" value="Remove publication from database" class = "button button1">
    	</form>
 
