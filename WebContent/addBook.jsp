@@ -71,6 +71,7 @@ li.dropdown {
 	
 }
 
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -95,6 +96,28 @@ li.dropdown {
 
 h2 {
     text-align: center;
+}
+
+.styled-select{
+text-align: center;
+	width: 100%;
+    margin: 0 auto;
+     height: 34px;
+
+}
+
+.styled-select select {
+	text-align: center;
+  text-align-last: center;
+   border: 1px solid #ccc;
+   font-size: 16px;
+   height: 34px;
+   width: 50%;
+}
+
+option {
+  text-align: center;
+
 }
 
 input[type=text], select {
@@ -152,13 +175,17 @@ input[type=submit]:hover {
 	<input type = "hidden" name = "action" value = addPublication >
 	
 	Choose publication type<br>
+	<div class="styled-select">
 	<select id="pubType" name="pubType">
-		<option value="book book">Book Book</option>
+		<option value="book book">Book</option>
 		<option value="article">Article</option>
 		<option value="other">Other</option>
-	</select><br><br>
+	</select>
+	</div><br>
+	
 	
 	Choose Author (if you can't find the correct author, you can simply add him/her to the database <a href="addAuthor.jsp">here</a>)<br>
+	<div class="styled-select">
 	<select id="author" name="author">
 		<% 
  		for(AuthorBean author: authors){
@@ -169,7 +196,8 @@ input[type=submit]:hover {
 			%>
 		<option value="<%=fullName %>"><%=fullName %></option>
 		<% }%>
-	</select><br><br>
+	</select>
+	</div><br>
 
  	
 	<input type="text" name="title" placeholder="Publication Title"><br><br>
