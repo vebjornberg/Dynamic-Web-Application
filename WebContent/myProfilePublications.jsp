@@ -298,6 +298,8 @@ table tr:hover td {
 
 
 
+<div class="profileButtons">
+    <form action="ControllerServlet" method = "post">
 
 <table cellspacing='0' id="table1">
 	<thead>
@@ -310,10 +312,10 @@ table tr:hover td {
 		    <th>Checkbox</th>
 		</tr>
 	</thead>
-	
 	<tbody>
 
 <%
+int i = 0;
 ArrayList<PublicationBean> publications = con.getPublicationsAddedByUser(username);
 for(PublicationBean publication : publications){
 	%>
@@ -323,25 +325,19 @@ for(PublicationBean publication : publications){
 			<td><%=publication.getPrice() %></td>
 			<td><%=publication.getSale() %></td>
 			<td><%=publication.getNumsold() %></td>
-			<td><input type="checkbox" name="checkbox" value="" form = "remove" > </td>
+			<td><input type="checkbox" name="myPubCheckbox" value="<%=i %>" > </td>
 		</tr>
-		<%}
+		<%i++;}
 		%>
 	</tbody>
 </table>
 
 
-<div class="profileButtons">
-    <form action="ControllerServlet" method = "post">
-    	<input type = "hidden" name = "action" value = "removePublication" >
-    	
-    	<input type="submit" value="Remove publication from database" class = "button button1">
+    	<input type="submit" name = "action" value="Pause publication" class = "button button1">
+    	<input type="submit" name ="action" value="Remove publication from database" class = "button button1">
    	</form>
 
-     <form action="ControllerServlet" method = "post">
-    	<input type = "hidden" name = "action" value = "pausePublication" >
-    	<input type="submit" value="Pause publication" class = "button button1">
-   	</form>
+     
 </div><br>
 
 

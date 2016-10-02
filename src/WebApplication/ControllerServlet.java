@@ -199,7 +199,8 @@ public class ControllerServlet extends HttpServlet {
 			newPub.setYear(request.getParameter("year"));
 			
 			sql.addPublication(newPub, username);
-			
+			requestdispatcher = request.getRequestDispatcher("/myProfilePublications.jsp");
+			requestdispatcher.forward(request, response);
 			
 			break;
 			
@@ -587,22 +588,40 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher.forward(request, response);
 			break;
 			
-		case "removePublication":
-			//TODO: - Torjus =)=)=)=)
-			//Kjør deletePublication(Publicationbean publication) på alle checked publications i myProfilePublications
-
+		case "Remove publication from database":
+			
+			String myPubCheckboxValues[] = request.getParameterValues("myPubCheckbox");
+			ArrayList<PublicationBean> pubs = sql.getPublicationsAddedByUser((String)session.getAttribute("currentUsername"));
+			int i=0;
+			if(!(myPubCheckboxValues == null)){
+				for (String s : myPubCheckboxValues){
+					PublicationBean toRemove = pubs.get(Integer.parseInt(s)-i);
+					sql.deletePublication(toRemove);
+					i++;
+				}
+			}
 			
 			requestdispatcher = request.getRequestDispatcher("/myProfilePublications.jsp");
 			requestdispatcher.forward(request, response);
 			
 			break;
 			
-		case "pausePublication":
-			//TODO: - Torjus =)=)=)=)
-			//Set publication.setSale(0) og kjør den gjennom update 
-			//på alle checked publications i myProfilePublications
-
-			
+		case "Pause publication":
+		
+			String pauseCheckboxValues[] = request.getParameterValues("myPubCheckbox");
+			ArrayList<PublicationBean> pubs1 = sql.getPublicationsAddedByUser((String)session.getAttribute("currentUsername"));
+			if(!(pauseCheckboxValues == null)){
+				for (String s : pauseCheckboxValues){
+					
+					PublicationBean toPause = pubs1.get(Integer.parseInt(s));
+					System.out.println("before " +toPause.getSale());
+					toPause.setSale((toPause.getSale() == 0) ? 1 : 0);
+					System.out.println(toPause.getSale());
+					sql.updatePublicationBean(toPause);
+					
+					
+				}
+			}
 			requestdispatcher = request.getRequestDispatcher("/myProfilePublications.jsp");
 			requestdispatcher.forward(request, response);
 			
