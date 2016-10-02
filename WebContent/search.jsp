@@ -287,7 +287,7 @@ for(PublicationBean publication : randomList){
 	</tbody>
 </table>
 	<input type="hidden"  name ="action" value="addRanToCart">
-	<input type="submit"  name ="action" value="Add to cart">
+	<input type="submit"  value="Add to cart">
 </form>
 
 </body>
