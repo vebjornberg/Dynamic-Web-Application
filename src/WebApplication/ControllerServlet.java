@@ -606,7 +606,7 @@ public class ControllerServlet extends HttpServlet {
 			
 			break;
 			
-		case "Pause publication":
+		case "Toggle 'for sale' value":
 		
 			String pauseCheckboxValues[] = request.getParameterValues("myPubCheckbox");
 			ArrayList<PublicationBean> pubs1 = sql.getPublicationsAddedByUser((String)session.getAttribute("currentUsername"));
