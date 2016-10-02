@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DLD - My Profile</title>
+<title>LDB - My Profile</title>
 
 <%-- JSP for viewing and editing your profile --%>
 

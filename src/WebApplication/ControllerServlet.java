@@ -246,7 +246,13 @@ public class ControllerServlet extends HttpServlet {
 				b.incrementNumsold();
 				sql.updatePublicationBean(b);
 				//TODO: send mail til selger, trenger sql metode for å få USER på PublicationBean(Han som selger)
-				//es.sendEmail(recipient, content)
+				UserBean usrbean = sql.getSeller(b);
+				try {
+					EmailSender.sendEmail(usrbean.getEmail(), "Hi, \n\nA copy of your "+b.getType()+ " "+b.getTitle()+" just got sold!\n\nCongratulations!");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 			}
 			UserBean ub =(UserBean) session.getAttribute("currentUser");
 			sql.deleteCart(ub.getUsername());

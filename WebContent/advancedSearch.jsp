@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>LDB - Advanced search</title>
 
 <%-- The website HOME PAGE for searching for books --%>
 

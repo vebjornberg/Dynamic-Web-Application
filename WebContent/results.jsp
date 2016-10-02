@@ -102,7 +102,7 @@ input[type=text], select {
 }
 
 input.button1{
-    width: 8%;
+    width: 10%;
     background-color: #b5b5b5;
     color: Black;
     font-size: 14px;
@@ -281,13 +281,13 @@ Now showing: <%if((Integer)session.getAttribute("currentPage") ==(Integer)sessio
 											%><%} %><br>
 											
 	<form action = "ControllerServlet" method = "post">
-		<input type = "hidden" name = "action" value = "Previous page" >
- 		<input type="submit" class = "button button1" value="<< Previous page" <%if((Integer)session.getAttribute("currentPage")==0){ %>disabled="disabled"<%} %> >
+		<input  type = "hidden" name = "action" value = "Previous page" >
+ 		<input type="submit" class = "button button1" value="<< Previous page" <%if((Integer)session.getAttribute("currentPage")==0){ %>style="display:none"<%} %> >
 	</form>
 	
 	<form action="changepage" method="post">
 		<input type = "hidden" name = "action" value = "Next page" >
-		<input name = "action" type = "submit" class = "button button1" value="Next page >>" <%if((Integer)session.getAttribute("currentPage")==(Integer)session.getAttribute("lastPage")){ %>disabled="disabled"<%} %> >
+		<input name = "action" type = "submit" class = "button button1" value="Next page >>" <%if((Integer)session.getAttribute("currentPage")==(Integer)session.getAttribute("lastPage")){ %>style="display:none"<%} %> >
 	</form>
 
 <form action = "ControllerServlet" method = "post">
