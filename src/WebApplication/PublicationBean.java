@@ -69,11 +69,17 @@ public class PublicationBean {
 	public void setNumsold(int numsold) {
 		this.numsold = numsold;
 	}
+	public void incrementNumsold(){
+		this.numsold++;
+	}
 	public int getNumremoved() {
 		return numremoved;
 	}
 	public void setNumremoved(int numremoved) {
 		this.numremoved = numremoved;
+	}
+	public void incrementNumremoved(){
+		this.numremoved++;
 	}
 	
 	

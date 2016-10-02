@@ -108,7 +108,10 @@ public class ControllerServlet extends HttpServlet {
 					else{
 						// Sets current User and his cart form db
 						session.setAttribute("currentUser", loginUser);
+						session.setAttribute("currentUsername", loginUser.getUsername());
 						session.setAttribute("cart", sql.getCart(username));
+						
+						
 
 					
 						
@@ -235,8 +238,18 @@ public class ControllerServlet extends HttpServlet {
 			
 			
 		case "Buy items":
-			//TODO: oppdater purchased, slett cart ++
+			ArrayList<PublicationBean> buyCart = sql.getCart((String)session.getAttribute("currentUsername"));
+			for (PublicationBean b : buyCart){
+				b.incrementNumsold();
+				sql.updatePublicationBean(b);
+			}
+			UserBean ub =(UserBean) session.getAttribute("currentUser");
+			sql.deleteCart(ub.getUsername());
 			
+			session.setAttribute("cart", new ArrayList<PublicationBean>());
+			
+			requestdispatcher = request.getRequestDispatcher("/shoppingCart.jsp");
+			requestdispatcher.forward(request, response);
 			break;
 	
 			
@@ -557,7 +570,10 @@ public class ControllerServlet extends HttpServlet {
 				
 				int i=0;
 				for (String s:checkboxValues){
+					PublicationBean toRemove = cart.get((Integer.parseInt(s)-i));
 					cart.remove((Integer.parseInt(s)-i));
+					toRemove.incrementNumremoved();
+					sql.updatePublicationBean(toRemove);
 					i++;
 					
 					
@@ -614,11 +630,35 @@ public class ControllerServlet extends HttpServlet {
 			}
 			session.setAttribute("cart", oldcart);
 			sql.addCart(usr.getUsername(), oldcart);
-			requestdispatcher = request.getRequestDispatcher("/results.jsp");
+			requestdispatcher = request.getRequestDispatcher("/shoppingCart.jsp");
 			requestdispatcher.forward(request, response);
 			break;
 		
-		
+		case "addRanToCart":
+			String randomCheckboxValues[] = request.getParameterValues("randomCheckbox");
+			
+			UserBean usr1 = (UserBean)session.getAttribute("currentUser");
+			ArrayList<PublicationBean> oldcart1 = sql.getCart(usr1.getUsername());
+			ArrayList<PublicationBean> rancart = (ArrayList<PublicationBean>)session.getAttribute("randomList");
+			if(!(randomCheckboxValues==null)){
+				
+				for (String s:randomCheckboxValues){
+					
+					oldcart1.add(rancart.get(Integer.parseInt(s)));
+					
+					
+					
+					
+				}
+			}
+			session.setAttribute("cart", oldcart1);
+			sql.addCart(usr1.getUsername(), oldcart1);
+			requestdispatcher = request.getRequestDispatcher("/shoppingCart.jsp");
+			requestdispatcher.forward(request, response);
+			
+			
+			break;
+			
 		case "Next page":
 			int x = (Integer)session.getAttribute("currentPage");
 			session.setAttribute("currentPage", x+1);

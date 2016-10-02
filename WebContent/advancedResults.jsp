@@ -29,6 +29,7 @@ tr:first-child {
 <body>
 
 <%
+// THIS PAGE IS VOID
 ArrayList<PublicationBean> results = (ArrayList<PublicationBean>) request.getAttribute("AdvancedResults");
 %>
 
