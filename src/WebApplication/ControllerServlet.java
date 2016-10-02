@@ -110,6 +110,8 @@ public class ControllerServlet extends HttpServlet {
 						session.setAttribute("currentUser", loginUser);
 						session.setAttribute("currentUsername", loginUser.getUsername());
 						session.setAttribute("cart", sql.getCart(username));
+						
+						
 
 					
 						
