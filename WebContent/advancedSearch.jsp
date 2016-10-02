@@ -26,6 +26,10 @@ html *
 {
    font-family: Arial !important;
 }
+body {
+	margin: 0px;
+
+}
 
 .searchField{
 text-align: center;
@@ -102,19 +106,18 @@ input[type=text], select {
 }
 
 input[type=submit] {
-    width: 30%;
-    background-color: #1406cb;
+    width: 20%;
+    background-color: #0036ff;
     color: white;
     font-size: 14px;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
-    border-radius: 12px;
     cursor: pointer;
 }
 
 input[type=submit]:hover {
-    background-color: #090079;
+    background-color:#0026b2;
 }
 </style>
 </head>

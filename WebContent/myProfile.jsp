@@ -32,6 +32,10 @@ text-align: center;
 input{
    text-align:center;
 }
+body {
+	margin: 0px;
+
+}
 
 ul {
     list-style-type: none;
@@ -110,19 +114,19 @@ input[type=password], select {
 }
 
 input.button1{
-    width: 30%;
-    background-color: #1406cb;
+    width: 20%;
+    background-color: #0036ff;
     color: white;
     font-size: 14px;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
-    border-radius: 12px;
     cursor: pointer;
 }
 
 input.button1:hover {
-    background-color: #090079;
+    background-color:#0026b2;
+    
 }
 
 input.button2 {
@@ -134,12 +138,12 @@ input.button2 {
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
-    border-radius: 12px;
     cursor: pointer;
 }
 
 input.button2:hover {
-     background-color: #e3e3e3;
+     background-color: #cdcdcd;
+     box-shadow: 1px 1px 1.5px 2px rgba(0, 0, 0, 0.4), -1px -1px 1.5px 2px rgba(0, 0, 0, 0.4); 
 }
 
 .profileButtons{
