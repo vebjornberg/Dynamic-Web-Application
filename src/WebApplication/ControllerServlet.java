@@ -149,6 +149,7 @@ public class ControllerServlet extends HttpServlet {
 			session.setAttribute("lastPage", ((results.size() - (results.size()%10))/10));
 
 			session.setAttribute("currentPage", 0);
+			session.setAttribute("searchWordPres", "'" + searchWord + "'");
 			requestdispatcher = request.getRequestDispatcher("/results.jsp");
 			requestdispatcher.forward(request, response);
 			
@@ -167,6 +168,7 @@ public class ControllerServlet extends HttpServlet {
 			session.setAttribute("lastPage", ((advancedResults.size() - (advancedResults.size()%10))/10));
 			session.setAttribute("searchResults", advancedResults);
 			session.setAttribute("currentPage", 0);
+			session.setAttribute("searchWordPres", "Advanced search");
 			
 
 			
