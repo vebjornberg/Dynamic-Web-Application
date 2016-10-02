@@ -94,6 +94,27 @@ li.dropdown {
 h2 {
     text-align: center;
 }
+.styled-select{
+text-align: center;
+	width: 100%;
+    margin: 0 auto;
+     height: 34px;
+
+}
+
+.styled-select select {
+	text-align: center;
+  text-align-last: center;
+   border: 1px solid #ccc;
+   font-size: 16px;
+   height: 34px;
+   width: 50%;
+}
+
+option {
+  text-align: center;
+
+}
 
 input[type=text], select {
 	width:50%;
@@ -153,12 +174,18 @@ input[type=submit]:hover {
 	<input type="text" name="authorLastName" placeholder="Last name author"><br><br>
 	<input type="text" name="title" placeholder="Publication Title"><br><br>
 	<input type="text" name="year" placeholder="Release year"><br><br>
-
+	
+	<div class="styled-select">
 	<select id="pubType" name="pubType">
 		<option value="book">Book</option>
 		<option value="article">Article</option>
+		<option value="phdthesis">Phdthesis</option>
+		<option value="inproceedings">Inproceedings</option>
+		<option value="journal">Journal</option>
+		<option value="conference">Conference</option>
 		<option value="other">Other</option>
-	</select><br>
+	</select>
+	</div><br>
   
 	<input type="submit" value="Submit">
 </form>
