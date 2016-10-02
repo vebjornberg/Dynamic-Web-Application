@@ -258,7 +258,6 @@ Random Publications
 
 <div class = searchField>
 <form action="addrantocart" method= "post">
-	<input type = "hidden" name = "action" value = "Add to cart" >
 
 
 <table cellspacing='0' id="table1">
@@ -295,8 +294,7 @@ for(PublicationBean publication : randomList){
 	</tbody>
 </table>
 
-	<input type="hidden"  name ="action" value="addRanToCart">
-	<input type="submit"  value="Add to cart">
+	<input type="submit" name="action" value="Add to Cart">
 </form>
 </div>
 </body>

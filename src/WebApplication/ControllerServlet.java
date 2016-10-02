@@ -609,7 +609,7 @@ public class ControllerServlet extends HttpServlet {
 			break;
 		
 			
-		case "addResultToCart":
+		case "Add to cart":
 			String resultCheckboxValues[] = request.getParameterValues("resultsCheckbox");
 			int cPage = (Integer)session.getAttribute("currentPage");
 			
@@ -634,7 +634,8 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher.forward(request, response);
 			break;
 		
-		case "addRanToCart":
+		case "Add to Cart":
+			System.out.println("addingrandom");
 			String randomCheckboxValues[] = request.getParameterValues("randomCheckbox");
 			
 			UserBean usr1 = (UserBean)session.getAttribute("currentUser");

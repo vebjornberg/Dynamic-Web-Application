@@ -290,7 +290,7 @@ Now showing: <%if((Integer)session.getAttribute("currentPage") ==(Integer)sessio
 		<input name = "action" type = "submit" class = "button button1" value="Next page >>" <%if((Integer)session.getAttribute("currentPage")==(Integer)session.getAttribute("lastPage")){ %>disabled="disabled"<%} %> >
 	</form>
 
-
+<form action = "ControllerServlet" method = "post">
 <table cellspacing='0' id="table1">
 	<thead>
 		<tr>
@@ -323,8 +323,8 @@ for (int i = 0; (i<results.size()-(10*currentPage))&&(i<10); i++){
 		%>
 	</tbody>
 </table>
-	<form action = "ControllerServlet" method = "post">
-    	<input type = "hidden" name = "action" value = "addResultToCart" >
+
+    	
     	<input type = "submit"  class = "button button2" name = "action" value = "Add to cart" >
 	</form>
 </div>
