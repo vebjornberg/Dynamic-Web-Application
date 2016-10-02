@@ -214,6 +214,7 @@ table tr:hover td {
 	String username =  user.getUsername();	
 	mySQLconnection sql = new mySQLconnection();
 	ArrayList<PublicationBean> randomList = sql.generateRandomList();
+	session.setAttribute("randomList",randomList);
 %>
 </head>
 <body>
@@ -276,17 +277,17 @@ for(PublicationBean publication : randomList){
 			<td><%=publication.getFirstname()%> <%=publication.getLastname() %></td>
 			<td><%="$" + publication.getPrice() %></td>
 			<td><%=publication.getYear() %></td>
-			<td><input type="checkbox" name="checkbox" value="<%=i%>"> </td>
+			<td><input type="checkbox" name="randomCheckbox" value="<%=i%>"> </td>
 			
 
 		</tr>
 
-		<%}
+		<%i++;}
 		%>
 	</tbody>
 </table>
-
-<input type="submit"  name ="action" value="Add to cart">
+	<input type="hidden"  name ="action" value="addRanToCart">
+	<input type="submit"  name ="action" value="Add to cart">
 </form>
 
 </body>
