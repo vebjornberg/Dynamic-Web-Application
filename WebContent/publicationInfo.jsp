@@ -4,10 +4,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>FinePoint Electrical</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
 </head>
-
 <style>
 html *
 {
@@ -213,7 +212,7 @@ table tr:hover td {
 	UserBean user = (UserBean) session.getAttribute("currentUser");
 	String username =  user.getUsername();	
 	mySQLconnection sql = new mySQLconnection();
-	ArrayList<PublicationBean> randomList = sql.generateRandomList();
+	PublicationBean publicationInfo = sql.getPublicationById( Integer.parseInt(request.getParameter("publicationId")) );
 %>
 </head>
 <body>
@@ -247,38 +246,35 @@ table tr:hover td {
 </div><br><br><br>
 
 <h3 align="center">
-Random Pubs
+Publication Info
 </h3>
 
 
 <table cellspacing='0' id="table1">
 	<thead>
 		<tr>
-			<th>Publication Title</th>
+			<th>ID</th>
+			<th>Title</th>
 			<th>Author</th>
 			<th>Price (AUD)</th>
 			<th>Year</th>
+			<th>Type</th>
+			<th>Units sold</th>
 		
 		</tr>
 	</thead>
 	
 	<tbody>
-<%
-for(PublicationBean publication : randomList){
-	String title = publication.getTitle();
-	int publicationId = publication.getPublicationid();
-%>
 		<tr>
-			<td><a href="publicationInfo.jsp?publicationId=<%=publicationId %>"><%=title %></a></td>
-			<td><%=publication.getFirstname()%> <%=publication.getLastname() %></td>
-			<td><%=publication.getPrice() %></td>
-			<td><%=publication.getYear() %></td>
-			<td><input type="checkbox" name="checkbox" value="" form = "remove" > </td>
-			
+			<td> <%=publicationInfo.getPublicationid() %></td>
+			<td> <%=publicationInfo.getTitle() %></td>
+			<td> <%=publicationInfo.getFirstname() %> <%=publicationInfo.getLastname() %></td>
+			<td> <%=publicationInfo.getPrice() %></td>
+			<td> <%=publicationInfo.getYear() %></td>
+			<td> <%=publicationInfo.getType() %></td>
+			<td> <%=publicationInfo.getNumsold() %></td>
 
 		</tr>
-		<%}
-		%>
 	</tbody>
 </table>
 
