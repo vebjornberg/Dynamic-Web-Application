@@ -247,14 +247,15 @@ table tr:hover td {
 </div><br><br><br>
 
 <h3 align="center">
-Random Pubs
+Random Publications
 </h3>
 
+<form action="addrantocart" method= "post">
 
 <table cellspacing='0' id="table1">
 	<thead>
 		<tr>
-			<th>Publication Title</th>
+			<th>Title</th>
 			<th>Author</th>
 			<th>Price (AUD)</th>
 			<th>Year</th>
@@ -263,24 +264,30 @@ Random Pubs
 	</thead>
 	
 	<tbody>
+<% int i = 0;%>
 <%
 for(PublicationBean publication : randomList){
+
 	String title = publication.getTitle();
 	int publicationId = publication.getPublicationid();
 %>
 		<tr>
 			<td><a href="publicationInfo.jsp?publicationId=<%=publicationId %>"><%=title %></a></td>
 			<td><%=publication.getFirstname()%> <%=publication.getLastname() %></td>
-			<td><%=publication.getPrice() %></td>
+			<td><%="$" + publication.getPrice() %></td>
 			<td><%=publication.getYear() %></td>
-			<td><input type="checkbox" name="checkbox" value="" form = "remove" > </td>
+			<td><input type="checkbox" name="checkbox" value="<%=i%>"> </td>
 			
 
 		</tr>
+
 		<%}
 		%>
 	</tbody>
 </table>
+
+<input type="submit"  name ="action" value="Add to cart">
+</form>
 
 </body>
 </html>

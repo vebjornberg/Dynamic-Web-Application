@@ -142,9 +142,10 @@ public class ControllerServlet extends HttpServlet {
 			System.out.println(searchWord);
 			
 			ArrayList<PublicationBean> results = sql.getPublications(searchWord);
-			request.setAttribute("searchResults", results);
+			session.setAttribute("searchResults", results);
+			session.setAttribute("lastPage", ((results.size() - (results.size()%10))/10));
 
-			
+			session.setAttribute("currentPage", 0);
 			requestdispatcher = request.getRequestDispatcher("/results.jsp");
 			requestdispatcher.forward(request, response);
 			
@@ -160,11 +161,13 @@ public class ControllerServlet extends HttpServlet {
 			System.out.println(firstName + lastName + title + year + type );
 			
 			ArrayList<PublicationBean> advancedResults = sql.getPublicationsAdvanced(type, title, firstName, lastName, year);
-			request.setAttribute("AdvancedResults", advancedResults);
+			session.setAttribute("lastPage", ((advancedResults.size() - (advancedResults.size()%10))/10));
+			session.setAttribute("searchResults", advancedResults);
+			session.setAttribute("currentPage", 0);
 			
 
 			
-			requestdispatcher = request.getRequestDispatcher("/advancedResults.jsp");
+			requestdispatcher = request.getRequestDispatcher("/results.jsp");
 			requestdispatcher.forward(request, response);
 			
 			break;
@@ -589,7 +592,51 @@ public class ControllerServlet extends HttpServlet {
 			
 			break;
 		
+			
+		case "addResultToCart":
+			String resultCheckboxValues[] = request.getParameterValues("resultsCheckbox");
+			int cPage = (Integer)session.getAttribute("currentPage");
+			
+			UserBean usr = (UserBean)session.getAttribute("currentUser");
+			ArrayList<PublicationBean> oldcart = sql.getCart(usr.getUsername());
+			ArrayList<PublicationBean> searchRes = (ArrayList<PublicationBean>)session.getAttribute("searchResults");
+			if(!(resultCheckboxValues==null)){
+				
+				for (String s:resultCheckboxValues){
+					System.out.println(s);
+					System.out.println("adding..");
+					oldcart.add(searchRes.get(Integer.parseInt(s) + 10*cPage));
+					
+					
+					
+					
+				}
+			}
+			session.setAttribute("cart", oldcart);
+			sql.addCart(usr.getUsername(), oldcart);
+			requestdispatcher = request.getRequestDispatcher("/results.jsp");
+			requestdispatcher.forward(request, response);
+			break;
 		
+		
+		case "Next page":
+			int x = (Integer)session.getAttribute("currentPage");
+			session.setAttribute("currentPage", x+1);
+			
+			requestdispatcher = request.getRequestDispatcher("/results.jsp");
+			requestdispatcher.forward(request, response);
+			break;
+			
+		case "Previous page":
+			int y = (Integer)session.getAttribute("currentPage");
+			session.setAttribute("currentPage", y-1);
+			
+			requestdispatcher = request.getRequestDispatcher("/results.jsp");
+			requestdispatcher.forward(request, response);
+			break;
+			
+			
+			
 		}
 		
 		

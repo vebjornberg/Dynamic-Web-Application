@@ -148,6 +148,7 @@ public class mySQLconnection {
 			ResultSet result = statement.executeQuery(sql);
 			ArrayList<PublicationBean> publications = new ArrayList<PublicationBean>();
 			while(result.next()) {
+				if(result.getInt("sale")==1){
 				PublicationBean publicationbean = new PublicationBean();
 				publicationbean.setAuthorid(result.getInt("authorid"));
 				publicationbean.setPublicationid(result.getInt("publicationid"));
@@ -161,6 +162,7 @@ public class mySQLconnection {
 				publicationbean.setNumsold(result.getInt("numsold"));
 				publicationbean.setNumremoved(result.getInt("numremoved"));
 				publications.add(publicationbean);
+				}
 			}
 			result.close();
 			closeConnection();

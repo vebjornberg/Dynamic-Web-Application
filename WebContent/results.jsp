@@ -219,7 +219,7 @@ table tr:hover td {
 	String username =  user.getUsername();	
 	
 	String keyWord = request.getParameter("search");
-	ArrayList<PublicationBean> results = (ArrayList<PublicationBean>) request.getAttribute("searchResults");
+	ArrayList<PublicationBean> results = (ArrayList<PublicationBean>) session.getAttribute("searchResults");
 
 %>
 </head>
@@ -257,11 +257,12 @@ table tr:hover td {
 Results from "<%=keyWord %>"
 </h3>
 
+<form action="addtocart" method= "post">
 
 <table cellspacing='0' id="table1">
 	<thead>
 		<tr>
-			<th>Publication Title</th>
+			<th>Title</th>
 			<th>Author</th>
 			<th>Price (AUD)</th>
 			<th>Year</th>
@@ -270,22 +271,38 @@ Results from "<%=keyWord %>"
 	</thead>
 	
 	<tbody>
+
 <%
-for(PublicationBean publication : results){
-	if(publication.getSale()==1){%>
+int currentPage = (Integer)session.getAttribute("currentPage");
+for (int i = 0; (i<results.size()-(10*currentPage))&&(i<10); i++){
+
+	
+	%>
 		<tr>
-			<td><%=publication.getTitle() %></td>
-			<td><%=publication.getFirstname()%> <%=publication.getLastname() %></td>
-			<td><%=publication.getPrice() %></td>
-			<td><%=publication.getYear() %></td>
-			<td><input type="checkbox" name="checkbox" value="" form = "remove" > </td>
+			<td><%=results.get(i +10*currentPage).getTitle() %></td>
+			<td><%=results.get(i +10*currentPage).getFirstname()%> <%=results.get(i+10*currentPage).getLastname() %></td>
+			<td><%="$" +results.get(i+10*currentPage).getPrice() %></td>
+			<td><%=results.get(i+10*currentPage).getYear() %></td>
+			<td><input type="checkbox" name="resultsCheckbox" value="<%=i %>" > </td>
 
 
 		</tr>
-		<%}}
+		<%}
 		%>
 	</tbody>
 </table>
-
+    	
+    	<input type = "hidden" name = "action" value = "addResultToCart" >
+    	<input type = "submit" name = "action" value = "Add to cart" >
+</form>
+<form action="changepage" method="post">
+			<input name = "action" type = "submit" value="Previous page" <%if((Integer)session.getAttribute("currentPage")==0){ %>disabled="disabled"<%} %> >
+			<input name = "action" type = "submit" value="Next page" <%if((Integer)session.getAttribute("currentPage")==(Integer)session.getAttribute("lastPage")){ %>disabled="disabled"<%} %> >
+</form>
+<p style="color:grey;">Search results: <%=results.size()%></p>  
+		<p style="color:grey;">Now showing: <%if((Integer)session.getAttribute("currentPage") ==(Integer)session.getAttribute("lastPage")){%> 
+												<%=(Integer)session.getAttribute("currentPage")*10+1%>-<%=results.size()%>
+											<%}else{ %> <%=(Integer)session.getAttribute("currentPage")*10+1%>-<%=((Integer)session.getAttribute("currentPage")+1)*10
+											%><%} %></p>
 </body>
 </html>
