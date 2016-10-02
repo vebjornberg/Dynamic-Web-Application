@@ -270,7 +270,7 @@ table tr:hover td {
 
 
 <h3 align="center">
-Results from "<%=keyWord %>"
+Results for <%=session.getAttribute("searchWordPres") %>
 </h3>
 
 <div class = "navButtons">
