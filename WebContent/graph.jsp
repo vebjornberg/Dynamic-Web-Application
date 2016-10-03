@@ -121,7 +121,7 @@ String username = user.getUsername();
 
 <script>
 
-  var graph = <%=connection.graphStore()%>
+  var graph = <%=connection.getSearchResults("p2")%>
 
             	
   var visualization = d3plus.viz()
