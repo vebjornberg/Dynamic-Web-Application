@@ -8,7 +8,7 @@
 <%} %>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Publication DB</title>
+<title>Adm - Publication DB</title>
 </head>
 <body><center>
 <h1>All publications</h1>

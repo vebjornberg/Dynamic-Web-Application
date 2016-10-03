@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DBL - New User</title>
+<title>LDB - New User</title>
 
 <%-- Her you can register a new user --%>
 

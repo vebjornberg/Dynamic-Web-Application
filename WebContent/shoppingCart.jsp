@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>LDB - Cart</title>
 
 
 <%
@@ -267,6 +267,7 @@ table tr:hover td {
   <li><a href="advancedSearch.jsp">Advanced Search</a></li>
   <li><a href="addBook.jsp">Add Publication</a></li>
   <li><a href="shoppingCart.jsp">Shopping Cart</a></li>
+  <li><a href="graph.jsp">Visuals</a></li>
   
   
   
@@ -280,7 +281,7 @@ table tr:hover td {
   </li>
 </ul><br>
 
-<h2> Profile  </h2>
+<h2> Shopping Cart  </h2>
 
 <div class="profileButtons">
     <form action="ControllerServlet" method = "post">
@@ -291,7 +292,7 @@ table tr:hover td {
 			<th>Publication Title</th>
 			<th>Author</th>
 			<th>Price</th>
-		    <th>Checkbox</th>
+		    <th>Remove</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -300,11 +301,9 @@ table tr:hover td {
    				int i = 0;
    				if (!cartList.isEmpty()){
 					for (PublicationBean publication : cartList){
-					
-	   					String title = publication.getTitle();
+						String title = publication.getTitle();
 						int publicationId = publication.getPublicationid();
-							%>
-
+						%>
 			<tr>
 				<td><a href="publicationInfo.jsp?publicationId=<%=publicationId %>"><%=title %></a></td>
 				<td><%=publication.getFirstname()%> <%=publication.getLastname() %></td>

@@ -5,7 +5,7 @@ language="java" contentType="text/html; charset=UTF-8"
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Digital Library Database</title>
+<title>Library Database</title>
 
 <%-- 
 	The first page you get sent to when opening the website.

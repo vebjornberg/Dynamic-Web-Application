@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>LDB - Publication</title>
 </head>
 <style>
 html *
@@ -226,6 +226,7 @@ table tr:hover td {
   <li><a href="advancedSearch.jsp">Advanced Search</a></li>
   <li><a href="addBook.jsp">Add Publication</a></li>
   <li><a href="shoppingCart.jsp">Shopping Cart</a></li>
+  <li><a href="graph.jsp">Visuals</a></li>
   
   
   

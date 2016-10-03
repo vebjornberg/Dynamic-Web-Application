@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DLD - My Profile</title>
+<title>LDB - My Profile</title>
 
 <%-- JSP for viewing and editing your profile --%>
 
@@ -16,8 +16,6 @@
 mySQLconnection con = new mySQLconnection();
 UserBean user = (UserBean) session.getAttribute("currentUser");
 String username = user.getUsername();
-
-//String firstName, lastname, dob, address, email, password, creditCard = infoFromUsername[0], infoFromUsername[1], infoFromUsername[2], osv..   
 %>
 <style>
 html *
@@ -164,6 +162,7 @@ display:inline;
   <li><a href="advancedSearch.jsp">Advanced Search</a></li>
   <li><a href="addBook.jsp">Add Publication</a></li>
   <li><a href="shoppingCart.jsp">Shopping Cart</a></li>
+  <li><a href="graph.jsp">Visuals</a></li>
   
   
   
