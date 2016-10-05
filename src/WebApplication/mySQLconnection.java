@@ -128,7 +128,6 @@ public class mySQLconnection {
 					+ userbean.getLastname() + "', '" + userbean.getAddress() + "', '" + userbean.getCreditCard() 
 					+ "', '" + userbean.getDateOfBirth() + "', 0, '" + userbean.getPassword() + "', 0, '" + userbean.getConfirmationHash() + "', 0)";
 			statement.executeUpdate(sql);
-			System.out.println(sql);
 			closeConnection();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -268,7 +267,6 @@ public class mySQLconnection {
 					+ ", user_table.confirmationHash='" + userbean.getConfirmationHash() + "', " + "user_table.banned=" + userbean.getBanned() + " "
 					+ "WHERE user_table.username='" + userbean.getUsername() + "'";
 			statement.executeUpdate(sql);
-			System.out.println(sql);
 			closeConnection();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -389,7 +387,6 @@ public class mySQLconnection {
 					+ "publication_table.price='" + publicationbean.getPrice() + "', publication_table.sale=" + publicationbean.getSale() + ", publication_table.numsold=" + publicationbean.getNumsold() + ", publication_table.numremoved=" + publicationbean.getNumremoved() + " "
 					+ "WHERE publication_table.publicationid=" + publicationbean.getPublicationid();
 			statement.executeUpdate(sql);
-			System.out.println(sql);
 			closeConnection();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

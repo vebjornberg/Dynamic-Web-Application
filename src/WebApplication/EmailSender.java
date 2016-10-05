@@ -39,15 +39,6 @@ public class EmailSender {
 	        // Add the text part to the multipart
 	        multipart.addBodyPart(messageBodyPart);
 	        
-	        /*
-	        // Create the html part
-	        messageBodyPart = new MimeBodyPart();
-	        String htmlMessage = "Our html text";
-	        messageBodyPart.setContent(htmlMessage, "text/html");
-	        // Add html part to multi part
-	        multipart.addBodyPart(messageBodyPart);
-			*/
-	        // Associate multi-part with message
 	        message.setContent(multipart);
 
 	        // Send message
@@ -55,7 +46,6 @@ public class EmailSender {
 	        transport.connect("smtp.gmail.com", "noreplylibrarydb@gmail.com", "inderentilandy");
 	     
 	        transport.sendMessage(message, message.getAllRecipients());
-	        System.out.println("Email is being sent");
 	        return true;
 	    } catch (AddressException e) {
 	        e.printStackTrace();

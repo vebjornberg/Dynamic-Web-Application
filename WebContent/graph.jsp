@@ -88,7 +88,7 @@ h2 {
 
 <script src="//d3plus.org/js/d3.js"></script>
 <script src="//d3plus.org/js/d3plus.js"></script>
-<title>Insert title here</title>
+<title>Visuals</title>
 </head>
 <%
 mySQLconnection con = new mySQLconnection();
@@ -114,14 +114,25 @@ String username = user.getUsername();
     </div>
   </li>
 </ul><br>
+
+
+<div class = searchField>
+<form action = "ControllerServlet" method = "post">
+	<input type = "hidden" name = "action" value = "visualSearch" >
+ 	<input type="text" name="visualSearch" placeholder="Search for a node..">
+</form>
+</div><br><br>
+
+
 <div id="viz"></div>
 
 
 <%graphMySQLConnection connection = new graphMySQLConnection();%>
-
+<%String visualSearchWord = (String)session.getAttribute("visualSearch");
+ 			System.out.println(visualSearchWord);%>
 <script>
-
-  var graph = <%=connection.getSearchResults("p2")%>
+ 
+  var graph = <%=connection.getSearchResults(visualSearchWord)%>
 
             	
   var visualization = d3plus.viz()

@@ -276,8 +276,8 @@ table tr:hover td {
   <li style="float:right" class="dropdown">
     <a class="dropbtn"><%=username %></a>
     <div class="dropdown-content">
-      <a href="logoutRedirect.jsp">My Profile</a>
-      <a href="">Log Out</a>
+      <a href="myProfile.jsp">My Profile</a>
+      <a href="logoutRedirect.jsp">Log Out</a>
 
     </div>
   </li>

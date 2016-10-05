@@ -39,7 +39,7 @@ public class ControllerServlet extends HttpServlet {
     
     // init
     public void init(ServletConfig config) throws ServletException {
-    	System.out.println("init()");
+    
     	
     	super.init(config);
     }
@@ -48,7 +48,7 @@ public class ControllerServlet extends HttpServlet {
     
 	// DO GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("This is doGet();");
+		
 		HttpSession session = request.getSession();
 		session.setAttribute("wrongPassword", false);
 		
@@ -62,7 +62,7 @@ public class ControllerServlet extends HttpServlet {
 	
 	// DO POST
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("This is doPost();");
+		
 
 		HttpSession session = request.getSession();
 		session.setAttribute("wrongPassword", false);
@@ -110,7 +110,8 @@ public class ControllerServlet extends HttpServlet {
 						session.setAttribute("currentUser", loginUser);
 						session.setAttribute("currentUsername", loginUser.getUsername());
 						session.setAttribute("cart", sql.getCart(username));
-						
+
+						session.setAttribute("visualSearch","");
 						
 
 					
@@ -142,7 +143,6 @@ public class ControllerServlet extends HttpServlet {
 			
 		case "simpleSearch":
 			String searchWord = request.getParameter("search");
-			System.out.println(searchWord);
 			
 			ArrayList<PublicationBean> results = sql.getPublications(searchWord);
 			session.setAttribute("searchResults", results);
@@ -162,7 +162,6 @@ public class ControllerServlet extends HttpServlet {
 			String title = request.getParameter("title");
 			String year = request.getParameter("year");
 			String type = request.getParameter("pubType");
-			System.out.println(firstName + lastName + title + year + type );
 			
 			ArrayList<PublicationBean> advancedResults = sql.getPublicationsAdvanced(type, title, firstName, lastName, year);
 			session.setAttribute("lastPage", ((advancedResults.size() - (advancedResults.size()%10))/10));
@@ -311,9 +310,9 @@ public class ControllerServlet extends HttpServlet {
 				newUpdateUser.setLastname(request.getParameter("lname"));
 				newUpdateUser.setPassword(request.getParameter("pass"));
 				
-				System.out.println("usr: " + newUpdateUser.getUsername() + "\nadress: " + newUpdateUser.getAddress() + "\nemail: "
-						+ newUpdateUser.getEmail() + "\nDoB: " + newUpdateUser.getDateOfBirth()
-				);
+				//System.out.println("usr: " + newUpdateUser.getUsername() + "\nadress: " + newUpdateUser.getAddress() + "\nemail: "
+				//		+ newUpdateUser.getEmail() + "\nDoB: " + newUpdateUser.getDateOfBirth()
+				//);
 			
 				sql.updateUser(newUpdateUser);
 				}
@@ -395,12 +394,12 @@ public class ControllerServlet extends HttpServlet {
 				
 				String confirmLink = getConfirmationLink(request.getParameter("username"));
 				String hash = confirmLink.substring(confirmLink.length()-8);
-				System.out.println(hash);
+				
 				
 				newCurrentUser.setConfirmationHash(hash);
-				System.out.println("usr: " + newCurrentUser.getUsername() + "\nadress: " + newCurrentUser.getAddress() + "\nemail: "
-						+ newCurrentUser.getEmail() + "\nDoB: " + newCurrentUser.getDateOfBirth()
-				);
+//				System.out.println("usr: " + newCurrentUser.getUsername() + "\nadress: " + newCurrentUser.getAddress() + "\nemail: "
+//						+ newCurrentUser.getEmail() + "\nDoB: " + newCurrentUser.getDateOfBirth()
+//				);
 			
 				sql.setUserBean(newCurrentUser);
 				
@@ -575,7 +574,7 @@ public class ControllerServlet extends HttpServlet {
 			String checkboxValues[] = request.getParameterValues("cartcheckbox");
 			
 			ArrayList<PublicationBean> cart = (ArrayList<PublicationBean>)session.getAttribute("cart");
-			System.out.println(cart.size());
+			
 			
 			if(!(checkboxValues==null)){
 				
@@ -590,7 +589,7 @@ public class ControllerServlet extends HttpServlet {
 					
 				}
 				UserBean userBean = (UserBean)session.getAttribute("currentUser");
-				System.out.println(cart.size());
+				
 				sql.addCart(userBean.getUsername(), cart);
 			}
 			
@@ -624,9 +623,7 @@ public class ControllerServlet extends HttpServlet {
 				for (String s : pauseCheckboxValues){
 					
 					PublicationBean toPause = pubs1.get(Integer.parseInt(s));
-					System.out.println("before " +toPause.getSale());
 					toPause.setSale((toPause.getSale() == 0) ? 1 : 0);
-					System.out.println(toPause.getSale());
 					sql.updatePublicationBean(toPause);
 					
 					
@@ -648,8 +645,6 @@ public class ControllerServlet extends HttpServlet {
 			if(!(resultCheckboxValues==null)){
 				
 				for (String s:resultCheckboxValues){
-					System.out.println(s);
-					System.out.println("adding..");
 					oldcart.add(searchRes.get(Integer.parseInt(s) + 10*cPage));
 					
 					
@@ -664,7 +659,6 @@ public class ControllerServlet extends HttpServlet {
 			break;
 		
 		case "Add to Cart":
-			System.out.println("addingrandom");
 			String randomCheckboxValues[] = request.getParameterValues("randomCheckbox");
 			
 			UserBean usr1 = (UserBean)session.getAttribute("currentUser");
@@ -716,8 +710,15 @@ public class ControllerServlet extends HttpServlet {
 			requestdispatcher = request.getRequestDispatcher("/shoppingCart.jsp");
 			requestdispatcher.forward(request, response);
 			break;
-		}
 		
+		case "visualSearch":
+			String vs = request.getParameter("visualSearch");
+			session.setAttribute("visualSearch", vs); 
+			
+			requestdispatcher = request.getRequestDispatcher("/graph.jsp");
+			requestdispatcher.forward(request, response);
+			break;
+		}
 		
 
 		
