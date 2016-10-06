@@ -31,10 +31,11 @@ ArrayList<PublicationBean> allPublications = (ArrayList<PublicationBean>)session
 
 <% int i = 0;
 for (PublicationBean pub: allPublications){
-	%>
-
-<tr>
-	<td><%out.println(pub.getTitle()); %></td>
+	String title = pub.getTitle();
+	int publicationId = pub.getPublicationid();
+%>
+		<tr>
+			<td><a href="publicationInfo.jsp?publicationId=<%=publicationId %>"><%=title %></a></td>
 	
 	 <td><%=pub.getSale()==1 ? "yes" : "no"%></td>
 	 <td><%=pub.getNumsold() %></td>
